@@ -9,7 +9,9 @@
 #let Irr = math.op("Irr")
 #let iso = $tilde.equiv$
 
+#set par(justify: false)
 #text("Mathematical Tools For Cryptography", size: 4em)
+#set par(justify: true)
 #v(1fr)
 #text("Disclaimer", size: 2em)\
 #text([This contains lessons from Mr. Zaimi, with contents that are either added, changed or rearranged, written by HADIOUCHE Azouaou.])
@@ -63,7 +65,7 @@
   Let $R$ be a ring, $I subset R$ ideal, we have:
   - *Prime Ideal:* $I$ is prime if $forall a, b in R, a b in I => a in I or b in I$.
   - *Principal Ideal:* $I$ is principal if $exists x in R, I = (x) = x R$.
-  - *Maximal Ideal:* $I$ is maximal if $forall M$ ideal of $R, I subset M subset R => M = I$ or $R$.
+  - *Maximal Ideal:* $I$ is maximal if $forall M$ ideal, $I subset M subset R => M = I$ or $R$.
 ]
 
 #pro[

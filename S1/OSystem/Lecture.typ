@@ -5,7 +5,7 @@
 #text("Operating Systems", size: 4em)
 #v(1fr)
 #text("Disclaimer", size: 2em)\
-#text([This contains lessons from Mr. Zaimi, with contents that are either added, changed or rearranged, written by HADIOUCHE Azouaou.])
+#text([This contains lessons from Mr. Metrouh, with contents that are either added, changed or rearranged, written by HADIOUCHE Azouaou.])
 
 #chap([Introduction])[
   Operating System is an abstraction layer in software that goes between the user and hardware, which gives the ability to easily access the resources and the services given from the hardware layer to the software.
@@ -19,25 +19,51 @@
   - *User Interface*: displaying graphical or command-line interfaces...
 ]
 
-The usual architecture we use in this case is the Von Neumann architecture to represent the computer workarounds
+The usual architecture we use in this case is the Von Neumann architecture to represent the computer workarounds which can be represented in a really simple way as follows.
 
-// #align(center)[
-//   #diagram(
-//     edge-stroke: 1pt,
-//     node-corner-radius: 5pt,
-//     edge-corner-radius: 8pt,
-//     mark-scale: 80%,
-//
-//     node((0, 0), [CPU], fill: red),
-//     node((2, 0), [RAM], fill: red),
-//     node((1, 1), [I/O System], fill: green),
-//
-//     edge((0, 0), "<->"),
-//     edge((2, 0), "<->"),
-//     edge((0, 0), (2, 0), "<->"),
-//   )
-// ]
-//
+#align(center)[
+  #box(
+    inset: 5mm,
+    diagram(
+      edge-stroke: 1pt,
+      node-corner-radius: 2pt,
+      // edge-corner-radius: 8pt,
+      mark-scale: 80%,
+
+      node((0.162, 0), [
+        CPU
+        #v(-2mm)
+        #line(length: 100%)
+        #v(-2mm)
+        #set align(left)
+        - ALU
+        - Registers
+      ], width: 2.5cm, height: 2cm, stroke: rgb("#333")),
+
+      node((0.9, 0), [
+        RAM
+        #v(-2mm)
+        #line(length: 100%)
+        #v(-2mm)
+        #set align(left)
+        - Kernel
+        - OS
+      ], width: 2cm, height: 2cm, stroke: rgb("#333")),
+
+      node((0.5, 0.8), [I/O Devices], width: 5cm, height: 1cm, stroke: rgb("#333")),
+
+      edge((0, 0), (1, 0), "->"),
+      edge((0, 0.2), (1, 0.2), "<-"),
+      edge((0, 0), (0, 0.7), "->"),
+      edge((0.2, 0), (0.2, 0.7), "<-"),
+      edge((0.8, 0), (0.8, 0.7), "->"),
+      edge((1, 0), (1, 0.7), "<-")
+    )
+  )
+]
+
+
+#colbreak()
 #sect("Historical Evolution Of OSs")
 + *First Generation (1950s):* The first operating systems were batch systems where the programs were processed in batches which used punch cards to enter data.
 + *Second Generation (1960s):* introduction of multiple users to share the same computing resources which inccreased productivity.
