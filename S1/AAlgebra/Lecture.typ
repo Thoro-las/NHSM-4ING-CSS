@@ -9,14 +9,10 @@
 #let Irr = math.op("Irr")
 #let iso = $tilde.equiv$
 
-#set par(justify: false)
-#text("Mathematical Tools For Cryptography", size: 4em)
-#set par(justify: true)
-#v(1fr)
-#text("Disclaimer", size: 2em)\
-#text([This contains lessons from Mr. Zaimi, with contents that are either added, changed or rearranged, written by HADIOUCHE Azouaou.])
 
-#chap("Remainders", num: 0)[
+#mainpage("Matehmatical Tools For Cryptography", "HADIOUCHE Azouaou", "Zaimi")
+
+#chap("Remainders")[
   This part will just be a remainder of the important definitions, propositions and theorems of the field extension course that are needed for this course. We assume that rings in this case are commutative rings with unity.
 ]
 
@@ -29,35 +25,32 @@
 
 #pro[
   Let $f: R -> R'$ be a ring homomorphism
-  - $f equiv.not 0 <=> f(1) = 1$.
-  - $Ker f$ is an ideal of $R$.
-  - $Im f$ is a subring of $R'$.
-  - $Ker f = {0} <=> f$ injective.
-  - $Im f = R' <=> f$ surjective.
+  - $Ker f$ is an ideal of $R$ and $Im f$ is a subring of $R'$.
+  - $Ker f = {0} <=> f$ injective and $Im f = R' <=> f$ surjective.
+  - If $R, R'$ are fields then $f equiv 0$ or $f(1)=1$.
 ]
 
 #thm(name: "First Isomophism Theorem")[
   Let $f: A -> B$ be a ring homomorphism, then $Im f iso A \/ Ker f$ and for $I subset Ker f$ is an ideal then there exists a unique isomorphism $f_*: A \/ I -> B, f_*(x + I) = f(x)$ with $f = f_* compose pi$ and $pi(x) = x + I$ the cannonical surjection.
   #align(center)[
     #commutative-diagram(
-      node-padding: (20mm, 6mm),
+      node-padding: (20mm, 10mm),
       node((0, 0), $A$),
       node((0, 2), $B$),
-      node((1, 1), $A\/I$),
-      arr($A$, $B$, $f$),
+      node((0, 1), $A\/I$),
+      arr($A$, $B$, $f$, curve: 20deg),
       arr($A$, $A\/I$, $pi$, label-pos: right),
       arr($A\/I$, $B$, $f_*$, label-pos: right)
     )
   ]
 ]
 
-
+#colbreak()
 #sect("Ideals, UFDs, PIDs & EDs")
 #def(name: "Elements")[
   Let $R$ be a ring, we have the following:
   - *Unit:* $x in R$ is a unit if $exists y in R, x y = 1$, denoted $R^*$.
-  - *Nilpotent:* $x in R$ is nilpotent if $exists n in NN, x^n = 0$, denoted $cal(N)(R)$.
-  - *Zero Divisor:* $x in R$ is a zero divisor if $exists y in R, x y = 0$.
+  - *Zero Divisor:* $x in R\\{0}$ is a zero divisor if $exists y in R, x y = 0$.
   - *Irreducible:* $x in R$ is irreducible if $x = x_1 x_2 => x_1 in R^* or x_2 in R^*$.
 ]
 
@@ -65,7 +58,7 @@
   Let $R$ be a ring, $I subset R$ ideal, we have:
   - *Prime Ideal:* $I$ is prime if $forall a, b in R, a b in I => a in I or b in I$.
   - *Principal Ideal:* $I$ is principal if $exists x in R, I = (x) = x R$.
-  - *Maximal Ideal:* $I$ is maximal if $forall M$ ideal, $I subset M subset R => M = I$ or $R$.
+  - *Maximal Ideal:* $I$ is maximal if $forall M$ ideal#h(-1mm), $I subset M subset R => M = I$ or $R$.
 ]
 
 #pro[
@@ -76,19 +69,18 @@
   Let $R$ be a ring and $I, J$ ideals of $R$
   - $I$ is a prime ideal $<=>$ $R\/I$ is an integral domain.
   - $I$ is a maximal ideal $<=>$ $R\/I$ is a field.
-  - $(I + J) \/ I iso I \/ (I inter J).$
-  - if $I subset J$ then $(A\/I)\/(I\/J) iso A\/I.$
+  - if $I subset J$ then $(A\/I)\/(J\/I) iso A\/J.$
 ]
 
 #def(name: "Domains")[
   Let $R$ be a ring, we have the following:
   - *Integral Domain:* $R$ is an integral domain if $x y = 0 => x = 0$ or $y = 0$.
   - *Principle Ideal Domain:* $R$ is a PID if for any ideal $I$ in $R$, $I$ is principle.
-  - *Euclidean Domain:* $R$ is said to be an ED if $exists nu: R \/ {0} -> NN$ a valuation function, $forall a, b in R, exists q, r in R, a = b q + r$ and $r = 0$ or $nu(r) = 0$.
+  - *Euclidean Domain:* $R$ is said to be an ED if $exists nu: R \/ {0} -> NN$ a valuation function, $forall a, b in R, exists q, r in R, a = b q + r$, $r = 0$ or $nu(r) < nu(b)$.
   - *Unique Factoriation Domain:* $R$ is a UFD if any element can be decomposed into a unique product of irreducible elements.
 ]
 
-
+#colbreak()
 
 #thm[
   - If $R$ is a UFD and $x in R$ is irreducible, then $(x)$ is prime.
@@ -99,11 +91,12 @@
 #sect("Ring Of Polynomials")
 #def(name: "Ring Of Polynomials")[
   Let $R$ be a ring, we define $ R[X]={sum_(i in I) a_i X^i | I "finite", {a_i}_(i in I) subset R}. $
+  to be the ring of polynomials on $R$, and for any $P in R[X]$ we set $ deg P = max { i in NN | X^i "has a non-zero coefficent in" P}. $
 ]
 
 #def(name: "Polynomials")[
-  Let $K\/L$ be a field extension and $P in K[X]$
-  - *Minimal:* $P$ is the minimal polynomial of $alpha in L$ if it is the unique monic polynomial with the smallest degree denoted $Irr(alpha, K, x)$.
+  Let $L\/K$ be a field extension and $P in K[X]$
+  - *Minimal:* $P$ is the minimal polynomial of $alpha in L$ if it is the unique monic polynomial with the smallest degree which vanishes at $alpha$ denoted $Irr(alpha, K, x)$.
 ]
 
 #pro[
@@ -113,23 +106,27 @@
 #thm[
   Let $R$ be a ring
   - $R$ is an integral domain $=>$ $R[X]$ is an integral domain.
-  - $R[X]$ is a Euclidean domain with the valuation $nu(P)=deg P.$
-  - $P=sum a_i X^i$ is a unit in $R[X]$ $<=>$ $a_0 in A^*$ and $forall i >= 1, a_i in cal(N)(A).$
-  - $P in R[X]$ irreducible $=>$  $R[X]\/P={sum_(i=1)^(deg P - 1) a_i alpha^i | a_i in R}$ .
-  - Let $alpha$ a root of $P in R[X]$ then $Irr(alpha, K, x)$ divides $P$.
+  - $P=sum a_i X^i$ is a unit in $R[X]$ $<=>$ $a_0 in R^*$ and $forall i >= 1, a_i $ nilpotent.
+  - $P in R[X]$ irreducible $=>$  $R[X]\/(P)={sum_(i=0)^(deg P - 1) a_i alpha^i | a_i in R}$ .
+  - Let $alpha$ a root of $P in R[X]$ then $Irr(alpha, K, X)$ divides $P$.
+  - if $R$ is a field, $R[X]$ is a Euclidean domain with the valuation $nu(P)=deg P.$
 ]
 
+#colbreak()
 #pro(name: "Eisenstein's Criterions")[
-  - Let $P(x)=a_0 + a_1 x + dots + a_n x^n in ZZ[X]$, if there is a prime $p$ such that $p | a_0, dots, p | a_(n-1), p^2 divides.not a$ and $p divides.not a_n$ then $P$ is irreducible over $QQ[X]$.
+  - Let $P(x)=a_0 + a_1 x + dots + a_n x^n in ZZ[X]$, if there is a prime $p$ such that $p | a_0, dots, p | a_(n-1), p^2 divides.not a_0$ and $p divides.not a_n$ then $P$ is irreducible over $QQ[X]$.
   - Let $P(X) in ZZ[X]$ and $phi: ZZ[X] -> ZZ_n[X]$ the extension of $k |-> k mod n$, if $deg phi(P) = deg P$ and $phi(P)$ is irreducible in $ZZ_n[X]$ then $P$ is irreducible in $QQ[X]$.
 ]
 
 \
 #sect("Field Extensions")
+#def(name: "Extension/Degree Of Extension")[
+  Let $L, K$ be two fields such that $K subset L$, we call $L$ a field extension of $K$ and we denote it $L\/K$, we define the degree of extension of $L$ on $K$ as $dim_K L$ if it is finite and $+infinity$ if it is infinite, and we denote it $[L:K]=dim_K L$.
+]
 
 #def(name: "Elements")[
   Let $K$ be a field and $x in K$.
-  - *Algebraic:* $x$ is said to be algebraic if $exists P in K[X], P(x) = 0$.
+  - *Algebraic:* $x$ is said to be algebraic if $exists P in K[X], deg P > 0, P(x) = 0$.
   - *Transcendental:* $x$ is said to be transcendental if it is not algebraic.
   - *Conjugate:* $alpha$ is said to be the conjugate of $beta$ if $beta$ is a root of $"Irr"(alpha, K, x)$.
 ]
@@ -143,10 +140,11 @@
   - *Algebraically Closed:* $K$ is said to be algebraically closed if any algebraic extension of $K$ is $K$.
 ]
 
+#colbreak()
 #def(name: "Extensions")[
   - *$L\/K$ Algebraic Extension:* $forall x in L$, x is algebraic over $K$.
   - *$L\/K$ Transcendental Extension:* if it is not an algebraic extension.
-  - *Algebraic Closure:* $overline(K)$ is an algebraic closure of $K$ if $L\/K$ is an algebraic extension and $L$ is algebraically closed.
+  - *Algebraic Closure:* $overline(K)$ is an algebraic closure of $K$ if $overline(K)\/K$ is an algebraic extension and $overline(K)$ is algebraically closed.
 ]
 
 #thm[
@@ -158,7 +156,7 @@
 
 #thm(name: "Steinitz")[
   + Any field is contained inside of an algebraically closed field.
-  + Every algebraic closure of a field are isomorphic.
+  + Any two algebraic closures of a field are isomorphic.
 ]
 
 #chap("Embeddings")[
@@ -167,20 +165,20 @@
 
 #sect("Embedding")
 #def(name: "Embedding")[
-  Let $sigma: K -> L$ a homomorphism, if $sigma(1) = 1$ then $sigma$ is an embedding from $K$ to $L$.
+  Let $sigma: K -> L$ a homomorphism, if $sigma equiv.not 0$ then $sigma$ is an embedding from $K$ to $L$.
 ]
 
 #def(name: "Extension/Restriction")[
-  Suppose $E$ is an extension of $K$, $tau$ is an embedding of $E$ into $L$ such that $forall k in K, tau(k) = sigma(k)$, then $tau$ is called an extension $sigma$ and $sigma$ is called a restriction of $tau$ to $K$ and moreover if $sigma = Id_K$ then $tau$ is called a $K$-embedding of $E$ into $L$.
+  Suppose $E$ is an extension of $K$, $tau$ is an embedding of $E$ into $L$ such that $forall k in K, tau(k) = sigma(k)$, then $tau$ is called an extension $sigma$ and $sigma$ is called a restriction of $tau$ to $K$. Moreover if $sigma = Id_K$ then $tau$ is called a $K$-embedding of $E$ into $L$.
 ]
 
 #exm[
-  - The only embedding $sigma: QQ -> CC$ is the identity, we prove $sigma(1)=1$, $sigma(n) = n$, $sigma(-n) = -n$, $sigma(a\/b)=sigma(a)\/sigma(b)$ by induction, then $sigma = Id$.
+  - The unique embedding $sigma: QQ -> CC$ is the identity, we prove $sigma(1)=1$, $sigma(n) = n$, $sigma(-n) = -n$, $sigma(a\/b)=sigma(a)\/sigma(b)$ by induction, then $sigma = Id$.
   - The embeddings $tau: QQ(sqrt(2)) -> CC$ has only two forms, given that $tau|_QQ = Id_QQ$ then $tau(a + b sqrt(2)) = a + b tau(sqrt(2))$ and since $tau(sqrt(2))^2 = tau(sqrt(2)^2) = tau(2) = 2 => tau(alpha)=sqrt(2)$ or $tau(alpha)=-sqrt(2)$.
 ]
 
 #pro[
-  Let $tau$ be a $K$-embedding of $L$ into $E$ where $K subset L$ and let $alpha in L$ be algebraic over $K$. Then $tau(alpha)$ is a conjugate of alpha over $K$.
+  Let $tau$ be a $K$-embedding of $L$ into $E$ where $K subset L$ and let $alpha in L$ be algebraic over $K$, then $tau(alpha)$ is a conjugate of $alpha$ over $K$.
 ]
 
 #prf[
@@ -190,7 +188,7 @@
 We used the fact that $tau$ is a $K$-embedding in the evaluation $tau(k_i) = k_i$.
 
 #pro[
-  Let $K$ be a field, $overline(K)$ an algebraic closure of $K$, $alpha in overline(K)$ and let $beta in overline(K)$ be a conjugate of $alpha$ over $K$, then there is a $K$-embedding $tau:K(alpha) -> overline(K)$ which is $K$-isomorphism $K(alpha) -> K(beta)$ sending $alpha$ to $beta$.
+  Let $K$ be a field, $overline(K)$ an algebraic closure of $K$, $alpha in overline(K)$ and let $beta in overline(K)$ be a conjugate of $alpha$ over $K$, then there is a $K$-embedding $tau:K(alpha) -> overline(K)$ which is a $K$-isomorphism of $K(alpha)$ into $K(beta)$ sending $alpha$ to $beta$.
 ]
 
 
@@ -209,9 +207,18 @@ We used the fact that $tau$ is a $K$-embedding in the evaluation $tau(k_i) = k_i
 ]
 
 #cor[
-  Let $alpha$ be algebraic over $K$ of degree $n$, $alpha in overline(K)$ an algebraic closure of $K$ and let $s$ be the number of distinct conjugates of $alpha$ over $K$, then there are $s$ embeddings of $K(alpha)$ into $overline(K)$ sending $alpha$ to its distinct conjugates.
+  Let $alpha$ be algebraic over $K$ of degree $n$, $alpha in overline(K)$ an algebraic closure of $K$ and let $s$ be the number of distinct conjugates of $alpha$ over $K$, then there are exactly $s$ embeddings of $K(alpha)$ into $overline(K)$ sending $alpha$ to its distinct conjugates.
 ]
 
 #prf[
   Follows immediatly from applying the previous two propositions.
+]
+
+#colbreak()
+#pro[
+  Let $L\/K$ be an algebraic extension and $sigma$ a $K$-endomorphism of $L$, then $sigma$ is surjective.
+]
+
+#prf[
+  Let $sigma: L -> L$ a $K$-embedding and $alpha in L$. Take $P = Irr(alpha, K, X)$ and set $C = {beta in L | P(beta) = 0}$ so $C$ is the set of conjugates of $alpha$ over $K$, $alpha in C eq.not emptyset$ and $C$ is finite since $P$ has finite roots. For any $beta in C, sigma(beta) in C$ since $P(sigma(beta))=sigma(P(beta))=0$, $sigma$ is an injection from a finite set to itself so $sigma(C) = C$ thus $exists beta in C, sigma(beta) = alpha$ so $sigma$ is surjective.
 ]
