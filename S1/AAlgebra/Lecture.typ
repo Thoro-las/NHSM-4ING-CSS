@@ -8,11 +8,11 @@
 #let Im = math.op("Im")
 #let Irr = math.op("Irr")
 #let iso = $tilde.equiv$
-
+#let char = math.op("Char")
 
 #mainpage("Matehmatical Tools For Cryptography", "HADIOUCHE Azouaou", "Zaimi")
 
-#chap("Remainders")[
+#chap("Remainders", num: 0)[
   This part will just be a remainder of the important definitions, propositions and theorems of the field extension course that are needed for this course. We assume that rings in this case are commutative rings with unity.
 ]
 
@@ -221,4 +221,54 @@ We used the fact that $tau$ is a $K$-embedding in the evaluation $tau(k_i) = k_i
 
 #prf[
   Let $sigma: L -> L$ a $K$-embedding and $alpha in L$. Take $P = Irr(alpha, K, X)$ and set $C = {beta in L | P(beta) = 0}$ so $C$ is the set of conjugates of $alpha$ over $K$, $alpha in C eq.not emptyset$ and $C$ is finite since $P$ has finite roots. For any $beta in C, sigma(beta) in C$ since $P(sigma(beta))=sigma(P(beta))=0$, $sigma$ is an injection from a finite set to itself so $sigma(C) = C$ thus $exists beta in C, sigma(beta) = alpha$ so $sigma$ is surjective.
+]
+
+#sect("Primitive Element Theorem")
+Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha in overline(K)$ and $alpha$ is a zero of $P(X) in K[X]\\{0}$, recall that $alpha$ is said to be a zero of $P$ is $P(X) =(X-alpha)^m Q(X)$ with $Q in K[X]$, if $m >= 2$ we say that $alpha$ is a repeated zero of $P$, if $m = 1$ we say that $alpha$ is a simple zero.
+
+#def(name: "Derivative/Repeated Factor")[
+  - Let $P in K[X]$ such that $P(X)=sum_(i=0)^n k_i X^i$, the formal derivative of $P(X)$ is defined by $P'(X) = sum_(i=1)^n i k_i X^(i-1)$.
+  - Let $Q in K[X]$ of degree $>= 1$, then $Q$ is said to be a repeated factor of $P in K[X]$ if $P(X)=Q(X)^m R(X)$ for some $m >= 2$ and $R in K[X]$.
+]
+
+#pro[
+  Let $K$ be a field with $char K = 0$, then we have that $deg P' = deg P - 1$, thus $P$ does not divide $P'$.
+]
+
+#prf[Trivial]
+
+#pro[
+  Let $K$ be a field with $char K = 0$ and $P in K[X]$, then
+  $P$ has a repeated factor in $K[X]$ $<=>$ $P, P'$ have a common factor.
+]
+#prf[
+  - $=>$ suppose that $P(X)=Q^m (X) R(X)$, $P'(X)=m Q^(m-1) (X) Q'(X) R(X) + Q^m (X) R'(X)$ then $Q(X)$ divides both $P$ and $P'$.
+  - $arrow.double.l$ suppose now that $P, P'$ have a common factor $Q$ irreducible which exists by the fact that $K[X]$ is a UFD, then $P(X) = Q(X) R(X)$ we get then that $P'(X) = Q'(X) R(X) + Q(X) R'(X)$ since $Q$ divides $P$ and $P'$ we have that it divides $Q'(X)R(X) = P'(X) - Q(X)R'(X)$ so $Q$ divides either $Q'$ or $R$, since $char K = 0$ then $Q$ does not divide $Q'$ so it necessarily divides $R$ then $R(X) = Q(X) R_1 (X)$, thus $P(X) = Q(X) R(X) = Q(X) Q(X) R_1 (X) = Q^2 (X) R_1 (X)$ so $Q$ is a repeated factor of $P$.
+]
+
+#cor[
+  Let $P in K[X]$ irreducible and $char K = 0$ then $P(X)$ has no repeated zeros in any algebraic closure $overline(K)$.
+]
+
+#prf[
+  Let $P in K[X]$ be irreducible then $P' != 0$ and $P$ does not divide $P'$, if $Q$ is a common factor of $P$ and $P'$ then $Q$ divides $P$ and since $P$ is irreducible then $Q(X) = lambda P(X)$ thus $P$ divides $P'$, so $gcd(P(X), P'(X))=1$. By Bezout's theorem we have that $exists u, v in K[X]$ such that $P(X) u(X) + P'(X) v(X) = 1$, viewing this identity in $overline(K)[X]$, let $alpha$ be a zero of $P$ in $overline(K)$, replacing in the previous equation we have that $P(alpha) u(alpha) + P'(alpha) v(alpha) = P'(alpha) v(alpha) = 1$ then $P'(alpha)!=0$ so $(X-alpha)$ is not a factor of $P'$ so $P$ has no repeated factor $(X-alpha)$ then $P$ has no repeated zeros in $overline(K)$.
+]
+
+#cor[
+  Let $K$ be a field of $char K = 0$ and $alpha$ be algebraic over $K$ of degree $d$ and let $Irr(alpha, K, X)=(X-alpha_1)dots(X-alpha_d)$ in $overline(K)[X]$, then there exists $d$ embeddings of $K(alpha)$ into $overline(K)$ of the form
+  $sigma_i &: alpha |-> alpha_i$.
+]
+#prf[Use the previous corollary and the one of the existence of $s$ embeddings in this case to get $s = d$.]
+
+#thm(name: "Primitive Element")[
+  Let $L$ be a finite extension of a field $K$ with $char K = 0$ then there is $theta in L$ such that $L = K(theta)$.
+]
+
+#nte[To be revisited]
+#prf[
+  It is easy to notice that by induction, a proof for $n=2$ is sufficent. Let $L\/K$ be a finite extension of degree $2$ and set $alpha, beta$ be a basis of $L$ as a $K$-vector space, then $forall l in L, exists l_1, l_2 in K, l = l_1 alpha + l_2 beta$ so $L=K(alpha, beta)$ where $alpha, beta$ algebraic over $K$. Consider the minimal polynomials $P = Irr(alpha, K, X)=(X-alpha_1) dots (X-alpha_n)$ and $Q = Irr(beta, K, X) = (X-beta_1) dots (X-beta_m)$ viewed in $overline(K)[X]$. Let $k in K$ such that $forall i in [|1,n|], forall j in [|2, m|], k != (alpha - alpha_i)/(beta_j - beta)$ which exists since $char(K) = 0 => \# K = infinity$ and consider $theta = alpha + k beta$, clearly $K(theta) subset K(alpha, beta)$. To prove that $K(alpha, beta) subset K(theta)$, it is sufficent to show that $beta in K(theta)$ given that $alpha = theta - k beta$. Consider the polynomial $R(X) = P(theta - k X)$, $deg R = deg P = n$ and $R in K(theta)[X]$, we have $R(beta)=P(theta - k beta) = P(alpha) = 0$ so $beta$ is a zero of $R$ and also a zero of $Q$. Let $gamma$ a zero of $R$ in $overline(K)$, $P(theta - k gamma) = 0 => theta - k gamma = alpha_i$ so we get $gamma = (alpha - alpha_i)/k + beta$ if $gamma = beta_j => k = (alpha-alpha_i)/(beta_j - beta)$ which is not true so $gamma = beta$. The unique common zero of $Q$ and $R$ is $beta$ then $Irr(beta, K, X)$ divides both $Q$ and $R$ and is of degree one so $Irr(beta, K, X) = X - beta => beta in K(theta)$.
+]
+
+#exm[
+  Find the primitive of $QQ(i, sqrt(2))$, we have $alpha = i, beta = sqrt(2)$ then $alpha_1 = i, alpha_2 = -i$ and $beta = sqrt(2), beta = -sqrt(2)$.
 ]

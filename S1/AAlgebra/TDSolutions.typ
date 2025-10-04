@@ -7,6 +7,7 @@
 #let Im = math.op("Im")
 #let Irr = math.op("Irr")
 #let iso = $tilde.equiv$
+#let char = math.op("Char")
 
 #sect("Tutorial Series 1: Remainders", level: 1)
 #exr[
@@ -26,5 +27,77 @@ Suppose there exists $P in ZZ[X]$ such that $(P) = (2) + (X)$, since $2 in (2) +
 $ZZ[X]$ is not a Euclidean domain since it is not a PID.
 
 #exr[
- 
+  Find embeddings and automorphisms in the following cases.
 ]
+
+#qst[
+  $K=QQ(sqrt(2)), QQ(root(4, 2)), QQ(root(3, 5))$ and $L=CC$.
+]
+
+- $K = QQ(sqrt(2))$: we have that $Irr(sqrt(2), K, X)=X^2-2$ since it is a monic $2$-Eisenstein that nullifies $sqrt(2)$ and we have that $char QQ = 0$ and $[QQ(sqrt(2)):QQ]=2$ so there are only two embeddings
+$
+  sigma_1&: sqrt(2) |-> sqrt(2)\
+  sigma_2&: sqrt(2) |-> -sqrt(2)
+$
+which are both automorphisms.
+- $K = QQ(root(4, 2))$: we have that $QQ(root(4, 2))=QQ(sqrt(2))(root(4, 2))$ then $[QQ(root(4, 2)):QQ]=[QQ(root(4, 2)), QQ(sqrt(2))][QQ(sqrt(2)):QQ] = 2 dot 2 = 4$ and $X^4 - 2$ nullifies $root(4, 2)$ then we have that $Irr(root(4, 2), QQ, X)=X^4-2$, and we get that the set of conjugates of $root(4, 2)$ over $QQ$ are ${root(4, 2), -root(4, 2), i root(4, 2), -i root(4, 2)}$ and since $char(QQ)=0$ then the following 4 embeddings are the only ones
+
+#align(center)[
+  #table(
+    columns: 2,
+    align: (left, left),
+    gutter: 0.2cm,
+    stroke: 0mm,
+    [$sigma_1: root(4, 2) |-> root(4, 2)$],
+    [$sigma_2: root(4, 2) |-> -root(4, 2)$],
+    [$sigma_3: root(4, 2) |-> i root(4, 2)$],
+    [$sigma_4: root(4, 2) |-> -i root(4, 2)$]
+  )
+]
+and only $sigma_1, sigma_2$ are automorphisms.
+
+- $K = QQ(root(3, 5))$: we have that $X^3 - 5$ is $5$-Eisenstein and nullifies $root(3, 5)$ then $Irr(root(3, 5), QQ, X)=X^3 - 5$ so the conjugates of $root(3, 5)$ over $QQ$ are ${root(3, 5), j root(3, 5), j^2 root(3, 5)}$ with $j = e^((2 pi) / 3 i)$, thus we get exactly $3$ embeddings
+$
+  sigma_1&: root(3, 5) |-> root(3, 5)\
+  sigma_2&: root(3, 5) |-> j root(3, 5)\
+  sigma_3&: root(3, 5) |-> j^2 root(3, 5)
+$
+and only $sigma_1$ is an automorphism.
+
+#qst[Find all $QQ(sqrt(2))$ embeddings of $QQ(root(4, 2))$ into $CC$.]
+we have that $[QQ(root(4, 2)):QQ(sqrt(2))]=2$ and its easy to verify that $Irr(root(4, 2), QQ(sqrt(2)), X)=X^2 - sqrt(2)$, thus the conjugates of $root(4, 2)$ over $QQ(sqrt(2))$ are ${root(4, 2), -root(4, 2)}$ thus we get only two embeddings since $char QQ(sqrt(2)) = 0$ which are
+$
+  sigma_1&: root(4, 2) |-> root(4, 2)\
+  sigma_2&: root(4, 2) |-> -root(4, 2)
+$
+
+#qst[Determine all embeddigns of $K=FF_2(alpha)$ into an algebraic closure $overline(K)$ and all automorphisms with $alpha^2 + alpha + 1 = 0$ then $alpha^3 + alpha^2 + 1 = 0$.]
+#qst[Determine all embeddigns of $K=FF_3(beta)$ into an algebraic closure $overline(K)$ and all automorphisms with $beta^2+beta+2=0$ then $beta^3+beta^2+2=0$.]
+
+#exr[Let $L\/K$ be an algebraic extension and $Omega$ an algebraically closed field.]
+#qst[Let $theta in L$, and $tau: K -> Omega$ an embedding, show that $tau$ can be extended to $sigma: K(theta) -> Omega$.]
+#qst[If $char K = 0$ and $[K(theta):K]=n$ then there is exactly $n$ extensions to $K(theta)$.]
+#qst[Apply the above to each embedding $sigma:QQ(sqrt(2))->CC$ with $theta=root(4, 2)$.]
+#qst[Using the $1.3.1$ and Zorn's Lemma, prove that $tau$ can be extended to $sigma: L -> Omega$.]
+
+#exr[Find the primitive element of the following extensions
+  + $QQ(sqrt(2), i) \/ QQ$.
+  + $CC\/RR$.
+  + $QQ(sqrt(2), i, sqrt(3)) \/ QQ(sqrt(3))$.
+  + $QQ(sqrt(2), i, sqrt(3)) \/ QQ$.
+  + $QQ(sqrt(2), sqrt(3), root(4, 2)) \/ QQ$.
+  + $FF_2(alpha, alpha^2, alpha + alpha^2) \/ FF_2$ with $alpha^2 + alpha + 1 = 0$.
+]
+
+#exr[Let $K$ be a field with $char K = 0$, $L\/K$ an $n$-degree extension and $theta$ a primitive element of $L\/K$ and an algebraically closed field $Omega$.]
+#qst[Showing that $1, theta, dots, theta^(n-1)$ is a basis of the vector space $L$ over $K$.]
+#qst[Proving that the embeddings $sigma_i: L -> Omega$ are of the forma $sigma_i (theta)=theta_i$ where $theta_1, dots, theta_n$ are distinct conjugates of $theta$ over $K$.]
+#qst[For any $eta in L$, the conjugates of $eta$ are contained in ${sigma_i (eta) | i in [|1,n|]}$.]
+#qst[$eta$ is a primitive element if and only if $forall i, j in [|1, n|], sigma_i (eta) = sigma_j (eta) => i = j$.]
+#qst[Deduce that for any $(a, b) in QQ^star times QQ^star$ we have $QQ(sqrt(2), sqrt(3)) = QQ(a sqrt(2) + b sqrt(2))$.]
+
+#exr[Let $alpha = root(3, 2)$, $omega = e^((2 pi)/3 i)$ and $beta = alpha omega$, prove the following statements]
+#qst[For any $c in QQ$, $gamma = alpha + c beta$ is a zero of $x^6 + a x^3 + b$ for some $a, b in QQ$.]
+#qst[the polynomial $Irr(alpha + beta, QQ, X)$ is cubic and $deg Irr(alpha - beta, QQ, X) = 6$. ]
+#qst[$forall c in QQ^star$, $QQ(alpha, omega) = QQ(omega + c alpha)$.]
+#qst[$QQ(omega, sqrt(5))=QQ(omega sqrt(5)).$]
