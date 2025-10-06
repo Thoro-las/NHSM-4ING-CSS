@@ -260,15 +260,28 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 ]
 #prf[Use the previous corollary and the one of the existence of $s$ embeddings in this case to get $s = d$.]
 
+#colbreak()
+
 #thm(name: "Primitive Element")[
   Let $L$ be a finite extension of a field $K$ with $char K = 0$ then there is $theta in L$ such that $L = K(theta)$.
 ]
 
-#nte[To be revisited]
 #prf[
-  It is easy to notice that by induction, a proof for $n=2$ is sufficent. Let $L\/K$ be a finite extension of degree $2$ and set $alpha, beta$ be a basis of $L$ as a $K$-vector space, then $forall l in L, exists l_1, l_2 in K, l = l_1 alpha + l_2 beta$ so $L=K(alpha, beta)$ where $alpha, beta$ algebraic over $K$. Consider the minimal polynomials $P = Irr(alpha, K, X)=(X-alpha_1) dots (X-alpha_n)$ and $Q = Irr(beta, K, X) = (X-beta_1) dots (X-beta_m)$ viewed in $overline(K)[X]$. Let $k in K$ such that $forall i in [|1,n|], forall j in [|2, m|], k != (alpha - alpha_i)/(beta_j - beta)$ which exists since $char(K) = 0 => \# K = infinity$ and consider $theta = alpha + k beta$, clearly $K(theta) subset K(alpha, beta)$. To prove that $K(alpha, beta) subset K(theta)$, it is sufficent to show that $beta in K(theta)$ given that $alpha = theta - k beta$. Consider the polynomial $R(X) = P(theta - k X)$, $deg R = deg P = n$ and $R in K(theta)[X]$, we have $R(beta)=P(theta - k beta) = P(alpha) = 0$ so $beta$ is a zero of $R$ and also a zero of $Q$. Let $gamma$ a zero of $R$ in $overline(K)$, $P(theta - k gamma) = 0 => theta - k gamma = alpha_i$ so we get $gamma = (alpha - alpha_i)/k + beta$ if $gamma = beta_j => k = (alpha-alpha_i)/(beta_j - beta)$ which is not true so $gamma = beta$. The unique common zero of $Q$ and $R$ is $beta$ then $Irr(beta, K, X)$ divides both $Q$ and $R$ and is of degree one so $Irr(beta, K, X) = X - beta => beta in K(theta)$.
+  It is easy to notice that by induction, a proof for the existence of $theta$ when $L = K(alpha, beta)$ is sufficent. 
+
+  Consider $L=K(alpha, beta)$. Consider the minimal polynomials 
+  $
+    P(X) &= Irr(alpha, K, X)limits(=)_(overline(K)[X])(X-alpha_1) dots (X-alpha_n) \
+    Q(X) &= Irr(beta, K, X) limits(=)_(overline(K)[X]) (X-beta_1) dots (X-beta_m)
+  $ 
+
+   Let $k in K$ such that $forall i in [|1,n|], forall j in [|2, m|], k != (alpha - alpha_i)/(beta_j - beta)$ which exists since $char(K) = 0 => \# K = infinity$ and consider $theta = alpha + k beta$, clearly $K(theta) subset K(alpha, beta)$. 
+
+  Consider the polynomial $R(X) = P(theta - k X)$, $deg R = deg P = n$ and $R in K(theta)[X]$, we have $R(beta)=P(theta - k beta) = P(alpha) = 0$ so $beta$ is a zero of $R$ and also a zero of $Q$. We want to prove that the only common zero of $R$ and $Q$ is $beta$, let $gamma$ be a zero of $R$ and $Q$ in $overline(K)$, $R(gamma) = P(theta - k gamma) = 0 => theta - k gamma = alpha_i$ so we get that $gamma$ satisfies $gamma = (theta - alpha_i)/k = (alpha - alpha_i)/k + beta$, since $gamma$ is a zero of $Q$ then $gamma = beta_j$ but this reduces to $k = (alpha-alpha_i)/(beta_j - beta)$ which is not true by choice of $k$ so $gamma = beta_1 = beta$. Thus the unique common zero of $Q$ and $R$ is $beta$ then $Irr(beta, K, X)$ divides both $Q$ and $R$ and is of degree one so $Irr(beta, K, X) = X - beta in K(theta)[X]$ thus we have $beta in K(theta)$.
+
+  It is clear that $K(theta) subset K(alpha, beta)$ and we have that $beta in K(theta)$ then $alpha = theta - k beta in K(theta)$ since $k, theta, beta in K(theta)$ and thus $K(alpha, beta) = K(theta)$.
 ]
 
 #exm[
-  Find the primitive of $QQ(i, sqrt(2))$, we have $alpha = i, beta = sqrt(2)$ then $alpha_1 = i, alpha_2 = -i$ and $beta = sqrt(2), beta = -sqrt(2)$.
+  - to find the primitive of $QQ(sqrt(a), sqrt(b))$ with $a, b in ZZ$ non-perfect squares, we have that $Irr(sqrt(a), QQ, K) = X^2 - a$ and $Irr(sqrt(b), QQ, K) = X^2 - b$ thus $alpha_1 = sqrt(a), alpha_2 = - sqrt(a)$ and $beta_1 = sqrt(b), beta_2 = - sqrt(b)$ and thus we obtain that the set of non-allowed values of $k$ are ${0, sqrt(a\/b)}$, given that $a != b$ then $k=1$ is not in that list so we obtain that $ QQ(sqrt(a) + sqrt(b)) = QQ(sqrt(a) + sqrt(b)) $
 ]
