@@ -82,8 +82,6 @@
     - *Unique Factoriation Domain:* $R$ is a UFD if any element can be decomposed into a unique product of irreducible elements.
   ]
 
-  #colbreak()
-
   #thm[
     - If $R$ is a UFD and $x in R$ is irreducible, then $(x)$ is prime.
     - If $R$ is an integral domain and a PID, every prime ideal is maximal.
@@ -114,7 +112,6 @@
     - if $R$ is a field, $R[X]$ is a Euclidean domain with the valuation $nu(P)=deg P.$
   ]
 
-  #colbreak()
   #pro(name: "Eisenstein's Criterions")[
     - Let $P(x)=a_0 + a_1 x + dots + a_n x^n in ZZ[X]$, if there is a prime $p$ such that $p | a_0, dots, p | a_(n-1), p^2 divides.not a_0$ and $p divides.not a_n$ then $P$ is irreducible over $QQ[X]$.
     - Let $P(X) in ZZ[X]$ and $phi: ZZ[X] -> ZZ_n[X]$ the extension of $k |-> k mod n$, if $deg phi(P) = deg P$ and $phi(P)$ is irreducible in $ZZ_n[X]$ then $P$ is irreducible in $QQ[X]$.
@@ -126,8 +123,8 @@
     Let $L, K$ be two fields such that $K subset L$, we call $L$ a field extension of $K$ and we denote it $L\/K$, we define the degree of extension of $L$ on $K$ as $dim_K L$ if it is finite and $+infinity$ if it is infinite, and we denote it $[L:K]=dim_K L$
   ]
 
-  #def(name: "Characterstic")[
-    we define the characterstic of $K$ to be the smallest $n$ such that $1 + 1 + dots + 1 = 0$ $n$ times, denoted $char K = n$, if $n$ does not exist then we say that $char K = 0$.
+  #def(name: "Characteristic")[
+    we define the characteristic of $K$ to be the smallest $n$ such that $1 + 1 + dots + 1 = 0$ $n$ times, denoted $char K = n$, if $n$ does not exist then we say that $char K = 0$.
   ]
 
   #def(name: "Elements")[
@@ -296,16 +293,16 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 ]
 
 #chap("Extensions Of Finite Fields")[
-  The aim of this chapter is to study the structure of the finite fields.
+  The aim of this chapter is to study the structure of the finite fields and how to characterize them using their ground fields. Consider the fields $FF_p$ as the fields $ZZ_p$ with the modular addition and multiplication.
 ]
 
 #sect("Finite Fields")
 #pro[
-  Let $F$ be a finite field with $card F = q$, and $E\/F$ a finite extension of degree $n$, thus we get that $card E = q^n$.
+  Let $F$ be a finite field with $card F = q$ and $E\/F$ a finite extension of degree $n$ then $card E = q^n$.
 ]
 
 #prf[
-  Let ${b_1, dots, b_n}$ be a basis of the vector space $E$ over $F$, let $alpha in E$, it is written in a unique way $alpha = k_1 b_1 + dots, k_n b_n$ with $k_i in F$, hence $card E = q^n$.
+  We have that $[E:F] = dim_F E = n$, thus $E iso F^n$ as an $F$-vector space, so $card E = card (F ^ n) = (card F)^n = q^n$.
 ]
 
 #cor[
@@ -313,19 +310,23 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 ]
 
 #prf[
-  Apply the previous proposition with $F = FF_p$ and $n = [E:FF_p]$
+  We have that $char E = p$, then it has a copy of $ZZ\/p ZZ$ by the isomorphism $phi: ZZ\/p ZZ -> E, n |-> 1 + 1 + dots + 1$, $n$ times, take $F = phi(ZZ\/p ZZ)$, it is a subfield of $E$, we get then that $card E = (card F)^n = p^n$ where $n = [E:F]$.
 ]
 
 #thm[
-  Let $E$ be a finite field with $card E = p^n$, then the elements of $p$ are precisely the zeros of the polynomial $X^(p^n) - X in FF_p [X]$ in a certain algebraic closure of $FF_p$.
+  Let $E$ be a finite field with $card E = p^n$, then the elements of $E$ are precisely the zeros of the polynomial $X^(p^n) - X in FF_p [X]$ in a certain algebraic closure $overline(FF_p)$.
 ]
 
 #prf[
-  Let $E$ be a field with $card E = p^n$, then the group $E^* = E \\ {0}$ has order $p^n - 1$, by the Lagranges theorem we have that $forall alpha in E^*, alpha^(p^n - 1) = 1$, $alpha^(p^n) = alpha$ thus we get that $alpha^(p^n) - alpha = 0$ for any $alpha in E$ so $E$ is contained in the set of roots of the polynomial $X^(p^n) - X$. Also, $X^(p^n) - X$ has at most $p^n$ zeros in $overline(FF_p)$ and so these zeros are exactly the elements of $E$.
+  Let $P(X) = X^(p^n)-X$ and $cal(Z)(P) = {alpha in overline(FF_p) | P(alpha) = 0}$
+  - $E subset cal(Z)(P)$: $card E = p^n$ then $card E^* = p^n - 1$ thus the multiplicative group $E^*$ is of order $p^n - 1$, by Lagrange's theorem, we have that $forall a in E^*$, $a^(p^n - 1) = 1$ thus we get that $a^(p^n) - a = 0$ so $P(a) = 0$ and notice also that $P(0) = 0$ thus we obtain $E = E^* union {0} subset cal(Z)(P)$.
+
+  - $cal(Z)(P) subset E$: notice that $card cal(Z)(P) <= p^n$ since $deg P = p^n$ and $card E = p^n$ thus it is clear that $cal(Z)(P) subset E$.
+  So we conclude that $cal(Z)(P) = E$.
 ]
 
 #exm[
-  + $E = FF_2$ with $n = 1$ and $p = 2$ then $FF_2$ are the zeros of $X^2 - X$.
+  + $E = FF_2$ with $n = 1$ and $p = 2$ then $FF_2$ are the zeros of $X^2 - X=X(X-1)$.
   + $E = FF_2(alpha)$ with $alpha^2 + alpha + 1 = 0$, we have that $E = {0, 1, alpha, alpha^2}$ and by the theorem the roots of $X^4 - X = X(X-1)(X^2 + X + 1)$ are the solutions.
 ]
 
@@ -334,11 +335,28 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 ]
 
 #prf[
-  Let $E$ be a finite field and $E^*=E\\{0}$ the multiplicative group of $E$, then $E^*$ is abelian and $card E^* = p^n - 1$ where $card E = p^n$, assume on the contrary that $E^*$ is not cyclic, so the order of any element of $E^*$ is strictly less than $p^n - 1$. Let $alpha in E^*$ of maximal order $s < p^n - 1$. Let $G = angle.l alpha angle.r = {alpha, alpha^2, dots, alpha^s}$ be the cyclic subgroup of $E^*$ generated by $alpha$. Any element of $G$ is dividing $s$ by Lagrange's theorem, $forall g in G, g^s = 1$ thus $g$ is a zero of $X^s - 1 in E[X]$, and since $deg (X^s - 1) = s$ then this polynomial has at most $s$ zeros, so $G$ are exactly the roots of $X^s - 1$ in $overline(FF_p)$, since $card G = s < p^n - 1 = card E^*$ then there exists $beta in E^*$ with $beta in.not G$. Let $t$ be the order of $beta$, $beta^t = 1$ and $t$ does not divide $s$
+  Let $E$ be a finite field and $E^*=E\\{0}$ the multiplicative group of $E$, then $E^*$ is abelian and $card E^* = p^n - 1$ where $card E = p^n$, assume on the contrary that $E^*$ is not cyclic, so the order of any element of $E^*$ is strictly less than $p^n - 1$. Let $alpha in E^*$ of maximal order $s < p^n - 1$. Let $G = angle.l alpha angle.r = {alpha, alpha^2, dots, alpha^s}$ be the cyclic subgroup of $E^*$ generated by $alpha$. Any element of $G$ has an order that divides $s$ by Lagrange's theorem, $forall g in G, g^s = 1$ thus $g$ is a zero of $X^s - 1 in E[X]$, and since $deg (X^s - 1) = s$ then this polynomial has at most $s$ zeros, so $G$ are exactly the roots of $X^s - 1$ in $overline(FF_p)$, since $card G = s < p^n - 1 = card E^*$ then there exists $beta in E^*$ with $beta in.not G$. Let $t$ be the order of $beta$, $beta^t = 1$ and $t$ does not divide $s$
   $
     s = p_1^(l_1) p_2^(l_2) dots p_j^(l_j) dots p_r^(l_r) quad quad t=p_1^(k_1) p_2^(k_2) dots p_j^(k_j) dots p_r^(k_r)
   $
   with $p_i$ prime numbers and $l_i, k_i in NN$, $l_1 < k_1, l_j < k_j, l_(j+1) >= k_(j+1), dots, l_r >= k_r$.\ $j$ exists since $t$ does not divide $s$, set $u = p_1^(l_1) dots p_j^(l_j)$, $u' = s \/ u$, $v = p_1^(k_1) dots p_j^(k_j)$ and $v' = t \/ v$. Notice that $u < v$ and $gcd(u, v')=1$. Let $gamma = alpha^u beta^(v')$, $gamma in E^*$ since $alpha, beta in E^*$, $alpha^u$ is of order $u'$ and $beta^(v')$ is of order $v$ and since $u$ and $v'$ are coprime then the order of $alpha^u beta^v$ is $u' v > u' u = s$, contradiction with the fact that the maximal order is $s$.
+]
+
+#ooc[
+  *Constructive Proof:* Let $q = card E$ and $q - 1 = product_(i=1)^k p_i^(l_i)$ by the  fundemental theorem of artihemtic. Consider for $i in [|1, k|]$ the polynomials $P_i (X) = X^((q-1)/p_i) - 1$, notice that $card cal(Z)(P_i) <= (q-1)/q_i < q-1 = card E^*$, thus there exists $y_i in E^* \\cal(Z)(P_i)$. Now for $i in [|1, k|]$ $z_i = y_i^((q-1)\/(p_i^(l_i)))$, notice that $z_i$ has order $p_i^(l_i)$ since $z_i^(p_i^(l_i))=y_i^(q-1)=1$ by Lagrange's theorem and $z_i^(p_i^(l_i - 1)) = y_i^((q-1)\/p_i) != 1$ by the definition of $y_i$. We chose $z = product_(i=1)^n z_i$, since all the orders of $z_i$ are coprime from the fact that they are different primes, then the order of $z$ is $product_(i=1)^n p_i^(l_i) = q - 1 = card E^*$, thus $E^* = angle.l z angle.r $ and $E^*$ is cyclic.
+
+  #exm[
+    Consider $FF_7$ then $p = 7$, $n = 1$ and $q = 7$
+    $
+      q-1 &= 6 = 2 dot 3
+      => cases(p_1 = 2, l_1 = 1, p_2 = 3, l_2 = 1)
+      => cases(P_1(X) = X^3 - 1, P_2(X) = X^2 - 1)\
+      &=> cases(y_1 = 3, y_2 = 4)
+      => cases(z_1 = 3^3 = 6, z_2 = 4^2 = 2)
+      => z = 6 dot 2 = 5
+    $
+    its easy to verify that $angle.l 5 angle.r = FF_7^star$.
+  ]
 ]
 
 #cor[
@@ -346,22 +364,19 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 ]
 
 #prf[
-  Since $E$ is finite then by Proposition 2.1.1, from Theorem $2.1.4$, $exists theta in E, E^* = angle.l theta angle.r$, it is clear that $F(theta) subset E$, now let $E = E^* union {0}$ we have that $E^* subset F(theta)$ from the previous theorem, and $0 in F$ thus $E = E^* union {0} subset F(theta)$ so we get $E = F(theta)$.
+  Consider $theta$ the generator of $E^*$ from the previous proposition. $F(theta) subset E$ since $theta in E^* subset E$ and $F subset E$. $E subset F(theta)$ given that $E^* = angle.l theta angle.r subset F(theta)$ and $0 in F subset F(theta)$ thus we obtain $E = {0} union E^* subset F(theta)$ hence $E = F(theta)$.
 ]
-
-#colbreak()
 
 #thm[
   Let $n in NN^*$ and $p$ a prime number, there exists a unique field of order $p^n$ up to an isomorphism denoted $FF_(p^n)$.
 ]
 
 #prf[
-  Consider $P(X) = X^(p^n) - X$ in $overline(FF_p)$ and let $K={alpha in overline(FF_p) | P(alpha) = 0}$.
-  - let $alpha in FF_p$ we have that $alpha^p = alpha$ by Proposition 2.1.3, and by induction its easy to prove that $forall i in NN, alpha^(p^i) = alpha => P(alpha) = 0$ thus $alpha^(p^n) in K$ so we have $FF_p subset K$.
-  - let $alpha, beta in K$ we have $alpha^(p^n) = alpha$ and $beta^(p^n) = beta$ then $(alpha beta)^(p^n) = alpha^(p^n) beta^(p^n) = alpha beta in K$.
-  - let $alpha in K$ we have $(alpha^(-1))^(p^n) = (alpha^(p^n))^(-1) = alpha^(-1)$ so $alpha^(-1) in K$.
-  - let $alpha, beta in K$ we have $(alpha + beta)^p = alpha^p + beta^p = alpha + beta$ by the fact that $p$ divides $binom(p, k)$ for $k = 1, dots, p-1$, by induction we have that $(alpha + beta)^(p^n) = alpha + beta$.
-  thus we deduce that $K$ is a subfield of $overline(FF_p)$ and it is a field having $p^n$ elements.
+  Consider $P(X) = X^(p^n) - X$ in $overline(FF_p)$ and let $K={alpha in overline(FF_p) | P(alpha) = 0}$. We will prove that $K$ is a subfield of $overline(FF_p)$ containing $FF_p$.
+
+  - $FF_p subset K$: let $alpha in FF_p$, we have $alpha^(p-1)=1$ by Langrange's theorem, thus $alpha^p = alpha$, by induction we have that $alpha^(p^i) = alpha$ thus $P(alpha) = alpha^(p^n) - alpha = 0$ so $alpha in K$, given that $FF_p$ is a field and $K$ is an extension of $FF_p$ then $char K = char FF_p = p$.
+  - $K$ is a field: Let $alpha, beta in K$, we have that $(alpha^(-1))^(p^n) = (alpha^(p^n))^(-1) = alpha^(-1)$, $(alpha beta)^(p^n) = alpha^(p^n) beta^(p^n) = alpha beta$ since $dot$ is commutative, $(alpha + beta)^(p^n)=sum_(i=0)^(p^n) binom(p^n, i) alpha^i beta^(p^n - i)$, since $K$ has characterestic $p$ then $forall i in [|1, p-1|], p | binom(p^n, i)$ thus we get $(alpha + beta)^(p^n) = alpha^(p^n) + beta^(p^n) = alpha + beta$.
+  Thus $K$ is a subfield of $overline(FF_p)$ containing $FF_p$ and has $p^n$ elements since $overline(FF_p)$ is algebraically closed and $deg P = p^n$.
 ]
 
 #cor[
@@ -373,8 +388,5 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 ]
 
 #exm[
-  - $FF_2 = {0, 1}$
-    - linear polynomials in $FF_2[X]$: $X$, $X+1$ irreducible.
-    - quadratic polynomials in $FF_2[X]$: $X^2 + X + 1$ irreducible.
-    - cubic polynomials in $FF_2[X]$: $X^3 + X + 1$, $X^3 + X^2 + 1$. Prove that there is an isomorphism between the fields generated by the zeros of those polynomials.
+  - $FF_2 = {0, 1}$, the set of cubic polynomials over $FF_2[X]$ are $P_1(X) = X^3 + X + 1$ and $P_2(X) = X^3 + X^2 + 1$.
 ]
