@@ -3,6 +3,9 @@
 #import "@THR/Wide:1.0.0": *
 #show: template
 
+#let xor = $times.circle$
+#let nand = $bar$
+
 #mainpage([Theory Of Computer Arithmetic], [HADIOUCHE Azouaou], [Oudjida])
 
 #chap("Classical logic")[
@@ -27,3 +30,58 @@ multiple basic operations can be made using these transistors, from a baasic mem
 - AND OR NOT
 - NOR XOR
 - Data Latch
+
+#nte[Some examples will be added soon.]
+
+#colbreak()
+#sect("Boolean Algebra")
+Let $BB := {0, 1}$ denote the set of boolean values, which can be represented too with true/false. Any variable ta
+#def(name: "Boolean Variable")[
+  Let $x$ be a variable, $x$ is said to be a _boolean variable_ if it can assume values in $BB$. Let $f: BB^n -> BB$ a map, $f$ is called a _boolean function_.
+]
+
+#def(name: "Boolean Operations")[
+  Let $x, y$ be two boolean variables, we define the operations $+, dot, bar.h$ to be the logical or, and, not respectively, which have the following truth tables.
+
+  #align(center)[
+    #table(
+      columns: 5,
+      [$y$], [$x$], table.vline(stroke: 0.7mm), [$overline(x)$], [$x+y$], [$x dot y$],
+      [$0$], [$0$], [$1$], [$0$], [$0$],
+      [$0$], [$1$], [$1$], [$1$], [$0$],
+      [$1$], [$0$], [$1$], [$1$], [$0$],
+      [$1$], [$1$], [$1$], [$1$], [$1$],
+    )
+  ]
+
+  there are some other operations that are as follows
+  - $x nand y = overline(x dot y)$.
+  - $x xor y = x dot overline(y) + overline(x) dot y$.
+  - $x => y = overline(x) + y$.
+]
+
+#pro(name: "Boolean Identites")[
+  - $overline(overline(x)) = x$.
+  - $x + x = x, x dot x = x$.
+  - $x + 0 = x, x dot 1 = x$.
+  - $x + 1 = 1, x dot 0 = 0$.
+  - $x + y = y + x, x dot y = y dot x$.
+  - $x+(y+z) = (x+y)+z, x dot (y dot z) = (x dot y) dot z$.
+  - $overline(x + y) = overline(x) dot overline(y), overline(x dot y) = overline(x) + overline(y)$.
+]
+
+#def(name: "Duality")[
+  Let $f: BB^n -> BB$ be a boolean function, we define the dual of $f$ as the map $(x_1, dots, x_n) |-> overline(f(overline(x)_1, dots, overline(x)_n))$. We can obtain the dual of a function $f$ by swapping $+$ with $dot$, $0$ with $1$ and keep the variables unchanged.
+]
+
+#def(name: "Conjunctive/Disjunctive Normal Form")[
+  Let $f: BB^n -> BB$ be a boolean function, ${J_i}_(i=1)^n$ a set of subsets of $[|1, n|]$
+  - CNF: $f(x_1, dots, x_n) = product_(i=1)^k sum_(j in J_i) y_j$.
+  - DNF: $f(x_1, dots, x_n) = sum_(i=1)^k product_(j in J_i) y_j$.
+  with $k in NN$, $y_i = x_i$ or $y_i = overline(x_i)$.
+]
+
+#pro[
+  - ${+, bar.h}$, ${dot, bar.h}$, ${bar.v}$ are all a complete set of connectives, that is, any boolean function can be written using only one of those sets.
+  - Any boolean function can be written in the CNF or DNF.
+]

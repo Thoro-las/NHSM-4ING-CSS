@@ -64,7 +64,7 @@ $
 $
 and only $sigma_1$ is an automorphism.
 
-#qst[Find all $QQ(sqrt(2))$ embeddings of $QQ(root(4, 2))$ into $CC$.]
+#qst[Find all $QQ(sqrt(2))$-embeddings of $QQ(root(4, 2))$ into $CC$.]
 we have that $[QQ(root(4, 2)):QQ(sqrt(2))]=2$ and its easy to verify that $Irr(root(4, 2), QQ(sqrt(2)), X)=X^2 - sqrt(2)$, thus the conjugates of $root(4, 2)$ over $QQ(sqrt(2))$ are ${root(4, 2), -root(4, 2)}$ thus we get only two embeddings since $char QQ(sqrt(2)) = 0$ which are
 $
   sigma_1&: root(4, 2) |-> root(4, 2)\
@@ -72,8 +72,17 @@ $
 $
 
 #qst[Determine all embeddigns of $K=FF_2(alpha)$ into an algebraic closure $overline(K)$ and all automorphisms with $alpha^2 + alpha + 1 = 0$ then $alpha^3 + alpha^2 + 1 = 0$.]
-#qst[Determine all embeddigns of $K=FF_3(beta)$ into an algebraic closure $overline(K)$ and all automorphisms with $beta^2+beta+2=0$ then $beta^3+beta^2+2=0$.]
+- $alpha^2 + alpha + 1 = 0$ : let $P(X) = X^2 + X + 1$, $P(0)=P(1)=1 != 0$ thus $P$ is irreducible over $FF_2[X]$ and $P(alpha)= 0$ so $Irr(alpha, KK, X) = P(X)$, $[FF_2(alpha):FF_2]=2$ thus there are two conjugates of $alpha$ over $FF_2$. $P(alpha^2) = alpha^4 + alpha^2 + 1$, we have $alpha^2 + alpha + 1 = 0 => alpha^2 = alpha + 1 => alpha^3 = 1 => alpha^4 = alpha$ thus $P(alpha^2) = alpha^2 + alpha + 1 = 0$. So the conjugates are ${alpha, alpha^2}$ and thus we get the embeddings are
+$
+  sigma_1&: alpha |-> alpha\
+  sigma_2&: alpha |-> alpha^2
+$
+which are both automorphisms.
 
+#qst[Determine all embeddigns of $K=FF_3(beta)$ into an algebraic closure $overline(K)$ and all automorphisms with $beta^2+beta+2=0$ then $beta^3+beta^2+2=0$.]
+- the process is just the same as before.
+
+#colbreak()
 #exr[Let $L\/K$ be an algebraic extension and $Omega$ an algebraically closed field.]
 #qst[Let $theta in L$, and $tau: K -> Omega$ an embedding, show that $tau$ can be extended to $sigma: K(theta) -> Omega$.]
 #qst[If $char K = 0$ and $[K(theta):K]=n$ then there is exactly $n$ extensions to $K(theta)$.]
@@ -88,6 +97,28 @@ $
   + $QQ(sqrt(2), sqrt(3), root(4, 2)) \/ QQ$.
   + $FF_2(alpha, alpha^2, alpha + alpha^2) \/ FF_2$ with $alpha^2 + alpha + 1 = 0$.
 ]
++ $QQ(sqrt(2), i)\/QQ$, we consider two methods to find the primitive element
+  + Let $theta = i + sqrt(2)$, we have that $theta - i = sqrt(2) => (theta - i)^2 = 2$, by distributing the factors, we have $theta^2 - 2 i theta + 1 = 2 => i = (theta^2 - 3)/(2 theta) in QQ(theta)$ and also $sqrt(2) = theta - i in QQ(theta)$ thus we get that $QQ(i, sqrt(2)) = QQ(theta)$.
+  + By Eisenstein criterion we have $
+    Irr(sqrt(2), QQ, X) &= X^2 - 2 \
+    Irr(i, QQ, X) &= X^2 + 1
+   $ thus the conjugates of $sqrt(2)$ are ${sqrt(2), -sqrt(2)}$ and of $i$ are ${i, -i}$, thus by the proof of the primitive element theorem, by taking $k in.not {0, i sqrt(2)}$ thus by taking $k=1$ we get $QQ(i, sqrt(2)) = QQ(i + sqrt(2))$.
++ $CC \/ RR$, its clear that $CC = RR(i)$ thus $i$ is a primitive element.
++ $QQ(sqrt(2), i, sqrt(3)) \/ QQ(sqrt(3))$, we have $QQ(sqrt(2), i, sqrt(3)) = QQ(sqrt(2), sqrt(i))(sqrt(3)) = QQ(sqrt(2) + sqrt(i))(sqrt(3)) = QQ(sqrt(3))(sqrt(2) + i)$ thus $sqrt(2) + i$ is a primitive element of $QQ(sqrt(2), i, sqrt(3)) \/ QQ(sqrt(3))$.
++ $QQ(sqrt(2), sqrt(3), i) \/ QQ$, we have from before that $QQ(sqrt(2), i)=QQ(sqrt(2) + i)$, thus $QQ(sqrt(2), sqrt(3), i) = QQ(sqrt(2) + i)(sqrt(3))$, now consider $theta = sqrt(2)+i$ we have then $
+  (theta - i)^2 = 2 &=> theta^2 - 3 = 2 theta i\
+  &=> (theta^2 - 3)^2 = -4 theta^2\
+  &=> theta^4 - 2 theta^2 + 9 = 0
+$ 
+we can see that $theta$ is a root of $P(X) = X^4 - 2 theta^2 + 9$, notice that if $a$ is a root of $P$ then so is $-a$, $overline(a)$ and $-overline(a)$ thus we get that the conjugates of $theta$ are $sqrt(2) + i, -sqrt(2) + i, sqrt(2) - i, - sqrt(2) - i$ and we know that the conjugates of $sqrt(3)$ over $QQ$ are $sqrt(3)$ and $-sqrt(3)$, by the proof of the primitive element theorem we have that $k in.not {0, sqrt(2\/3), i\/sqrt(3), (sqrt(2) + i) \/ sqrt(3)$}, so taking $k=1$ we get that $sqrt(2) + sqrt(3) + i$ is a primitive element.
+
++ $QQ(root(4, 2), sqrt(2), sqrt(3))= QQ(sqrt(3), root(4, 2))$ with the same method.
++ $FF(alpha, alpha^2, alpha^2 + alpha) \/ FF$, its easy to notice that $alpha + alpha ^ 2 in FF(alpha, alpha^2)$ and from the definition of $alpha$, $alpha ^2 = alpha + 1 in FF(alpha)$ thus we get $
+  FF(alpha, alpha^2, alpha^2 + alpha)
+  = FF(alpha, alpha^2)
+  = FF(alpha) (alpha^2) 
+  = FF(alpha)
+$ thus $alpha$ is a primitive element.
 
 #exr[Let $K$ be a field with $char K = 0$, $L\/K$ an $n$-degree extension and $theta$ a primitive element of $L\/K$ and an algebraically closed field $Omega$.]
 #qst[Showing that $1, theta, dots, theta^(n-1)$ is a basis of the vector space $L$ over $K$.]
