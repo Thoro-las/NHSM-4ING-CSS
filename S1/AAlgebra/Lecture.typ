@@ -11,6 +11,12 @@
 #let char = math.op("Char")
 #let card = math.op("#")
 
+
+#let __sum-content = state("sum-content", [])
+#let add-to-summary(content) = {
+  sum-content.update(sum => {[#sum, t]})
+}
+
 #mainpage("Matehmatical Tools For Cryptography", "HADIOUCHE Azouaou", "Zaimi", comment: [Some contents were added as remainders for the students])
 
 #chap("Remainders", num: 0)[
@@ -194,6 +200,12 @@ We used the fact that $tau$ is a $K$-embedding in the evaluation $tau(k_i) = k_i
 
 #pro[
   Let $K$ be a field, $overline(K)$ an algebraic closure of $K$, $alpha in overline(K)$ and let $beta in overline(K)$ be a conjugate of $alpha$ over $K$, then there is a $K$-embedding $tau:K(alpha) -> overline(K)$ which is a $K$-isomorphism of $K(alpha)$ into $K(beta)$ sending $alpha$ to $beta$.
+  #prfout[
+    + $P(X) = Irr(alpha, K, X) = Irr(beta, K, X)$ since they are conjugates.
+    + $K[alpha] = K(alpha), K[beta] = K(beta)$ since they are algebraic.
+    + $K(alpha) iso K[X]\/(P(X)) iso K(beta)$.
+    + Construct using those isomorphisms a map that keeps $K$ invariant.
+  ]
 ]
 
 
@@ -215,14 +227,15 @@ We used the fact that $tau$ is a $K$-embedding in the evaluation $tau(k_i) = k_i
   Let $alpha$ be algebraic over $K$ of degree $n$, $alpha in overline(K)$ an algebraic closure of $K$ and let $s$ be the number of distinct conjugates of $alpha$ over $K$, then there are exactly $s$ embeddings of $K(alpha)$ into $overline(K)$ sending $alpha$ to its distinct conjugates.
 ]
 
-#prf[
-  Follows immediatly from applying the previous two propositions.
-]
-
-#colbreak()
 #pro[
   Let $L\/K$ be an algebraic extension and $sigma$ a $K$-endomorphism of $L$, then $sigma$ is surjective.
+  #prfout[
+    + $sigma$ transforms a conjugate to another.
+    + the conjugates of an element are finite so $sigma$ is a bijection.
+    + $sigma$ is a permutation thus there is a preimage for any element.
+  ]
 ]
+
 
 #prf[
   Let $sigma: L -> L$ a $K$-embedding and $alpha in L$. Take $P = Irr(alpha, K, X)$ and set $C = {beta in L | P(beta) = 0}$ so $C$ is the set of conjugates of $alpha$ over $K$, $alpha in C eq.not emptyset$ and $C$ is finite since $P$ has finite roots. For any $beta in C, sigma(beta) in C$ since $P(sigma(beta))=sigma(P(beta))=0$, $sigma$ is an injection from a finite set to itself so $sigma(C) = C$ thus $exists beta in C, sigma(beta) = alpha$ so $sigma$ is surjective.
@@ -239,6 +252,9 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 #pro[
   Let $K$ be a field with $char K = 0$, then we have that $deg P' = deg P - 1$, thus $P$ does not divide $P'$.
 ]
+#prf[
+  Let $P(X) = sum_(i=0)^n a_i X^i$, with $a_n != 0$, its derivative is defined as $P'(X) = sum_(i=1)^(n) i a_i X^(i-1)$, the coefficent of the highest degree is $n a_n$, which is not zero since $char K = 0$. Thus $deg P' = n - 1 = deg P - 1$.
+]
 
 #pro[
   Let $K$ be a field with $char K = 0$ and $P in K[X]$, then $P$ has a repeated factor in $K[X]$ $<=>$ $P, P'$ have a common factor. 
@@ -246,7 +262,6 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
     More precisely, if $Q in K[X]$ a repeated factor of $P$ then it divides both $P$ and $P'$. Conversely if $Q$ is irreducible and is a common divisor of $P$ and $P'$ then it is a repeated factor of $P$.
   ]
 ]
-#colbreak()
 #prf[
   - $=>$ suppose that $P(X)=Q^m (X) R(X)$, $P'(X)=m Q^(m-1) (X) Q'(X) R(X) + Q^m (X) R'(X)$ then $Q$ divides both $P$ and $P'$.
   - $arrow.double.l$ suppose now that $P, P'$ have a common factor $Q$ irreducible which exists by the fact that $K[X]$ is a UFD, then $P(X) = Q(X) R(X)$ we get then that $P'(X) = Q'(X) R(X) + Q(X) R'(X)$ since $Q$ divides $P$ and $P'$ we have that it divides $Q'(X)R(X) = P'(X) - Q(X)R'(X)$ so $Q$ divides either $Q'$ or $R$, since $char K = 0$ then $Q$ does not divide $Q'$ so it necessarily divides $R$ then $R(X) = Q(X) R_1 (X)$, thus $P(X) = Q(X) R(X) = Q(X) Q(X) R_1 (X) = Q^2 (X) R_1 (X)$ so $Q$ is a repeated factor of $P$.
@@ -254,6 +269,12 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 
 #cor[
   Let $P in K[X]$ irreducible and $char K = 0$ then $P(X)$ has no repeated zeros in any algebraic closure $overline(K)$.
+  #prfout[
+    + Consider the Bezout identity $P(X) U(X) + P'(X) V(X) = 1$.
+    + Replace with the roots of $P(X)$ and deduce it doesn't nullify $P'$.
+    + Deduce that the factor $(X-alpha)$ is not present in $P'$.
+    + Deduce that $(X-alpha)$ is simple factor of $P$.
+  ]
 ]
 
 #prf[
@@ -266,10 +287,17 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 ]
 #prf[Use the previous corollary and the one of the existence of $s$ embeddings in this case to get $s = d$.]
 
-#colbreak()
 
 #thm(name: "Primitive Element")[
   Let $L$ be a finite extension of a field $K$ with $char K = 0$ then there is $theta in L$ such that $L = K(theta)$.
+  #prfout[
+    + Simplify by induction to two elements $L = K(alpha, beta)$.
+    + Take $P(X) = Irr(alpha, K, X)$, $Q(X) = Irr(beta, K, X)$.
+    + Take $theta in K \\ {(alpha - alpha_i)\/(beta_j - beta) | (i, j) in [|1, n|] times [|2, m|] }$.
+    + Consider $theta = alpha + k beta$ and $R(X) = P(theta - k X)$.
+    + Prove that $k$ is the only common factor of $R$ and $Q$.
+    + Deduce that $(X-beta) in K(theta)[X]$ and thus $beta in K(theta)$.
+  ]
 ]
 
 #prf[
@@ -360,7 +388,7 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 ]
 
 #cor[
-  Let $E$ be a finite exntesion of a finite field $F$, then there exists a primitive element $theta in E$, $E = F(theta)$.
+  Let $E$ be a finite extension of a finite field $F$, then there exists a primitive element $theta in E$, $E = F(theta)$.
 ]
 
 #prf[
@@ -374,8 +402,8 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 #prf[
   Consider $P(X) = X^(p^n) - X$ in $overline(FF_p)$ and let $K={alpha in overline(FF_p) | P(alpha) = 0}$. We will prove that $K$ is a subfield of $overline(FF_p)$ containing $FF_p$.
 
-  - $FF_p subset K$: let $alpha in FF_p$, we have $alpha^(p-1)=1$ by Langrange's theorem, thus $alpha^p = alpha$, by induction we have that $alpha^(p^i) = alpha$ thus $P(alpha) = alpha^(p^n) - alpha = 0$ so $alpha in K$, given that $FF_p$ is a field and $K$ is an extension of $FF_p$ then $char K = char FF_p = p$.
-  - $K$ is a field: Let $alpha, beta in K$, we have that $(alpha^(-1))^(p^n) = (alpha^(p^n))^(-1) = alpha^(-1)$, $(alpha beta)^(p^n) = alpha^(p^n) beta^(p^n) = alpha beta$ since $dot$ is commutative, $(alpha + beta)^(p^n)=sum_(i=0)^(p^n) binom(p^n, i) alpha^i beta^(p^n - i)$, since $K$ has characterestic $p$ then $forall i in [|1, p-1|], p | binom(p^n, i)$ thus we get $(alpha + beta)^(p^n) = alpha^(p^n) + beta^(p^n) = alpha + beta$.
+  - $FF_p subset K$: let $alpha in FF_p$, we have $alpha^(p-1)=1$ by Langrange's theorem, thus $alpha^p = alpha$, by induction we have that $alpha^(p^i) = alpha$ thus $P(alpha) = alpha^(p^n) - alpha = 0$ so $alpha in K$.
+  - $K$ is a field: Let $alpha, beta in K$, we have that $(alpha^(-1))^(p^n) = (alpha^(p^n))^(-1) = alpha^(-1)$, $(alpha beta)^(p^n) = alpha^(p^n) beta^(p^n) = alpha beta$ since $dot$ is commutative, $(alpha + beta)^(p^n)=sum_(i=0)^(p^n) binom(p^n, i) alpha^i beta^(p^n - i)$, since $K subset overline(FF_p)$ and $char overline(FF_p) = char FF_p = p$ then $forall i in [|1, p-1|], p | binom(p^n, i)$ thus we get $(alpha + beta)^(p^n) = alpha^(p^n) + beta^(p^n) = alpha + beta$.
   Thus $K$ is a subfield of $overline(FF_p)$ containing $FF_p$ and has $p^n$ elements since $overline(FF_p)$ is algebraically closed and $deg P = p^n$.
 ]
 
@@ -390,3 +418,45 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 #exm[
   - $FF_2 = {0, 1}$, the set of cubic polynomials over $FF_2[X]$ are $P_1(X) = X^3 + X + 1$ and $P_2(X) = X^3 + X^2 + 1$.
 ]
+
+#pro[
+  Let $m, n in NN^*$ and $p$ prime then 
+  #align(center)[$FF_(p^m)$ is a subfield of $FF_(p^n)$ $<=>$ $m$ divides $n$.]
+]
+
+#prf[
+  $=>$ suppose that $FF_(p^m)$ is a subfield of $FF_(p^n)$, then $FF_(p^n)$ is an extension of $FF_(p^m)$ and we have that $n = [FF_(p^n):FF_p] = [FF_(p^n):FF_(p^m)]dot[FF_(p^m):FF_p] = k dot m$ thus $m$ divides $n$. $arrow.double.l$ suppose that $m$ divides $n$ so $n = k dot m$, let $alpha in FF_(p^m)$, by definition of $FF_(p^m)$ we have $alpha^(p^m) = 1$ so $alpha^(p^n) = alpha^(p^(k m)) = (alpha^(p^m))^(p^((k-1)m))= 1^(p^((k-1)m)) = 1$ thus $alpha in FF_(p^n)$, and since $FF_(p^m)$ is a field then it is a subfield of $FF_(p^n)$.
+]
+
+#cor[
+  The number of subfields of $FF_(p^n)$ is equal to the number of positive divisors of $n$.
+]
+#prf[
+  It is clear from the previous statement that the only subfields are divisors of $n$, denote them $d_1, dots, d_k$. Then the subfields of $FF_(p^n)$ are $FF_(p^(d_1)), FF_(p^(d_2)), dots, FF_(p^(d_k))$.
+]
+
+#colbreak()
+
+#def(name: "Frobenius Automorphisms")[
+  Let $f: FF_q -> FF_q$ where $q=p^n$ with $f: alpha |-> alpha^p$, then $f$ is called the frobenius automorphism of $FF_q$.
+]
+
+To justify this nomination, we will prove that it is a $FF_p$-automorphism 
+- $f$ is well defined: since for $alpha in FF_q$, $alpha^p in FF_q$ thus $f(alpha) in FF_q$.
+- $f$ is a $FF_p$-embedding: let $alpha, beta in FF_q$, $f(alpha + beta) = (alpha + beta)^p = alpha^p + beta^p = f(alpha) + f(beta)$ since $char FF_q = p$, $f(alpha beta) = (alpha beta)^p = alpha^p beta^p = f(alpha) f(beta)$. $f$ is injective since $Ker f = { alpha in FF_q | f(alpha) = 0} = {alpha in FF_q | alpha^p = 0} = {0}$ given its a field. Let $alpha in FF_p$, $alpha$ satisfies $alpha^p - alpha = 0$ thus $f(alpha) = alpha^p = alpha$.
+Using Proposition 1.1.6, we deduce that $f$ is an automorphism of $FF_q$.
+
+#pro[
+  Let $alpha$ be algebraic over $FF_p$ of degree $n$ $(FF_p (alpha)=FF_(p^n))$ then the embeddings of $FF_p (alpha)$ into $overline(FF_p)$ are $f^(1), f^(2), dots, f^(n)$ where $f$ is the Frobenius automorphism of $FF_(p^n)$.
+]
+
+#prf[
+  Notice that $f$ is an automorphism, thus $forall i in [|1, n|], f^i$ is an automorphism from $FF_(p^n)$ to $FF_(p^n)$ so is an embedding from $FF_(p)(alpha)$ to $overline(FF_p)$. Since $alpha$ is of degree $n$ then there are exactly $n$ embeddings, we will prove that all of them are of the form $f^i$.
+
+  There $n$ embeddings $f^1, dots, f^n$, now we will prove that they are all not equal, that is $forall 1 <= i < j <= n, f^i equiv.not f^j$. Suppose that there exists $i, j in [|1, n|]$, $i < j$ such that $f^i equiv f^j$, $FF_p (alpha)$ is a finite field then there is a generator $theta$ for the multiplicative group $(FF_p (alpha))^* = angle.l theta angle.r$, $theta^(p^i) = f^i (theta) = f^j (theta) = theta^(p^j)$, so $theta^(p^j - p^i) = 1$ but $p^j - p^i < p^n$ and the order of $theta$ is $p^n$ which is a contradiction. Thus we conclude that ${f^i}_(i in [|1, n|])$ are the only embeddings of $FF_p (alpha)$ into $overline(FF_p)$.
+]
+
+
+// #exm[
+//   Let $p$ prime $FF_p subset FF_(p^2) subset FF_(p^6)$. We have $[FF_(p^2) : FF_p] = 2$, $[FF_(p^6):FF_p]=6$, $[FF_(p^6):FF_(p^2)]=3$ and take $FF_(p^2) = FF_p (eta)$, $FF_(p^6) = FF_p (theta)$. We have that the set of emebeddings from $FF_(p^6) = FF_p (theta)$ into $overline(FF_p)$ are ${f^i}_(i in [|1, 6|])$ with $f(alpha) = alpha^p$.
+// ]

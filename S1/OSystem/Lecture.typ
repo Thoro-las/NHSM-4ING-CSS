@@ -3,8 +3,8 @@
 #show: template
 
 #set table(
-  fill: (x, _) => if (x == 0) { color.oklch(95%, 12%, 190deg, 100%) },
-  stroke: 0.5mm + color.oklch(66%, 20%, 190deg, 100%)
+  fill: (x, _) => if (x == 0) { color.oklch(95%, 12%, 190deg, 40%) },
+  stroke: 0.5mm + color.oklch(66%, 60%, 190deg, 100%)
 )
 
 #show table: content => align(center)[#content]
@@ -13,6 +13,8 @@
 #v(1fr)
 #text("Disclaimer", size: 2em)\
 #text([This contains lessons from Mr. Metrouh, with contents that are either added, changed or rearranged, written by HADIOUCHE Azouaou.])
+
+#mainpage("Operating Systems", "HADIOUCHE Azouaou", "METROUH", comment: [Man..])
 
 #chap([Operating Systems])[
   Operating System is an abstraction layer in software that goes between the user and hardware, which gives the ability to easily access the resources and the services given from the hardware layer to the software.

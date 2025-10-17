@@ -1,4 +1,5 @@
-#import "@preview/zap:0.4.0"
+#import "@preview/zap:0.4.0": *
+#import "@preview/circuiteria:0.2.0" as circuiteria: *
 
 #import "@THR/Wide:1.0.0": *
 #show: template
@@ -110,10 +111,106 @@ Boolean functions will be the main study of Boolean algebra, how they can be wri
   ]
 ]
 
-
 #sect("Transistors")
 One of the biggest advancements in our modern world is the creation of a transistor, in principle the idea is simple, a transistor is simply an electrically controlled valve. 
 
-#ooc[
-  Multiple families of transistors exist, the ones used in course are FET transistors, but due to their unfamiliarity, I would prefer to use BJT transistors that have a slightly different workflow but are almost the same, one regulates current and the other votage.
+#nte[The examples and all will be added soon]
+
+#sect("Logic Gates & Digital Circuits") To be able to use and/or/not in circuits, we introduce the most basic circuit components called logic gates, as the table below shows
+
+#align(center)[
+  #table(
+    columns: 3,
+    [Not], [And], [Or],
+    [
+      #circuiteria.circuit({
+        import circuiteria: *
+
+        gates.gate-not(id: "not", x: 0, y: 0, w: 1, h: 1)
+        wire.stub("not-port-out", "east", name: $S$, length: 0.5)
+        wire.stub("not-port-in0", "west", name: $A$, length: 0.5)
+      })
+    ],
+    [
+      #circuiteria.circuit({
+        import circuiteria: *
+
+        gates.gate-and(id: "and", x: 0, y: 0, w: 1, h: 1)
+        wire.stub("and-port-out", "east", name: $S$, length: 0.5)
+        wire.stub("and-port-in0", "west", name: $A$, length: 0.5)
+        wire.stub("and-port-in1", "west", name: $B$, length: 0.5)
+      })
+    ],
+    [
+      #circuiteria.circuit({
+        import circuiteria: *
+
+        gates.gate-or(id: "or", x: 0, y: 0, w: 1, h: 1)
+        wire.stub("or-port-out", "east", name: $S$, length: 0.5)
+        wire.stub("or-port-in0", "west", name: $A$, length: 0.5)
+        wire.stub("or-port-in1", "west", name: $B$, length: 0.5)
+      })
+    ],
+    [
+      #table(columns: (1fr, 1fr),
+        $A$, $S$,
+        $0$, $1$,
+        $1$, $0$,
+      )
+    ],
+    [
+      #table(columns: (1fr, 1fr, 1fr),
+        $A$, $B$, $S$,
+        $0$, $0$, $0$,
+        $0$, $1$, $1$,
+        $1$, $0$, $1$,
+        $1$, $1$, $1$
+      )
+    ],
+    [
+      #table(columns: (1fr, 1fr,1fr),
+        $A$, $B$, $C$,
+        $0$, $0$, $0$,
+        $0$, $1$, $0$,
+        $1$, $0$, $0$,
+        $1$, $1$, $1$
+      )
+    ]
+  )
 ]
+
+Thus we can use these to represent some circuits that behave as logical circuits called digital circuits.
+
+#exm[
+  - A commitee of $n$ individuals decide issues for an organization. Each individual votes either yes or no for each proposal that arises. The proposal is passed if it receives at least $p$ votes. Its easy to notice that the solution is equal to $ y = sum_(1 <= i_1 < dots.c < i_p <= n) x_(i_1) x_(i_2) dots x_(i_p) $ where $x_1, dots, x_n$ represent the votes of the individuals and $y$ the proposal passing. In case, $n=3$ and $p=2$ we get #align(center)[
+    #circuiteria.circuit({
+      import circuiteria: *
+
+      gates.gate-and(id: "and1", x: 0, y: 0, w: 1, h: 1)
+      gates.gate-and(id: "and2", x: 0, y: 2, w: 1, h: 1)
+      gates.gate-and(id: "and3", x: 0, y: 4, w: 1, h: 1)
+
+      gates.gate-or(id: "or", inputs: 3, x: 3, y: 1.75, w: 1, h: 1.5)
+
+      wire.wire("w1", ("and3-port-out", "or-port-in0"), style: "zigzag")
+      wire.wire("w2", ("and2-port-out", "or-port-in1"), style: "zigzag")
+      wire.wire("w3", ("and1-port-out", "or-port-in2"), style: "zigzag")
+
+      wire.wire("w4", ((-3, 1), "and1-port-in0"), style: "zigzag", zigzag-ratio: 30%)
+      wire.wire("w5", ((-3, 1), "and2-port-in1"), style: "zigzag", zigzag-ratio: 30%)
+      wire.intersection("w5.zig")
+
+      wire.wire("w6", ((-3, 4), "and2-port-in0"), style: "zigzag", zigzag-ratio: 40%)
+      wire.wire("w7", ((-3, 4), "and3-port-in1"), style: "zigzag", zigzag-ratio: 40%)
+      wire.intersection("w6.zig")
+
+      wire.wire("w8", ((-3, 2.5), "and1-port-in1"), style: "zigzag", zigzag-ratio: 20%)
+      wire.wire("w9", ((-3, 2.5), "and3-port-in0"), style: "zigzag", zigzag-ratio: 20%)
+      wire.intersection("w8.zig")
+    })
+  ]
+]
+
+#subs("Circuit Simplification & Reduction Methods")
++ *Kernaugh Maps*
++ *Quine-McCluskey Method*

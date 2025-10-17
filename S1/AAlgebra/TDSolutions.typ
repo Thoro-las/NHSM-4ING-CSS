@@ -9,7 +9,7 @@
 #let iso = $tilde.equiv$
 #let char = math.op("Char")
 
-#sect("Tutorial Series 1: Remainders", level: 1)
+#sect("Tutorial Series 1: Embeddings", level: 1)
 #exr[
   Consider the ring of polynomials $ZZ[X]$ with indeterminate $X$.
 ]
@@ -132,3 +132,52 @@ $ thus $alpha$ is a primitive element.
 #qst[the polynomial $Irr(alpha + beta, QQ, X)$ is cubic and $deg Irr(alpha - beta, QQ, X) = 6$. ]
 #qst[$forall c in QQ^star$, $QQ(alpha, omega) = QQ(omega + c alpha)$.]
 #qst[$QQ(omega, sqrt(5))=QQ(omega sqrt(5)).$]
+
+#colbreak()
+#sect("Tutorial Series 2: Finite Fields", level: 1)
+#exr[
+  Decide whether there exists a finite field having the given number of elements.
+  $ 4095 #h(2mm) - #h(2mm) 191 #h(2mm) - #h(2mm) 12345678910\ 81 #h(2mm) - #h(2mm) 12396 #h(2mm) - #h(2mm) 128 $
+]
+
+We do prime factorization for each of the elements below.
+
+#exr[
+  Determine all finite fields having $n$ elements where $n <= 15$. Find a basis, a primitive element, a generator for the multiplicative group for every field.
+]
+
+We will find all the fields of the form $FF_(p^n)$ such that $p^n <= 15$.
+- $p = 2$:
+  - $n = 1$:
+    - Field: $FF_2$.
+    - Primitive Element: $1$ or $0$.
+    - Basis Over $FF_2$: ${1}$.
+    - Generator: $1$.
+  - $n = 2$:
+    - Field: $FF_(2^2) = FF_4$.
+    - Primitive Element: $alpha$ with $alpha^2 + alpha + 1 = 0$.
+    - Basis Over $FF_2$: ${1, alpha}$
+    - Generator: $alpha$.
+  - $n = 3$:
+    - Field: $FF_(2^3) = FF_8$.
+    - Primitive Element: $alpha$ with $alpha^3 + alpha + 1 = 0$.
+    - Basis Over $FF_2$: ${1, alpha, alpha^2}$.
+    - Generator: $alpha$.
+
+- $p = 3$:
+  - $n = 1$:
+    - Field: $FF_3$.
+    - Primitive Element: $1$ or $0$.
+    - Basis Over $FF_3$: ${1}$.
+    - Generator: $2$.
+  - $n = 2$:
+    - Field: $FF_(3^2) = FF_9$.
+    - Primitive Element: $alpha$ with $alpha^2 + 1 = 0$.
+    - Basis Over $FF_3$: ${1, alpha}$.
+    - Generator: $$.
+
+- for the remaining for any $p in {5, 7, 11, 13}$ we have
+  - Field: $FF_p$.
+  - Primitive Element: $1$ or $0$.
+  - Basis Over $FF_p$: ${1}$.
+  - Generator:  respectively.

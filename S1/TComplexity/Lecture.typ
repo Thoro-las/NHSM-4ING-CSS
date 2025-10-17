@@ -9,6 +9,9 @@
 #let sp = $triangle.stroked.small.r$
 #let bl = $square.stroked.small$
 
+#show "etc": "te"
+
+
 #mainpage("Complexity Theory", "HADIOUCHE Azouaou", "Berrachedi", comment: [The course will be heavily changed due to the fact that the needs the computational theory])
 
 
@@ -45,7 +48,8 @@ For our interest, we usually do not check exactly how the algorithm behaves at e
 #pro[
   Let $f, g: NN -> RR^+$, suppose that, then
   - if $exists N in NN, forall n > N, g(n) != 0$ then $f = o(g) <=> lim_(n -> infinity) (f(n))/(g(n)) = 0$.
-  - $f = O(g) <=> exists M > 0, exists N in NN, forall n > N, (f(n))/(g(n)) < M.$
+  - $f = O(g) <=> exists M > 0, exists N in NN, forall n > N, f(n)\/g(n) < M.$
+  - if $f = o(g)$ then $f = O(g)$.
 ]
 
 notice that $n$ usually represents some variable of the quantity of data given by the algorithm. Depending on the context, we may take it to be the amount of elements in a list, the number of digits in a number and multiple other things.
@@ -90,9 +94,45 @@ notice that $n$ usually represents some variable of the quantity of data given b
   
   thus this measure is independent of the time that each transition goes, and using the definitions we have earlier, we can give upperbounds for the growth of an algorithm depending on its input's size. The most important result is the following theorem which allows us to simulate turing machines inside of others in an efficent manner.
 
-  #thm(name: "Efficent Universal Turing Machine")[
+ #thm(name: "Efficent Universal Turing Machine")[
     There exists a Turing machine $cal(M)$ such that for every $x, alpha in {0, 1}^*, cal(M)(x, alpha) = M_alpha (x)$ where $M_alpha$ is the Turing machine represented with $alpha$.
   ]
 
   $alpha$ here represents a "program", and thus we can program any Turing machine behavior inside of the universal Turing machine $cal(M)$.
 ]
+
+#def(name: "Polynomial Functions")[
+  Let $f: NN -> RR^+$, $f$ is said to be a polynomial function if $f(n) = O(n^c)$ for some $c in NN$. If $c$ is the smallest that satisfies $f(n) = O(n^c)$ then $f$ is said to be of order $c$ near infinity.
+]
+
+Now we give some classes of problems that are usually uncountered in complexity. For the upcoming definitions, we will consider these defintiions for algorithms and time complexity which are less formal but easier to use.
+
+#def(name: "Algorithm")[
+  We say that $cal(A)$ is an algorithm if its a sequence of elementary operations like arithmetic operations, reading and writing in memory...etc, that turns a binary string into another binary string.
+
+  $cal(A)$ solves a problem $cal(P)$ if for any instance $I$ of $cal(P)$, that are represented as a binary string and given to the algorithm, it returns a value that represents the solution of the instance $I$.
+]
+
+#def(name: "Time Complexity")[
+  Given a representation of the inputs as a binary string, we say that the size of the data is the number of bits needed to store the binary string the represents it, if we denote it $n$, then the time complexity is a function $f_cal(A) (n)$ that takes an algorithm and the inputs of size $n$, and returns the time needed for $cal(A)$ to solve the instance that has size $n$.
+]
+
+#subs("The Class P Of Algorithms")
+#ooc[
+  This class represents the class of efficent algorithms, if we consider some algorithms of order $O(n)$ or $O(n^2)$ then we can consider them as efficent. We also naturally accept that an algorithm that called efficent algorithms is also supposed to be efficent, thus we consider in general that an algorithm efficent if it has a polynomial running time.
+]
+
+#def(name: "Class P/Efficent")[
+  We say that a problem $cal(P)$ is of class _P_ if there exists an algorithm $cal(A)$ that solves any instance of $cal(P)$ in a polynomial time. We say that $cal(A)$ is efficent, and $cal(P)$ is said to be easy.
+]
+
+#ooc[
+  In practice, multiple algorithms can be made efficent, a simple example is the one we started the course with, the first algorithm using the definition was of order $O(n!)$ but when we changed the algorithm we could solve in $O(n^3)$.
+
+  Some algorithms that are not easy, in a way that we did not find any polynomial algorithm to solve them. There is a class that is a bit larger then the P Class that the whole study of complexity is based on, its call the NP class.
+]
+
+#colbreak()
+#subs("The Class NP Of Algorithms")
+
+etc
