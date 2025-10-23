@@ -2,13 +2,15 @@
 #import "@preview/circuiteria:0.2.0" as circuiteria: *
 
 #import "@THR/Wide:1.0.0": *
-#show: template
-#set table(stroke: 0.3mm)
+#show: template.with(
+  title: "Computer Arithemtic",
+  disclaimer: [This textbook follows the courses of Dr. OUDJIDA, some alternations of the course like additions and rearrangements occur for clarity, simplicity or personal preferences.],
+  writer: "HADIOUCHE Azouaou",
+  warning: "USE IT AT YOUR OWN RISK!",
+)
 
 #let xor = $times.circle$
 #let nand = $bar$
-
-#mainpage([Theory Of Computer Arithmetic], [HADIOUCHE Azouaou], [Oudjida], comment: [Some extra information will be added])
 
 #chap("Classical logic")[
   The most basic part of executing a computation on a machine is to describe the most basic information, which is true/false, and then compose them into a statement or a proposition.
@@ -111,11 +113,6 @@ Boolean functions will be the main study of Boolean algebra, how they can be wri
   ]
 ]
 
-#sect("Transistors")
-One of the biggest advancements in our modern world is the creation of a transistor, in principle the idea is simple, a transistor is simply an electrically controlled valve. 
-
-#nte[The examples and all will be added soon]
-
 #sect("Logic Gates & Digital Circuits") To be able to use and/or/not in circuits, we introduce the most basic circuit components called logic gates, as the table below shows
 
 #align(center)[
@@ -211,6 +208,16 @@ Thus we can use these to represent some circuits that behave as logical circuits
   ]
 ]
 
+#sect("Transistors")
+One of the biggest advancements in our modern world is the creation of a transistor, in principle the idea is simple, a transistor is simply an electrically controlled valve. We use this to materialize
+
 #subs("Circuit Simplification & Reduction Methods")
 + *Kernaugh Maps*
 + *Quine-McCluskey Method*
+
+#chap("Arithmetics")[
+  Computer arithmetic is the process of using algorithms for doing basic operations on numbers like addition multiplication... etc. To be able to do those operations, a representation of the numbers is needed, which will be the first part of the course.
+]
+
+#sect("Numbers & Number Representations")
+Multiple numeral systems were devlopped

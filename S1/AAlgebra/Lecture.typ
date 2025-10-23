@@ -1,6 +1,12 @@
 #import "@preview/commute:0.3.0": node, arr, commutative-diagram
+
 #import "@THR/Wide:1.0.0": *
-#show: template
+#show: template.with(
+  title: "Mathematical Tools For Cryptography",
+  writer: "HADIOUCHE Azouaou",
+  disclaimer: [This document contains the lectures given by Dr.ZAIMI.],
+  comment: [Some contents were added as remainders and extras for the students.]
+)
 
 #let subset = $subset.eq$
 #let Id = math.op("Id")
@@ -16,9 +22,6 @@
 #let add-to-summary(content) = {
   sum-content.update(sum => {[#sum, t]})
 }
-
-#mainpage("Matehmatical Tools For Cryptography", "HADIOUCHE Azouaou", "Zaimi", comment: [Some contents were added as remainders for the students])
-
 #chap("Remainders", num: 0)[
   This part will just be a remainder of the important definitions, propositions and theorems of the field extension course that are needed for this course. We assume that rings in this case are commutative rings with unity.
 ]

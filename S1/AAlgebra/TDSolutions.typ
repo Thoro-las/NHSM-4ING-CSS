@@ -1,5 +1,5 @@
 #import "@THR/Sum:1.0.0": *
-#show: template
+#show: template.with(mainpage: false)
 
 #let subset = $subset.eq$
 #let Id = math.op("Id")
