@@ -5,7 +5,8 @@
   title: "Mathematical Tools For Cryptography",
   writer: "HADIOUCHE Azouaou",
   disclaimer: [This document contains the lectures given by Dr.ZAIMI.],
-  comment: [Some contents were added as remainders and extras for the students.]
+  comment: [Some contents were added as remainders and extras for the students.],
+  summarize: true
 )
 
 #let subset = $subset.eq$
@@ -441,7 +442,7 @@ Let $K$ be a field and $overline(K)$ an algebraic closure of $K$, and let $alpha
 #colbreak()
 
 #def(name: "Frobenius Automorphisms")[
-  Let $f: FF_q -> FF_q$ where $q=p^n$ with $f: alpha |-> alpha^p$, then $f$ is called the frobenius automorphism of $FF_q$.
+  Let $f: FF_q -> FF_q$ where $q=p^n$ with $f: alpha |-> alpha^p$, then $f$ is called the Frobenius automorphism of $FF_q$.
 ]
 
 To justify this nomination, we will prove that it is a $FF_p$-automorphism 
@@ -463,3 +464,72 @@ Using Proposition 1.1.6, we deduce that $f$ is an automorphism of $FF_q$.
 // #exm[
 //   Let $p$ prime $FF_p subset FF_(p^2) subset FF_(p^6)$. We have $[FF_(p^2) : FF_p] = 2$, $[FF_(p^6):FF_p]=6$, $[FF_(p^6):FF_(p^2)]=3$ and take $FF_(p^2) = FF_p (eta)$, $FF_(p^6) = FF_p (theta)$. We have that the set of emebeddings from $FF_(p^6) = FF_p (theta)$ into $overline(FF_p)$ are ${f^i}_(i in [|1, 6|])$ with $f(alpha) = alpha^p$.
 // ]
+//
+#nte[Some things may be missing here]
+
+#chap("Normal Extensions")[
+  In what follows $K$ denotes a field, $overline(K)$ an algebraic closure of $K$ and $P(X)$ a non-constant polynomial.
+]
+
+#def(name: "Splitting Field")[
+  Let $alpha_1, dots, alpha_n$ be the zeros of the polynomial $P in K[X]$ in $overline(K)$, then the field $K(alpha_1, dots, alpha_n)$ is called splitting field of $P$ over $K$. In other words, $K(alpha_1, dots, alpha_n)$ is the smallest subfield of $overline(K)$, in which, we can write $P(X)=(X-alpha_1) dots.c (X-alpha_n)$.
+]
+
+#exm[
+  - The splitting field of $X^2-2$ over $QQ$ in $CC$ is $QQ(sqrt(2))$.
+  - The splitting field of $X^3-2$ over $QQ$ in $CC$ is $QQ(root(3, 2), j root(3, 2), j^2 root(3, 2)) = QQ(root(3, 2), j)$.
+  - $CC$ is the pslitting field of $X^2 + 1$ in $RR$ because $RR(i, -i)=RR(i)=CC$.
+  - Any finite field $FF_(p^n)$ is the splitting field some polynomial in $FF_p [X]$, since $forall alpha in FF_(p^n), alpha$ is a zero of $X^(p^n) - X in FF_p [X]$ so if we set $cal(Z)(X^(p^n) - X)$ the set of zeros of $X^(p^n) - X$ then $FF_(p^n) = FF_p (cal(Z)(X^(p^n) - X))$.
+  - The splitting field of $(X^2 - 2)(X^2 - 3)(X^2 - 1) in QQ[X]$ is the field containing all the roots which is $QQ(plus.minus sqrt(3), plus.minus sqrt(2), plus.minus 1) = QQ(sqrt(2) + sqrt(3))$.
+]
+
+#def(name: "Splitting Field Of A Family Of Polynomials")[
+  Let $(P_i)_(i in I) subset K[X]$ and $cal(Z)= union_(i in I) cal(Z)(P_i)$ then the field $K(cal(Z))$ is the intersection of all subfields of $overline(K)$ containing $K$ and $cal(Z)$ which is called the splitting field of the family $(P_i)_(i in I)$ over $K$.
+]
+
+#exm(count: true)[
+  - $overline(K)$ is a splitting field of the family of non-constant polynomials in $K[X]$.
+  - The splitting field of ${X^2 - 2, X^2 - X - 1, X^3 - 2, X^3 - 1}$ over $QQ$ is $QQ(plus.minus sqrt(2), (1 plus.minus sqrt(5))\/2, root(3, 2), j root(3, 2), j^2 root(3, 2))=QQ(root(3, 2), sqrt(2), sqrt(5), j).$
+]
+
+#def(name: "Normal Extension")[
+  Let $L\/K$ be an algebraic extension, then $L\/K$ is said to be a _normal extension_ if for any $P in K[X]$ irreducible in $K$, if $P$ has a root in $L$, then all its roots are in $L$.
+]
+
+#pro[
+  Let $L\/K$ be an algebraic extension, the following statements are equivalent
+  + $L\/K$ is a normal extension.
+  + $forall alpha in L$, all conjugates of $alpha$ over $K$ are in $L$.
+]
+
+#prf[
+  - $1. => 2.$ is clear given that the conjugates of $alpha$ are the roots of $Irr(alpha, K, X)$, which exists by the fact that $L\/K$ is algebraic and has $alpha$ as a root in $L$, are contained in $L$ thus all the conjugates of $alpha$ over $K$ are contained in $L$. 
+  - $2. => 1.$ Let $P in K[X]$ be irreducible over $K$, and suppose $P$ has a zero $alpha in L$, since $Irr(alpha, K, X)$ divides $P(X)$ in $K[X]$ and $P$ is irreducible then $P(X) = lambda Irr(alpha, K, X)$, any root of $P$ is a root of $Irr(alpha, K, X)$ and thus a conjugate of $alpha$, so the roots of $P$ are contained in $L$.
+]
+
+#exm(count: true)[
+  - $overline(K) \/ K$ is normal since $overline(K)\/K$ is algebraic and every polynomial is splitted on $overline(K)$.
+  - $CC\/QQ$ is not normal since it is not algebraic, while $CC\/RR$ is normal since $overline(RR) = CC$.
+  - $K\/K$ is normal since $[K:K] = 1$ thus algebraic and $Irr(alpha, K, X) = X - alpha$ thus its only conjugate is $alpha$ and thus contained in $K$.
+  - Let $QQ(root(3, 2))\/QQ$ is not normal since the conjugates of $root(3, 2)$ which are $j root(3, 2)$ and $j^2 root(3, 2)$ are not in $QQ(root(3, 2))$.
+]
+
+#colbreak()
+#thm[
+  Let $L\/K$ be an algebraic extension and $L subset Omega$, then the following statements are equivalent:
+  + Any $K$-embeddings of $L$ into $Omega$ is an automorphism of $L$.
+  + $L\/K$ is normal.
+  + $L$ is a splitting field over $K$ of a family of $K[X]$.
+]
+
+#prf[
+  - $1. => 2.$ Let $alpha in L$ and $beta$ a conjugate of $alpha$ over $K$, by Proposition 1.1.4 there exists a $K$-embedding $tau$ from $K(alpha) subset L$ to $K(beta) subset Omega$ that sends $alpha$ to $beta$ and since $L\/K$ then $L\/K(alpha)$ is algebraic. Let $sigma$ be an extension of $tau$ to $L$, so $sigma$ is a $K$-automorphism of $L$ from assumption, and thus $sigma(alpha) = tau(alpha) = beta in L$.
+  - $2. => 3.$ Suppose $L\/K$ normal, consider the family of polnyomials $cal(F)$ defined by $cal(F) = {P(X) in K[X] | P "irreducible having a zero in" L}$ and $F$ be the splitting field of $cal(F)$ over $K$. Let $cal(Z)$ be the set of zeros of all elements of $cal(F)$, $F = K(cal(Z))$. Since $cal(Z) subset L$ (because $L\/K$ normal), we have $K(cal(Z)) = F subset L$. Now let $alpha in L$, $alpha$ is algebraic and is a zero $Irr(alpha, K, X) in cal(F)$ so $alpha in cal(Z) subset F$ thus $L subset F$.
+  - $3. => 1.$ Suppose that $L$ is a splitting field over $K$ of a family $cal(F)$ of $K[X]$, $L = K(cal(Z))$ where $cal(Z)$ is the set of zeros of elements of $cal(F)$ in $Omega$. Let $sigma$ be a $K$-embedding of $L$ into $Omega$. To show that $sigma$ is a $K$-automorphism of $L$, it suffices to prove that $sigma$ is a $K$-endomorphism using Proposition 1.1.6. Let $alpha in cal(Z)$ then $sigma(alpha)$ is a conjugate of $alpha$ over $K$ thus $sigma(alpha) in cal(Z)$.
+]
+
+#exm[
+  - $QQ(sqrt(2))\/QQ$ is normal. We have that $Irr(sqrt(2), K, X) = X^2 - 2$ then there are two embeddings of $QQ(sqrt(2)) -> overline(QQ)$ which are $sigma_1: sqrt(2) |-> sqrt(2)$ and $sigma_2: sqrt(2) |-> -sqrt(2)$ which are both automorphisms.
+  - $QQ(root(3, 2))\/QQ$ is not normal, we have that $j root(3, 2)$ is a conjugate of $root(3, 2)$ over $QQ$ but is not in $QQ(root(3, 2))$ thus
+  - $F$ is a finite field, $E$ a finite extension of $F$ then $E\/F$ is normal.
+]
