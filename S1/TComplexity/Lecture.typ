@@ -1,5 +1,11 @@
 #import "@THR/Wide:1.0.0": *
-#show: template
+#show: template.with(
+  title: [Complexity Theory],
+  writer: [HADIOUCHE Azouaou],
+  disclaimer: [
+  The course will be heavily changed due to all needs in computational theory and the pure misinformation given throughout the course.
+]
+)
 #set math.cases(gap: 3mm)
 
 #let sign = math.op("sgn")
@@ -9,14 +15,10 @@
 #let sp = $triangle.stroked.small.r$
 #let bl = $square.stroked.small$
 
-#show "etc": "te"
+#show "etc": text(font: "Diwani Letter", size: 1.7em, "إِلَى آخِرِهِ")
 
-
-#mainpage("Complexity Theory", "HADIOUCHE Azouaou", "Berrachedi", comment: [The course will be heavily changed due to the fact that the needs the computational theory])
-
-
-#chap("Introduction")[
-  Complexity theory revolves around the idea of measuring execution time of an algorithm giving a measure of the execution time given some taken parameters about the inputs.
+#chapter("Introduction")[
+  Complexity theory revolves around the idea of measuring execution time of an algorithm giving a measure of the execution time given some taken parameters about the inputs etc.
 ]
 
 To introduce the concept of computation complexity, we start by considering the calculation of a determinant of a square matrix, we can calculate it with two different ways, first by the definition of a determinant, the second with LU decomposition.
@@ -26,9 +28,9 @@ To introduce the concept of computation complexity, we start by considering the 
 $ We have $card S_n = n!$, if we suppose that $sign sigma, sigma(i)$ can be calculated in a constant time, then the remaining product has $n$ steps to evaluate thus we have that $C_1(n)=n dot n!$
 
 #ooc[
-- Now for the calculation of determinant using the LU method, denote $C_2(n)$ the number of steps needed for this calculation, if we denote $T(n)$ be the amount of steps needed to do the LU decomposition, its easy to calculate that $T(n) = ((n-2)(n-1)(2n-3))\/3$ and then we get that $A = L U$, with $L, U$ triangular, and $det L = 1$, then $det(A) = det(L U) = det L dot det U = det U = product_(i=1)^n u_(i i)$ thus $C_2(n) = T(n) + n$.
+- Now for the calculation of determinant using the LU method, denote $C_2(n)$ the number of steps needed for this calculation, if we denote $T(n)$ be the amount of steps needed to do the LU decomposition, it is easy to calculate that $T(n) = ((n-2)(n-1)(2n-3))\/3$ and then we get that $A = L U$, with $L, U$ triangular, and $det L = 1$, then $det(A) = det(L U) = det L dot det U = det U = product_(i=1)^n u_(i i)$ thus $C_2(n) = T(n) + n$.
 
-Now that we calculated the amount of steps needed for each one, we will assume that each step takes a second and that we want to calculate the determinant of $100 times 100$ matrix. Using the first algorithm, we get that it will take $C_1(100) = 100 dot 100!$ seconds which is approximately $3 dot 10^150$ years, for comparision, we have that the life span of the universe is approximately $10^10$ years, if we use the second method, it will take $C_2(100)=T(100)+100$ which takes approximately a week and a day to calculate.
+Now that we calculated the amount of steps needed for each one, we will assume that each step takes a second and that we want to calculate the determinant of $100 times 100$ matrix. Using the first algorithm, we get that it will take $C_1(100) = 100 dot 100!$ seconds which is approximately $3 dot 10^150$ years, for comparison, we have that the lifespan of the universe is approximately $10^10$ years, if we use the second method, it will take $C_2(100)=T(100)+100$ which takes approximately a week and a day to calculate.
 
 For our interest, we usually do not check exactly how the algorithm behaves at each point, but how it behaves asymptotically, thus we created our comparision notations.
   #def(name: "Comparision Notations")[
@@ -66,7 +68,7 @@ notice that $n$ usually represents some variable of the quantity of data given b
 ]
 
 #ooc[
-  #sect("Formalism Of Computation")
+  #section("Formalism Of Computation")
   It can be noticed that in the prior definitions we did not formalize properly what is a "step" or an "algorithm", this is the goal of this section. For computations, we have a whole theory revolving around abstract computers called Computability Theory. For brievity, we will describe Turing machines directly and the concept of universality of computing machines.
 
   We assume that the machines will just work with data written in ${0, 1}$ alphabets, denote ${0,1}^* = union_(n >= 0) {0, 1}^n$ be the set of all possible binary strings, and we assume that any mathematical object $x$ will be represented in these machines using some convention or cannonical representation denoted $repr(x)$ or directly $x$ is the context is clear.
@@ -92,9 +94,9 @@ notice that $n$ usually represents some variable of the quantity of data given b
     Let $f: {0,1}^* -> {0,1}^*$  and $T: NN -> NN$ be two maps and $M$ a Turing machine. We say that $M$ computes $f$ in $T(n)$-time if for every $x in {0, 1}^*$, if we set the input of $M$ as $x$ then after at most $T(|x|)$ transition, $f(x)$ is written on the output and $M$ halts.
   ]
   
-  thus this measure is independent of the time that each transition goes, and using the definitions we have earlier, we can give upperbounds for the growth of an algorithm depending on its input's size. The most important result is the following theorem which allows us to simulate turing machines inside of others in an efficent manner.
+  thus this measure is independent of the time that each transition goes, and using the definitions we have earlier, we can give upperbounds for the growth of an algorithm depending on its input's size. The most important result is the following theorem which allows us to simulate turing machines inside of others in an efficient manner.
 
- #thm(name: "Efficent Universal Turing Machine")[
+ #thm(name: "efficient Universal Turing Machine")[
     There exists a Turing machine $cal(M)$ such that for every $x, alpha in {0, 1}^*, cal(M)(x, alpha) = M_alpha (x)$ where $M_alpha$ is the Turing machine represented with $alpha$.
   ]
 
@@ -117,22 +119,21 @@ Now we give some classes of problems that are usually uncountered in complexity.
   Given a representation of the inputs as a binary string, we say that the size of the data is the number of bits needed to store the binary string the represents it, if we denote it $n$, then the time complexity is a function $f_cal(A) (n)$ that takes an algorithm and the inputs of size $n$, and returns the time needed for $cal(A)$ to solve the instance that has size $n$.
 ]
 
-#subs("The Class P Of Algorithms")
+#subsection("The Class P Of Algorithms")
 #ooc[
-  This class represents the class of efficent algorithms, if we consider some algorithms of order $O(n)$ or $O(n^2)$ then we can consider them as efficent. We also naturally accept that an algorithm that called efficent algorithms is also supposed to be efficent, thus we consider in general that an algorithm efficent if it has a polynomial running time.
+  This class represents the class of efficient algorithms, if we consider some algorithms of order $O(n)$ or $O(n^2)$ then we can consider them as efficient. We also naturally accept that an algorithm that called efficient algorithms is also supposed to be efficient, thus we consider in general that an algorithm efficient if it has a polynomial running time.
 ]
 
-#def(name: "Class P/Efficent")[
-  We say that a problem $cal(P)$ is of class _P_ if there exists an algorithm $cal(A)$ that solves any instance of $cal(P)$ in a polynomial time. We say that $cal(A)$ is efficent, and $cal(P)$ is said to be easy.
+#def(name: "Class P/efficient")[
+  We say that a problem $cal(P)$ is of class _P_ if there exists an algorithm $cal(A)$ that solves any instance of $cal(P)$ in a polynomial time. We say that $cal(A)$ is efficient, and $cal(P)$ is said to be easy.
 ]
 
 #ooc[
-  In practice, multiple algorithms can be made efficent, a simple example is the one we started the course with, the first algorithm using the definition was of order $O(n!)$ but when we changed the algorithm we could solve in $O(n^3)$.
+  In practice, multiple algorithms can be made efficient, a simple example is the one we started the course with, the first algorithm using the definition was of order $O(n!)$ but when we changed the algorithm we could solve in $O(n^3)$.
 
-  Some algorithms that are not easy, in a way that we did not find any polynomial algorithm to solve them. There is a class that is a bit larger then the P Class that the whole study of complexity is based on, its call the NP class.
+  Some algorithms that are not easy, in a way that we did not find any polynomial algorithm to solve them. There is a class that is a bit larger than the P Class that the whole study of complexity is based on, its call the NP class.
 ]
 
 #colbreak()
-#subs("The Class NP Of Algorithms")
+#subsection("The Class NP Of Algorithms")
 
-etc

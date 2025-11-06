@@ -1,34 +1,36 @@
 #import "@preview/zap:0.4.0": *
 #import "@preview/circuiteria:0.2.0" as circuiteria: *
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
 #import "@THR/Wide:1.0.0": *
 #show: template.with(
-  title: "Computer Arithemtic",
-  disclaimer: [This textbook follows the courses of Dr. OUDJIDA, some alternations of the course like additions and rearrangements occur for clarity, simplicity or personal preferences.],
+  title: "Computer Arithmetic",
+  disclaimer: [This document follows the slides and lessons given by Mr.OUDJIDA, written in a mathematical textbook format, freedoms are taken when writing the course.],
   writer: "HADIOUCHE Azouaou",
   warning: "USE IT AT YOUR OWN RISK!",
 )
 
 #let xor = $times.circle$
 #let nand = $bar$
+#let card = math.op("#")
 
-#chap("Classical logic")[
+#chapter("Classical logic")[
   The most basic part of executing a computation on a machine is to describe the most basic information, which is true/false, and then compose them into a statement or a proposition.
 ]
 
-informally, given a sentence, it is said to be a _statement_ if
-- its declaritive, either affirmative or negative.
-- its possible truth values are true or false.
-- its verifiable in reality.
+Informally, given a sentence, it is said to be a _statement_ if
+- it is declarative, either affirmative or negative.
+- it is possible truth values are true or false.
+- it is verifiable in reality.
 
-on those statements, we have some rules to give them truth values
-- law of identity: $A=A$ is a true statement.
-- law of non-contradiction: $not (A and not A)$ is false statement.
-- law of excluded middle: either $not A$ or $A$ is true statement.
+On those statements, we have some rules to give them truth values
+- Law of identity: $A=A$ is a true statement.
+- Law of non-contradiction: $not (A and not A)$ is false statement.
+- Law of excluded middle: either $not A$ or $A$ is true statement.
 
-Now we will formalize calculations on boolean variables which is known as Boolean algebra, it will help us analyse and create circuits later on and also simplify them to have less components.
+Now we will formalize calculations on boolean variables which is known as Boolean algebra, it will help us analyze and create circuits later on, also simplifying them to have less components.
 
-#sect("Boolean Algebra")
+#section("Boolean Algebra")
 Let $BB := {0, 1}$ denote the set of boolean values, which can be represented too with true/false. Any variable ta
 #def(name: "Boolean Variable")[
   Let $x$ be a variable, $x$ is said to be a _boolean variable_ if it can assume values in $BB$. Let $f: BB^n -> BB$ a map, $f$ is called a _boolean function_.
@@ -113,7 +115,7 @@ Boolean functions will be the main study of Boolean algebra, how they can be wri
   ]
 ]
 
-#sect("Logic Gates & Digital Circuits") To be able to use and/or/not in circuits, we introduce the most basic circuit components called logic gates, as the table below shows
+#section("Logic Gates & Digital Circuits") To be able to use and/or/not in circuits, we introduce the most basic circuit components called logic gates, as the table below shows
 
 #align(center)[
   #table(
@@ -179,45 +181,100 @@ Boolean functions will be the main study of Boolean algebra, how they can be wri
 Thus we can use these to represent some circuits that behave as logical circuits called digital circuits.
 
 #exm[
-  - A commitee of $n$ individuals decide issues for an organization. Each individual votes either yes or no for each proposal that arises. The proposal is passed if it receives at least $p$ votes. Its easy to notice that the solution is equal to $ y = sum_(1 <= i_1 < dots.c < i_p <= n) x_(i_1) x_(i_2) dots x_(i_p) $ where $x_1, dots, x_n$ represent the votes of the individuals and $y$ the proposal passing. In case, $n=3$ and $p=2$ we get #align(center)[
-    #circuiteria.circuit({
-      import circuiteria: *
+  - A commitee of $n$ individuals decide issues for an organization. Each individual votes either yes or no for each proposal that arises. The proposal is passed if it receives at least $p$ votes. Its easy to notice that the solution is equal to $ y = sum_(1 <= i_1 < dots.c < i_p <= n) x_(i_1) x_(i_2) dots x_(i_p) $ where $x_1, dots, x_n$ represent the votes of the individuals and $y$ the proposal passing. In case, $n=3$ and $p=2$ we get 
 
-      gates.gate-and(id: "and1", x: 0, y: 0, w: 1, h: 1)
-      gates.gate-and(id: "and2", x: 0, y: 2, w: 1, h: 1)
-      gates.gate-and(id: "and3", x: 0, y: 4, w: 1, h: 1)
-
-      gates.gate-or(id: "or", inputs: 3, x: 3, y: 1.75, w: 1, h: 1.5)
-
-      wire.wire("w1", ("and3-port-out", "or-port-in0"), style: "zigzag")
-      wire.wire("w2", ("and2-port-out", "or-port-in1"), style: "zigzag")
-      wire.wire("w3", ("and1-port-out", "or-port-in2"), style: "zigzag")
-
-      wire.wire("w4", ((-3, 1), "and1-port-in0"), style: "zigzag", zigzag-ratio: 30%)
-      wire.wire("w5", ((-3, 1), "and2-port-in1"), style: "zigzag", zigzag-ratio: 30%)
-      wire.intersection("w5.zig")
-
-      wire.wire("w6", ((-3, 4), "and2-port-in0"), style: "zigzag", zigzag-ratio: 40%)
-      wire.wire("w7", ((-3, 4), "and3-port-in1"), style: "zigzag", zigzag-ratio: 40%)
-      wire.intersection("w6.zig")
-
-      wire.wire("w8", ((-3, 2.5), "and1-port-in1"), style: "zigzag", zigzag-ratio: 20%)
-      wire.wire("w9", ((-3, 2.5), "and3-port-in0"), style: "zigzag", zigzag-ratio: 20%)
-      wire.intersection("w8.zig")
-    })
+  #align(center)[
+    #image("Images/VoteCircuit.svg")
   ]
 ]
 
-#sect("Transistors")
-One of the biggest advancements in our modern world is the creation of a transistor, in principle the idea is simple, a transistor is simply an electrically controlled valve. We use this to materialize
+#section("Transistors")
+One of the biggest advancements in our modern world is the creation of a transistor, in principle the idea is simple, a transistor is simply an electrically controlled switch. We use this to materialize the logic gates to be able to use them directly.
 
-#subs("Circuit Simplification & Reduction Methods")
+#subsection("Circuit Simplification & Reduction Methods")
 + *Kernaugh Maps*
 + *Quine-McCluskey Method*
 
-#chap("Arithmetics")[
+#chapter("Arithmetics")[
   Computer arithmetic is the process of using algorithms for doing basic operations on numbers like addition multiplication... etc. To be able to do those operations, a representation of the numbers is needed, which will be the first part of the course.
 ]
 
-#sect("Numbers & Number Representations")
-Multiple numeral systems were devlopped
+#section("Positive Integer Representations")
+Multiple numeral systems were devlopped throughout history, the roman numerals were the oldest that are still in use, but not in any complicated systems due to the difficulty of doing arithmetic operations on them.
+
+#align(center)[
+  #diagram(
+    spacing: (2mm, 5mm),
+    node-stroke: luma(80%),
+    node((2.5, 0), [*Representation Systems*], name: <a>),
+
+    node((0.6, 0.5), [*Positional Systems*], name: <b>),
+    node((0.6, 1), [*Weighted Systems*], name: <c>),
+
+    node((0, 1.8), [
+      *Mixed Radix*
+      #align(left)[
+        - Factorial.
+        - Time.
+      ]
+    ], name: <d>),
+
+    node((1.3, 1.8), [
+      *Fixed Radix*
+      #align(left)[
+        - Decimal.
+        - Duodecimal.
+        - Radix-$2^r$.
+      ]
+    ], shape: "rect", name: <e>),
+
+    node((3.5, 1), [
+      *Non-Positional Systems*
+      #align(left)[
+        - Roman numerals.
+        - Residue number system.
+        - Double base number system.
+        - Multi base number system.
+        - Addition chain.
+      ]
+    ], name: <f>),
+
+    edge(<a>, <f>, "-|>"),
+    edge(<a>, <b>, "-|>"),
+    edge(<b>, <c>, "-|>"),
+    edge(<c>, <d>, "-|>"),
+    edge(<c>, <e>, "-|>"),
+  )
+]
+
+#subsection("Weighted Representation System")
+Let $I = [|0, n-1|]$, and ${D_i}_(i in I)$ be sets of digits, the digit vector $x=(x_(n-1), dots, x_0) in D_(n-1) times dots.c times D_0$ and let $w$ a weight vector $w = (w_n, dots, w_0) in ZZ^n$, we have that the integer mapping of $x$ in this weighted system is $w^t x = sum_(i=0)^(n-1) x_i w_i$. The number of combinations possible is $product_(i=0)^(n-1) card D_i$ but notice that there representations are not necessarily unique.
+
+#subsection("Mixed Radix Representation System")
+The mixed radix representation is the same as weighted but has a different way to get the weight vector, we consider a radix vector $r = (r_(n-1), dots, r_0)$, $w_0 = 1$ and $w_(i) = w_(i-1) dot r_(i-1)$ and by using the representation from the weighted system we get $w^t x = sum_(i=0)^(n-1) x_i product_(j=0)^(i-1) r_i$. 
+
+- The factorial system is an example of such a system, where we take the radix vector to be $r=(n, n-1, dots, 2, 1)$ then we get that the weight vector would be $w = (n!, (n-1)!, dots, 2!, 1!)$ and we take $D_i = {0, 1, dots, i}$, thus we get a unique representation for each integer, and using this represetation and the previous formula we get that the number of permutations is $product_(i=0)^(n-1) card D_i = sum_(i=0)^(n-1) i dot (i-1)! = (n+1)! - 1$.
+
+
+#subsection("Fixed Radix Representation System")
+The fixed radix represetation is just taking the mixed radix represetation with the vector to be all the same constant $r$ and $D_i = D$ and thus we get that the representation is $product_(i=0)^(n-1) x_i r^i$. 
+
+- For $r=10, D={0, dots, 9}$, it is the decimal system.
+- For $r=2, D={0, 1}$, it is the binary system. 
+
+We get a redundant representation since we can represent a number with multiple representations. Let $r, s$ be the indices of two unbalanced positional number systems, $n_r$ and $n_s$ represent the number of digits required in radices $r$ and $s$, then we get that $n_r\/n_s = log(s)\/log(r)$.
+
+#section("Integer Representations In Binary")
+We went through the way we represent positive integers in multiple systems. Now we will consider the binary system and the goal is to represent negative integers too, for that we will see 3 typical ways to represent them. Consider $w$ the number of bits we will use for the representations and $x=(x_(w-1), dots, x_0) in BB^w$.
+
+#colbreak()
+#subsection("Sign & Magnitude")
+$x$ represents $X = (-1)^(x_(w-1)) dot.c sum_(i=0)^(w-2) x_i 2^i$ as value, the first bit $x_(w-1)$ is called the sign bit while the rest $(x_(w-2), dots, x_0)$ is the magnitude. The range of values that can be represented using this representation is $[-2^(w-1) + 1; 2^(w-1) + 1]$.
+
+#subsection("One's Complement")
+$x$ represents $X = -x_(w-1) dot.c (2^(w-1) - 1) + sum_(i=0)^(w-2) x_i 2^i$, and the values in this representation range from $[-2^(w-1) + 1; 2^(w-1) + 1]$.
+
+#subsection("Two's Complement")
+$x$ represents $X = -x_(w-1) dot.c 2^(w-1) + sum_(i=0)^(w-2) x_i 2^i$, and the values of this representation range from $[-2^(w-1); 2^(w-1) - 1]$.
+
+

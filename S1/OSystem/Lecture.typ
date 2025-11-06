@@ -1,6 +1,10 @@
 #import "@THR/Wide:1.0.0": *
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
-#show: template
+#show: template.with(
+  title: "Operating Systems",
+  writer: "HADIOUCHE Azouaou",
+  disclaimer: "Man... Not sure if there is a course, but it follows what is supposed to be in it. Presented by Mr. METROUH."
+)
 
 #set table(
   fill: (x, _) => if (x == 0) { color.oklch(95%, 12%, 190deg, 40%) },
@@ -9,14 +13,7 @@
 
 #show table: content => align(center)[#content]
 
-#text("Operating Systems", size: 4em)
-#v(1fr)
-#text("Disclaimer", size: 2em)\
-#text([This contains lessons from Mr. Metrouh, with contents that are either added, changed or rearranged, written by HADIOUCHE Azouaou.])
-
-#mainpage("Operating Systems", "HADIOUCHE Azouaou", "METROUH", comment: [Man..])
-
-#chap([Operating Systems])[
+#chapter([Operating Systems])[
   Operating System is an abstraction layer in software that goes between the user and hardware, which gives the ability to easily access the resources and the services given from the hardware layer to the software.
 ]
 
@@ -73,18 +70,18 @@ The usual architecture we use in this case is the Von Neumann architecture to re
 
 
 #colbreak()
-#sect("Historical Evolution Of OSs")
+#section("Historical Evolution Of OSs")
 + *First Generation (1950s):* The first operating systems were batch systems where the programs were processed in batches which used punch cards to enter data.
 + *Second Generation (1960s):* introduction of multiple users to share the same computing resources which inccreased productivity.
 + *Third Generation (1970s):* systems start to run interactive tasks simultaneously thus making it more efficent in tasks and the minicomputers made operating systems more accessible and affordable for small scale usages.
 + *Fourth Generation (1980-1990s):* the popularization of micro-computers and personal-computers gave more access to a wide audience and the development of networks and management of shared resources.
 + *Fifth Generation (After 2000s):* The evolution of rebost, secure and cross-platform operating systems that give the best user experience and more user-friendly services and the birth of mobile computers and laptops for portability.
 
-#chap([Process Management])[
+#chapter([Process Management])[
   Process management is the part of the operating system that is responsible for the creation, execution, synchronization and termination of processes. The goal is to have the best algorithms for sharing and managing the resources of the computer to maximize efficency.
 ]
 
-#sect("Basic Concepts")
+#section("Basic Concepts")
 #def(name: "Process")[
   A process is an instance or a program in execution including the binaries or scripts of the running program, also the program data like variables, heap and the execution state information like the contents of the CPU registers, the call stack.
 ]
@@ -162,14 +159,14 @@ The process can have the following states
 
 The PCB is unique for each process and helps resume the process even after an interruption by a change of context. This part is important for multitasking.
 
-#sect("Process Scheduling")
+#section("Process Scheduling")
 scheduling processes aims to optimize usage of the resources by having the following objectives:
 - Maximize CPU Usage
 - Minimize Waiting & Response Time
 - Uniform Distribution Of CPU Time
 we will check some standard algorithms for process scheduling.
 
-#subs("Process Scheduling Algorithms")
+#subsection("Process Scheduling Algorithms")
 In the scheduling information of the PCB, we have some parameters that we will use, in each algorithm we have extra information that we will give and how they are used in the algorithm.
 
 #v(5mm)
@@ -226,7 +223,6 @@ In the scheduling information of the PCB, we have some parameters that we will u
     ]
   )
 
-#colbreak()
 + *RR: Round Robin*
   #table(
     columns: (25%, 75%),
@@ -276,7 +272,7 @@ In the scheduling information of the PCB, we have some parameters that we will u
       Similar to the multilevel queue, but processes may switch their queue depending on their behavior.
     ],
     [*Pros*], [
-      - more flexible by adapting to process bhavior.
+      - more flexible by adapting to process behavior.
       - multiple algorithms can improve management.
     ],
     [*Cons*], [
@@ -285,7 +281,13 @@ In the scheduling information of the PCB, we have some parameters that we will u
     ]
   )
 
-#colbreak()
-#subs([Communication & Synchronization])
+#section([Communication & Synchronization])
+Processes need to use common resources or communicate throughout their execution, thus we have multiple synchronization techniques for there not to be any overlap of usage or corruption of resources in use of those processes.
+
+#subsection([Processes Communication])
 + *Pipes:* provide a uni-directional communication channel between processes, usually between a parent process and its children processes.
-+ *Message Queues:*
++ *Message Queues:* 
+#nte[Will be finished soon]
+
+#subsection([Processes Synchronization])
+

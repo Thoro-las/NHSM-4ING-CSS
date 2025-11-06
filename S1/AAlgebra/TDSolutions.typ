@@ -9,7 +9,7 @@
 #let iso = $tilde.equiv$
 #let char = math.op("Char")
 
-#sect("Tutorial Series 1: Embeddings", level: 1)
+#section("Tutorial Series 1: Embeddings", level: 1)
 #exr[
   Consider the ring of polynomials $ZZ[X]$ with indeterminate $X$.
 ]
@@ -85,7 +85,48 @@ which are both automorphisms.
 #colbreak()
 #exr[Let $L\/K$ be an algebraic extension and $Omega$ an algebraically closed field.]
 #qst[Let $theta in L$, and $tau: K -> Omega$ an embedding, show that $tau$ can be extended to $sigma: K(theta) -> Omega$.]
+
+#ooc[
+   Define the map $
+    dot.c^(tau): K[X] &-> K^tau [X] = tau(K)[X] \
+  P(X) = sum_(i=0)^n a_i X^i &|-> P^tau (X) = sum_(i=0)^n tau(a_i) X^i
+  $
+  - $dot.c^tau$ is an isomorphism:
+    - $dot.c^tau$ is an homomorphism: Let $P(X) = sum_(i=0)^n p_i X^i$ and $Q(X) = sum_(i=0)^n q_i X^i$ we have $
+      (P + Q)^tau (X) &= sum_(i=0)^(n) tau(p_i + q_i) X^i \
+        &= sum_(i=0)^n (tau(p_i) + tau(q_i)) X^i\
+        &= P^tau (X) + Q^tau (X)\
+      (P Q)^tau &= sum_(i=0)^(2n) tau(sum_(j=0)^i p_j q_(i - j)) X^i\
+        &= sum_(i=0)^(2n) sum_(j=0)^i tau(p_j) tau(q_(i-j)) X^i\
+        &= P^tau Q^tau
+    $
+    - $dot.c^tau$ is bijective: its surjective by definition $
+      Ker dot.c^tau &= {P in K[X] | P^tau (X) = 0}\
+        &= {P in K[X] | sum_(i=0)^n tau(p_i) X^i = 0}\
+        &= {P in K[X] | forall i in [|1, n|], tau(p_i) = 0}\
+        &= {P in K[X] | p_i = 0} = {0}
+    $
+  #v(-1mm)
+
+  - $dot.c^tau$ preserves irreduciblility, that is, if $P$ is irreducible in $K[X]$ then it is irreducible in $K^tau [X]$:
+    - Suppose that $P$ is irreducible and $P^tau$ is reducible, so $P^tau (X) = Q(X) R(X)$ then $P(X) = (Q(X) R(X))^(tau^(-1)) = Q^(tau^(-1))(X) R^(tau^(-1)) (X)$ and thus $P$ is reducible, contradiction.
+
+  #v(-1mm)
+  - Consider $P(X) = Irr(theta, K, X)$, $P^tau (X)$ is irreducible, and $K^tau subset Omega$ and $Omega$ is algebraically closed thus there is an element $theta' in Omega$, $P^tau (theta') = 0$. We define the map $
+    phi: K[X] &-> K^tau [X]\/(P^tau (X))\
+    Q(X) &|-> Q^tau (X) + (P^tau (X))
+  $
+  - $phi$ is a homeomorphism which is easy to verify $
+      Ker phi &= {Q in K[X] | phi(Q) = (P^tau (X)) }\
+        &= {Q in K[X] | Q^tau (X) = P^tau (X) R(X)}\
+        &= {Q in K[X] | Q(X) = P(X) R^(tau^(-1)) (X)}\
+        &= (P(X))
+    $
+  By applying the First Isomorphism Theorem we get that $phi$ is an isomorphism between $K(theta) iso K[X]\/(P(X)) iso K^tau [X]\/(P^tau (X)) iso K^tau (theta')$
+]
+
 #qst[If $char K = 0$ and $[K(theta):K]=n$ then there is exactly $n$ extensions to $K(theta)$.]
+
 #qst[Apply the above to each embedding $sigma:QQ(sqrt(2))->CC$ with $theta=root(4, 2)$.]
 #qst[Using the $1.3.1$ and Zorn's Lemma, prove that $tau$ can be extended to $sigma: L -> Omega$.]
 
@@ -125,7 +166,7 @@ $ thus $alpha$ is a primitive element.
 #qst[Proving that the embeddings $sigma_i: L -> Omega$ are of the forma $sigma_i (theta)=theta_i$ where $theta_1, dots, theta_n$ are distinct conjugates of $theta$ over $K$.]
 #qst[For any $eta in L$, the conjugates of $eta$ are contained in ${sigma_i (eta) | i in [|1,n|]}$.]
 #qst[$eta$ is a primitive element if and only if $forall i, j in [|1, n|], sigma_i (eta) = sigma_j (eta) => i = j$.]
-#qst[Deduce that for any $(a, b) in QQ^star times QQ^star$ we have $QQ(sqrt(2), sqrt(3)) = QQ(a sqrt(2) + b sqrt(2))$.]
+#qst[Deduce that for any $(a, b) in QQ^star times QQ^star$ we have $QQ(sqrt(2), sqrt(3)) = QQ(a sqrt(2) + b sqrt(3))$.]
 
 #exr[Let $alpha = root(3, 2)$, $omega = e^((2 pi)/3 i)$ and $beta = alpha omega$, prove the following statements]
 #qst[For any $c in QQ$, $gamma = alpha + c beta$ is a zero of $x^6 + a x^3 + b$ for some $a, b in QQ$.]
@@ -133,14 +174,15 @@ $ thus $alpha$ is a primitive element.
 #qst[$forall c in QQ^star$, $QQ(alpha, omega) = QQ(omega + c alpha)$.]
 #qst[$QQ(omega, sqrt(5))=QQ(omega sqrt(5)).$]
 
-#colbreak()
-#sect("Tutorial Series 2: Finite Fields", level: 1)
+#pagebreak()
+#__cbox-count.update(0)
+#section("Tutorial Series 2: Finite Fields", level: 1)
 #exr[
   Decide whether there exists a finite field having the given number of elements.
   $ 4095 #h(2mm) - #h(2mm) 191 #h(2mm) - #h(2mm) 12345678910\ 81 #h(2mm) - #h(2mm) 12396 #h(2mm) - #h(2mm) 128 $
 ]
 
-We do prime factorization for each of the elements below.
+the fields have a cardinal of the form $p^n$ with $p$ prime, If a number has more than one prime divisor then it is not of the form $p^n$ thus there is no field with such cardinality. There are no fields with cardinality $4095, 12345678910, 12396$ since their prime decomposition have multiple primes while $191, 81, 128$ are powers of primes thus there exists a field having their cardinality which are $FF_(191), FF_(3^4), FF_(2^7)$ respectively.
 
 #exr[
   Determine all finite fields having $n$ elements where $n <= 15$. Find a basis, a primitive element, a generator for the multiplicative group for every field.
@@ -181,3 +223,109 @@ We will find all the fields of the form $FF_(p^n)$ such that $p^n <= 15$.
   - Primitive Element: $1$ or $0$.
   - Basis Over $FF_p$: ${1}$.
   - Generator:  respectively.
+
+#exr[
+  Let $p$ denote a prime number and let $m, n$ be positive integers.
+]
+
+#qst[
+  Let $P in FF_p [X]$ be irreducible, show that $P$ is a factor of the polynomial $X^(p^n) - X$ for some $p$ prime and $n in NN$.
+]
+
+#qst[
+  Prove that a finite field with $p^n$ eleemnts admits exactly one subfield having $p^m$ elements for each divisors of $m$ in $n$.
+]
+
+#qst[
+  Suppose $FF_(p^m)$ is a subfield of $FF_(p^n)$ prove that $m$ divides $n$.
+]
+
+#qst[
+  Deduce that the number of subfields of $FF_(p^n)$ is equal to the number of divisors of $n$.
+]
+
+#exr[
+  Let $p$ be a prime number and $n in NN$, show that the polynomial $x^(p^n) - x in FF_p [X]$ is the product of all irreducible monic polynomials in $FF_p [X]$ with degrees dividing $n$.
+]
+
+#exr[Verify certain results from Chapter 2]
+
+#qst[
+  Using thhe fact that $P_0(X) = X^2 + X + 1$ is the unique quadratic irreducible element of $FF_2 [X]$. Prove that the polynomials $P_1 (X) = X^4 + X + 1, P_2 (X) = X^4 + X^3 + 1, P_3 (X) = X^4 + X^3 + X^2 + X + 1$ are irreducible over $FF_2$.
+]
+
+#qst[
+  Let $alpha, beta, gamma$ be the zeros of $P_1, P_2, P_3$ respectively, in a fixed algebraic closure $overline(FF_2)$. Find bases of $FF_2 (alpha), FF_2 (beta), FF_2 (gamma)$, what is the number of elements of each of these fields.
+]
+
+#qst[
+  Show that $1\/beta$ is a conjugate of $alpha$ and $1 + gamma$ is a conjugate of $beta$ over $FF_2$.
+]
+
+#qst[
+  Express $alpha^5$ in terms of $1, alpha, alpha^2, alpha^3$. Deduce that $alpha$ generates $FF_2 (alpha)^*$.
+]
+
+#qst[
+  Express $alpha^8$ in terms of $1, alpha, alpha^2, alpha^3$. Deduce that the conjugates of $alpha$ over $FF_2$ are $alpha, alpha^2, alpha^4, alpha^8$.
+]
+
+#qst[
+  Deduce from the the last two points that $beta$ generates $FF_2 (beta)^*$ and the set of conjugates of $beta$ over $FF_2$ is ${alpha^(14), alpha^(13), alpha^(11), alpha^7}$.
+]
+
+#qst[
+  Verify that the set of conjugates of $gamma$ over $FF_2$ is ${alpha^3, alpha^6, alpha^9, alpha^12}={gamma, gamma^2, gamma^4, gamma^8}$, $FF_2 (alpha) = FF_2 (beta) = FF_2 (gamma)$ and the order of $gamma$ in the group $FF_2 (gamma)^*$ is $5$.
+]
+
+#qst[
+  Prove that $alpha^5$ and $alpha^10$ are zeros of $P_0$ and $FF_2 (alpha^5)$ is a quadratic subfield of $FF_2 (alpha)$. Verify that the decomposition of the polynomial $X^16 - X$ into irreducible elements of $FF_2 [X]$ is given by $X(X-1)P_0P_1P_2P_3$.
+]
+
+#pagebreak()
+#__cbox-count.update(0)
+#section("Normal Extensions", level: 1)
+
+#exr[
+  Decide whether each of the following extensions is normal:
+  + $QQ(sqrt(2), i) \/ QQ$.
+  + $CC\/R$.
+  + $QQ(sqrt(2), sqrt(3), i) \/ QQ$.
+  + $QQ(sqrt(2), root(4, 2)) \/ QQ$.
+  + $QQ(sqrt(2), sqrt(3), root(4, 2)) \/ QQ(root(4, 2))$.
+  + $QQ(root(3, 5), i) \/ QQ$.
+  + $QQ(sqrt(2), sqrt(3), root(4, 2)) \/ QQ(sqrt(2))$
+  + $FF_2 (alpha, beta, alpha + beta) \/ FF_2$ with $alpha^2 + alpha + 1 = 0$ and $beta^(2025) + beta + 1 = 0$.
+]
+
+#exr[
+  Show in three different ways that each of the following field extensions $L\/K$ is normal.
+]
+
+#qst[$L = K$.]
++ *Conjugates:* Let $alpha in K$ then $Irr(alpha, K, X) = X-alpha$ which has exactly one root $alpha$ which is in $K$, so all conjugates of $alpha$ are in $L$, thus $L\/K$ is normal.
++ *Splitting Field:* Take the family $cal(F) = { X - alpha | alpha in K }$ so every $f in cal(F)$ splits over $K$ since $forall alpha in K, K(alpha) = K$. So $L\/K$ is normal since it's splitting field of the family $cal(F)$.
++ *Embeddings:* Let $sigma: L -> overline(K)$ be a $K$-embedding into $overline(K)$. since $sigma$ is the identity on $K$ then its an automorphism so $L\/K$ is normal.
+
+#qst[$L$ is an algebraic closure of $K$.]
++ *Definition:* Let $P in K[X]$ irreducible and $alpha in L$ such that $P(alpha) = 0$. As $L$ is the algebraic closure then $L$ is algebraically closed thus all zeros of $P$ are in $L$ and we have that $L\/K$ is normal.
++ *Splitting Field:* Since $L$ is the algebraic closure of $K$ then $L$ is the splitting field of the family $cal(F) = K[X]$ thus the extension $L\/K$ is normal.
++ *Embeddings:* Let $sigma: L -> overline(K) = L$ is an endomorphism and since it is an $K$-embedding and $L\/K$ is algebraic then $sigma$ is surjective by the course Proposition 1.1.6 thus it is an automorphism from $L$ to $L$.
+
+#qst[$L$ is a quadratic extension of $K$.]
+#nte[
+  If $[L:K] = p$ prime number, then there exists $theta$ a primitive element for $L\/K$, that is because by taking $theta in L$, $K subset K(theta) subset L$ and we have that $[L:K] = [L:K(theta)] dot.c [K(theta):K]$ and thus we get that $[K(theta):K] = 1$ if and only if $theta in K$ thus by taking $theta in L \\ K$ we have that $[K(theta):K] = p$ necessarily and thus $K(theta) = L$.
+]
++ *Conjugates:* Let $theta in L$, if $[K(theta):K]=1$ then the conjugates of $theta$ is just $theta$ which is in $K(theta)$, else if $[K(theta):K] = 2$ then $Irr(theta, K, X) = X^2 + a X + b$, let $theta'$ be the conjugate of $theta$ over $K$, then $Irr(theta, K, X) = (X - theta) (X - theta') = X^2 - (theta + theta') X + theta theta' in K[X]$ thus $a = theta + theta' in K$ and we get $theta' = a - theta in K(theta) subset L$ thus the conjugates of $theta$ which are $theta, theta'$ are in $L$ thus it is normal.
+
+#exr[
+  Show that the degree of a splitting field of the polynomial $X^p - 1 in QQ[X]$ over $QQ$ with $p$ prime is equal to $p-1$.
+]
+Consider $P(X) = X^p - 1 = (X-1)(X^(p-1) + dots.c + X + 1) = (X-1)Phi(X)$, $Phi(X)$ is irreducible and its zeros are the roots of unity thus the splitting field of $P$ is $QQ(xi)$, $xi = e^((2 pi)/p i)$ which has degree $[QQ(xi), QQ] = deg Phi = p - 1$. The polynomial $phi(X)$ is irreducible since $phi(X + 1)$ is $p$-Eisenstein.
+#qst[Give another proof for Proposition 3.10]
+Let $sigma$ be a $L$-embedding of $L$ into $Omega$, since $K subset L$ then $sigma$ is a $K$-embedding of $L$ into $Omega$ since $M\/K$ is normal then $sigma$ is an isomorphism of $M$.
+
+#exr[
+]
+#qst[]
+#qst[Let $alpha, beta in overline(K)$, and $S_alpha, S_beta$ the splitting fields of $Irr(alpha, K, X)$ and $Irr(beta, K, X)$.]
