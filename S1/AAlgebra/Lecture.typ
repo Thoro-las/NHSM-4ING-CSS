@@ -6,7 +6,7 @@
   writer: "HADIOUCHE Azouaou",
   disclaimer: [This document contains the lectures given by Dr.ZAIMI.],
   comment: [Some contents were added as remainders and extras for the students.],
-  summarize: false
+  summarize: true
 )
 
 #let subset = $subset.eq$
@@ -605,6 +605,8 @@ The extension exists since $overline(K) \/ K$ is normal and by the Proposition 3
 #prf[
   From Theorem $1.2.12$ and Corollary $2.1.5$, there is $theta in L$ such that $L = K(theta)$ since $Irr(theta, K, X)$ is irreducible it is separable when $char K = 0$ by Corollary $1.2.10$. Also when $K$ is finite $=>$ $L$ is finite, say $card L = p^n$ hence $theta$ is a zero of $X^(p^n) - X in FF_p [X] subset K[X]$ which is separable then we can conclude from Proposition $4.3$.
 ]
+
+#colbreak()
 
 #exm(count: true)[
   - Let $p$ be prime $K = FF_p (y^p)$ and $L = FF_p (y)$, we have that $FF_p subset K subset L = K(y)$ since $y$ is a zero of $X^p - y^p in K[X]$ then $L\/K$ is finite with $[L:K] <= p$, and $Irr(y, K, X)$ divides $X^p - y^p = (X - y)^p$ then $Irr(y, K, X) = (X-y)^t$ with $1 <= t <= p$. Indeed,, if $t=1$ then $y in K$ and so $y = P(y^p)\/Q(y^p)$ for some $P, Q in FF_p [X]$ then $y Q(y^p) = P(y^p)$ but $(y Q(y^p))' = Q(y^p) + y p Q'(y^p) = Q(y^p)$ and $(P(y^p))' = 0$ thus $Q(y^p) = 0$ which is a contradiction.

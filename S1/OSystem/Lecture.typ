@@ -3,7 +3,7 @@
 #show: template.with(
   title: "Operating Systems",
   writer: "HADIOUCHE Azouaou",
-  disclaimer: "Man... Not sure if there is a course, but it follows what is supposed to be in it. Presented by Mr. METROUH."
+  disclaimer: [Man... Not sure if there is a course, but it follows what is supposed to be in it. Presented by Mr. METROUH. For the purposes of a better understanding of the course, a small library of operations and functions is made to run the programs that will be given in the course. A proper implementation will be found later.]
 )
 
 #set table(
@@ -100,47 +100,6 @@ The process can have the following states
   )
 ]
 
-// #align(center)[
-//   #box(
-//     inset: 5mm,
-//     diagram(
-//       edge-stroke: 1pt,
-//       node-corner-radius: 2pt,
-//       // edge-corner-radius: 8pt,
-//       mark-scale: 80%,
-//
-//       node((0.162, 0), [
-//         CPU
-//         #v(-2mm)
-//         #line(length: 100%)
-//         #v(-2mm)
-//         #set align(left)
-//         - ALU
-//         - Registers
-//       ], width: 2.5cm, height: 2cm, stroke: rgb("#333")),
-//
-//       node((0.9, 0), [
-//         RAM
-//         #v(-2mm)
-//         #line(length: 100%)
-//         #v(-2mm)
-//         #set align(left)
-//         - Kernel
-//         - OS
-//       ], width: 2cm, height: 2cm, stroke: rgb("#333")),
-//
-//       node((0.5, 0.8), [I/O Devices], width: 5cm, height: 1cm, stroke: rgb("#333")),
-//
-//       edge((0, 0), (1, 0), "->"),
-//       edge((0, 0.2), (1, 0.2), "<-"),
-//       edge((0, 0), (0, 0.7), "->"),
-//       edge((0.2, 0), (0.2, 0.7), "<-"),
-//       edge((0.8, 0), (0.8, 0.7), "->"),
-//       edge((1, 0), (1, 0.7), "<-")
-//     )
-//   )
-// ]
-
 #colbreak()
 #v(2.5cm)
 
@@ -164,13 +123,12 @@ scheduling processes aims to optimize usage of the resources by having the follo
 - Maximize CPU Usage
 - Minimize Waiting & Response Time
 - Uniform Distribution Of CPU Time
-we will check some standard algorithms for process scheduling.
+We will check some standard algorithms for process scheduling.
 
 #subsection("Process Scheduling Algorithms")
 In the scheduling information of the PCB, we have some parameters that we will use, in each algorithm we have extra information that we will give and how they are used in the algorithm.
 
 #v(5mm)
-
 + *FCFS: First-Come, First-Served.*
   #table(
     columns: (25%, 75%),
@@ -185,6 +143,28 @@ In the scheduling information of the PCB, we have some parameters that we will u
       - processes blocking others from execution.
     ]
   )
+
+#let code(title: none, link: none, code) = [
+  #align(center)[
+    #block(
+      fill: color.rgb("#282C34"),
+      inset: 3mm,
+      width: 90%,
+      radius: 1mm,
+      code
+    )
+  ]
+]
+
+#code(```py
+class FCFS(Algorithm):
+  def preprocess(self, processes):
+    return processes.sort(lambda p: p.arrival_time)
+
+  def schedule(self, processes, time):
+    return processes.dequeue()
+```)
+
 + *SJN: Shortest Job Next.*
   #table(
     columns: (25%, 75%),
@@ -286,8 +266,45 @@ Processes need to use common resources or communicate throughout their execution
 
 #subsection([Processes Communication])
 + *Pipes:* provide a uni-directional communication channel between processes, usually between a parent process and its children processes.
-+ *Message Queues:* 
++ *Message Queues:* allows the exchange of message between processes through a messages queue.
++ *Shared Memory:* multiple processes can access the same region of memory like files and allows a fast and efficent communication.
++ *Sockets:* a socket enables communication over a network using some protocols for exchanging data such as TCP/IP or UDP.
 #nte[Will be finished soon]
 
 #subsection([Processes Synchronization])
 
+```java
+class Mutex {
+  private boolean locked = false;
+  
+  public void lock() {
+    while (locked) wait();
+    locked = true;
+  }
+  
+  public void unlock() { locked = false; }
+}
+
+public class MutexSimulation {
+  static int sharedCounter = 0;
+  static Mutex mutex = new Mutex();
+  
+  static void process(int processId) {
+    mutex.lock();
+    
+    sharedCounter++;
+    System.out.println("Process " + processId);
+    System.out.println(": counter = " + sharedCounter);
+    
+    mutex.unlock();
+  }
+  
+  public static void main(String[] args) {
+    process(1);
+    process(2);
+    process(3);
+    
+    System.out.println("Final counter: " + sharedCounter);
+  }
+}
+```

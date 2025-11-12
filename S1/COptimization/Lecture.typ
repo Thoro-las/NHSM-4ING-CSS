@@ -2,41 +2,77 @@
 #show: template.with(
   title: "Combinatorial Optimization",
   writer: "HADIOUCHE Azouaou",
-  disclaimer: "This course extremely losely follows what Mr.Berrachedi is supposed to mean."
+  disclaimer: [
+    That typed course follows the course Pr.YAGOUNI.
+  ]
 )
 
+#chapter("Introduction")[]
 
-// #chapter("Remainders")[]
-// #section("Unidimensional Optimization")
-// Let $f: I subset RR -> RR$ be a map, we have the following iterative methods to find the extremum points of $f$.
-//
-// + *Newton-Raphson Method:* for $f in cal(C)^2(I)$, we look for $x$ such that $f'(x)=0$, we define the sequence of points as $x_0$ is given near the solution and the iteration $x_(n+1) = x_n - f'(x_n) \/ f''(x_n)$.
-// + *Secant Method:* for $f in cal(C)(I)$, we approximate $f''$ with the secant of $f'$ on the points $(x_(n-1), f'(x_(n-1)))$ and $(x_n, f'(x_n))$, thus we get the iteration $x_(n+1)=x_n - f'(x_n) dot (x_n - x_(n-1))\/(f'(x_n)-f'(x_(n-1)))$.
-// + *Bisection Method:* for $f in cal(C)(I)$, we approximate a zero of $f'$ using bisections, by taking an interval $[a, b]$ and dividing the interval into two parts $[a, (a + b)\/2]$ and $[(a + b)\/2, b]$ and do the same process on the one of them where the function changes the sign.
-//
-// #chapter("Introduction")[
-//   Optimization in general is the process of finding minimum or maximum of numerical functions, i.e. functions $f: E -> RR$ where $E$ is a set. In the case of combinatorial optimization, we consider the set to be discrete, that is, we take the sets to be finite or countable. The notations and the terminology all comes from the Continuous Optimization course.
-// ]
-//
-
-#chapter("Optimization Problems")[]
-
-#nte[
-  These will be added later... probably
-  - Vector comparision
-  - Problem notation
+#def(name: "Information")[
+  An _information_ is the set of data, formulas, rules, results... etc., which results in knowledge and should be interesting, logical, complete, premise... etc.
 ]
 
-#section("Transformation Of C.O. Problems")
-We consider the following integer optimization problem, $
-  ("INP") #h(2mm) cases(
-    max c dot x,
-    A x <= b,
-    x in NN^m
-  )
-$
-with $A in ZZ^(n times m), b in ZZ^m, c in ZZ^m$.
-- A special case of this is a binary variable problem (BVP), where we take the variable we want to optimize on $x$ to be binary, that is, $x in {0, 1}^m$. The knapsack is a special case where the $b$ is the volume and $A$ is the volume of each element, while $c$ is their usefulness and $x$ represents either taking it or not.
+An information goes through the a treatment, for example if we take a rectangle with width $W = 50m$ and height $H = 20m$, to calculate the surface with the formula $S = W dot.c H$ and using it we get $S = 1000m^2$, and each step is information of different types
 
-If we take by hypothesis that $cal(D)$ is bounded, notice that the set $S subset cal(D)$ that satisfies the INP problem are finite.
-#nte[Proof will be written in a bit]
+#align(center)[
+  #table(
+    columns: 3,
+    align: center + horizon,
+    [ $W=50m$ \ $H=20m$ ], 
+    [ $S = W dot.c H$ ], 
+    [ $S = 1000m^2$ ], 
+    [ info. to treat ], 
+    [ treating info. ], 
+    [ treated info. ]
+  )
+]
+
+#def(name: "Algorithm")[
+  An _algorithm_ is a finite sequence of steps that are: elementary, complementary, logical, chronological and non-ambiguous, that transforms a string representing the data to a string representing a solution, a set of solutions or the non-existence of solutions.
+]
+
+Each algorithm has one or many stop condition, taking for example a search algorithm on a list to find the minimum value, the stop condition would be that we passed through all the items of the list, or if we look for some value val, its either passing through all the items of the list or finding the value val.
+
+For a given problem $(cal(P))$, we make an algorithm $cal(A)$ to solve $(cal(P))$, that is an algorithm given any instance $I$ of $(cal(P))$, it returns a solution. The algorithm has the multiple components which include:
+- Constants & Variables:
+  - Constant: a value that stays unchanged throughout the treatment.
+  - Variable: a memory case that can save a value and admits a change through the treatment.
+- Affectations ($:=$): changing the value of a variable.
+- Tests:
+  - Simple Test (if block): a condition only containing the if block
+    ```lua
+      if (condition) 
+        then <action-1>;
+             <action-2>;
+             ...
+             <action-n>
+      end
+    ```
+  - Complete Test (if-else block): a condition containing both if and else
+    ```lua
+      if (condition) 
+        then <action1>;
+        else <action2>;
+      end
+    ```
+  - Complete Composed Test (if-else if-else block): a condition containing if, else, and a set of else if statements
+    ```lua
+      if (condition1)
+        then <action1>;
+      else
+        if (condition2)
+          then <action2>;
+        else 
+          <action3>;
+        end
+      end
+    ```
+#colbreak()
+- Loops:
+  - For Loop
+    ```lua
+      for i = 1 to n do
+        <action>;
+      end
+    ```

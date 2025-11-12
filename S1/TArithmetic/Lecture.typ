@@ -268,13 +268,105 @@ We get a redundant representation since we can represent a number with multiple 
 We went through the way we represent positive integers in multiple systems. Now we will consider the binary system and the goal is to represent negative integers too, for that we will see 3 typical ways to represent them. Consider $w$ the number of bits we will use for the representations and $x=(x_(w-1), dots, x_0) in BB^w$.
 
 #colbreak()
-#subsection("Sign & Magnitude")
-$x$ represents $X = (-1)^(x_(w-1)) dot.c sum_(i=0)^(w-2) x_i 2^i$ as value, the first bit $x_(w-1)$ is called the sign bit while the rest $(x_(w-2), dots, x_0)$ is the magnitude. The range of values that can be represented using this representation is $[-2^(w-1) + 1; 2^(w-1) + 1]$.
+#def(name: "Sign & Magnitude")[
+  - Value: $X = (-1)^(x_(w-1)) dot.c sum_(i=0)^(w-2) x_i 2^i$
+    - $x_(w-1)$ is called the _sign bit_
+    - $(x_(w-2), dots, x_0)$ is the magnitude.
+  - Range: $[|-2^(w-1) + 1; 2^(w-1) + 1|]$.
 
-#subsection("One's Complement")
-$x$ represents $X = -x_(w-1) dot.c (2^(w-1) - 1) + sum_(i=0)^(w-2) x_i 2^i$, and the values in this representation range from $[-2^(w-1) + 1; 2^(w-1) + 1]$.
+  #align(center)[
+    #table(
+      columns: 2,
+      align: left + top,
+      table.header([Pros], [Cons]),
+      [
+        - Simple conceptually.
+        - Easy to negate the values by flipping the sign bit.
+        - Range is balanced evenly around 0 like the unsigned integers with one less bit.
+      ], [
+        - Duplicate value for zero.
+        - Arithmetic operations are done with different circuits.
+        - Overflow detection is more complicated because of the duplicate zero and sign bit.
+      ]
+    )
+  ]
+]
 
-#subsection("Two's Complement")
-$x$ represents $X = -x_(w-1) dot.c 2^(w-1) + sum_(i=0)^(w-2) x_i 2^i$, and the values of this representation range from $[-2^(w-1); 2^(w-1) - 1]$.
+#def(name: "One's Complement")[
+  - Value: $X = -x_(w-1) dot.c (2^(w-1) - 1) + sum_(i=0)^(w-2) x_i 2^i$.
+  - Range: $[|-2^(w-1) + 1; 2^(w-1) + 1|]$.
+
+  #align(center)[
+    #table(
+      columns: 2,
+      align: left + top,
+      table.header([Pros], [Cons]),
+      [
+        - Better for arithmetic with similar circuits to unsigned integers.
+        - Easy to negate the values by inverting all the bits.
+      ], [
+        - Duplicate value for zero.
+        - The range of the representation is asymmetric.
+      ]
+    )
+  ]
+]
+
+#def(name: "Two's Complement")[
+  - Value: $X = -x_(w-1) dot.c 2^(w-1) + sum_(i=0)^(w-2) x_i 2^i$.
+  - Range: $[|-2^(w-1); 2^(w-1) - 1|]$.
+
+  #align(center)[
+    #table(
+      columns: 2,
+      align: left + top,
+      table.header([Pros], [Cons]),
+      [
+        - Single zero representation.
+        - Arithmetic circuits use the exact same as unsigned integers.
+      ], [
+        - The range is asymmetric.
+        - The negation requires extra circuitry.
+      ]
+    )
+  ]
+]
+
+An overflow may happen in all representations, we will give the rules for detecting overflow in addition. Notice that if we add two numbers of different signs then there is no possible overflow. Thus, we will verify it only for numbers with the same sign.
 
 
+#pro(count: false, name: "Properties Of Two's Complement")[\
+  Let $A = a_n a_(n-1) dots a_0$ and $B = b_n b_(n-1) dots b_0$ two numbers represented in the two's complement representation.
+  + $A+B = c_n c_(n-1) dots c_0$ overflows if and only if $a_n = b_n$ and $c_n != a_n$.
+  + $A$ can be represented in $n+d$ bits in two's complement with the representation $A = underbrace(a_n dots a_n, d) a_n dots a_0$.
+]
+
+#prf[
+  #ooc[
+    + We consider the value of $A+B$
+
+    $
+      A+B &= -a_(n) dot.c 2^(n) sum_(i=0)^(n-1) a_i - b_(n) dot.c 2^(n) sum_(i=0)^(n-1) b_i dot.c 2^i \
+      &= - (a_(n) + b_(n)) dot.c 2^(n) + sum_(i=0)^(n-1) (a_i + b_i) 2^i
+    $
+
+  ]
+  + Consider the value of $A' = a_(n+d) a_(n+d-1) dots a_(n+1) a_n dots a_0$, $forall i in [|1, d|], a_(n+i) = a_n$
+  $
+    A' &= - a_(n+d) dot.c 2^(n+d) + sum_(i=0)^(n+d-1) a_i dot.c 2^i\
+    &= - a_(n) dot.c 2^(n+d) + a_n sum_(i=0)^(d-1) 2^(n+i) + sum_(i=0)^(n-1) a_i dot.c 2^i = - a_n dot.c sum_(i=0)^(d) 2^(n+i) + sum_(i=0)^(n-1) a_i dot.c 2^i\
+    &= -a_n 2^n dot.c (1-2^(d+1))/(1-2) + sum_(i=0)^(n-1) a_i dot.c 2^i = -a_n 2^n dot.c (2^(d+1) - 1) + sum_(i=0)^(n-1) a_i dot.c 2^i
+  $
+  by truncating the first $n$ elements we get $- a_n 2^n dot.c (2 - 1) + sum_(i=0)^(n-1) a_i dot.c 2^i = A$.
+]
+
+#section("Decimal Representations In Binary")
+After representing integers with binary, we will represent numbers with decimal digits. So we consider the following representations, we take 
+
+#def(name: "Fixed Point Representation")[\
+  Let $x = x_(w-1) x_(w-2) dots x_(0) x_(-1) dots x_(-m) in BB^(w + m)$.
+  - Value: $-x_(w-1) dot.c 2^(w - 1) + sum_(i=-m)^(w-2) x_i dot.c 2^i$
+  - Range: $[|-2^(n-1); 2^(n-1) - 1|]\/2^m$.
+
+  We denote the values represented in this fixed point system as $Q_(n.m)$ where $n$ is the number of bits for integers and $m$ the number of bits for the decimal part.
+]
