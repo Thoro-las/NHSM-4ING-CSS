@@ -9,7 +9,7 @@
 #let iso = $tilde.equiv$
 #let char = math.op("Char")
 
-#section("Tutorial Series 1: Embeddings", level: 1)
+#section("Embeddings", level: 1)
 #exr[
   Consider the ring of polynomials $ZZ[X]$ with indeterminate $X$.
 ]
@@ -176,7 +176,7 @@ $ thus $alpha$ is a primitive element.
 
 #pagebreak()
 #__cbox-count.update(0)
-#section("Tutorial Series 2: Finite Fields", level: 1)
+#section("Finite Fields", level: 1)
 #exr[
   Decide whether there exists a finite field having the given number of elements.
   $ 4095 #h(2mm) - #h(2mm) 191 #h(2mm) - #h(2mm) 12345678910\ 81 #h(2mm) - #h(2mm) 12396 #h(2mm) - #h(2mm) 128 $

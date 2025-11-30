@@ -34,45 +34,47 @@ An information goes through the a treatment, for example if we take a rectangle 
 
 Each algorithm has one or many stop condition, taking for example a search algorithm on a list to find the minimum value, the stop condition would be that we passed through all the items of the list, or if we look for some value val, its either passing through all the items of the list or finding the value val.
 
-For a given problem $(cal(P))$, we make an algorithm $cal(A)$ to solve $(cal(P))$, that is an algorithm given any instance $I$ of $(cal(P))$, it returns a solution. The algorithm has the multiple components which include:
-- Constants & Variables:
-  - Constant: a value that stays unchanged throughout the treatment.
-  - Variable: a memory case that can save a value and admits a change through the treatment.
-- Affectations ($:=$): changing the value of a variable.
-- Tests:
-  - Simple Test (if block): a condition only containing the if block
-    ```lua
-      if (condition) 
-        then <action-1>;
-             <action-2>;
-             ...
-             <action-n>
-      end
-    ```
-  - Complete Test (if-else block): a condition containing both if and else
-    ```lua
-      if (condition) 
-        then <action1>;
-        else <action2>;
-      end
-    ```
-  - Complete Composed Test (if-else if-else block): a condition containing if, else, and a set of else if statements
-    ```lua
-      if (condition1)
-        then <action1>;
-      else
-        if (condition2)
-          then <action2>;
-        else 
-          <action3>;
-        end
-      end
-    ```
-#colbreak()
-- Loops:
-  - For Loop
-    ```lua
-      for i = 1 to n do
-        <action>;
-      end
-    ```
+// For a given problem $(cal(P))$, we make an algorithm $cal(A)$ to solve $(cal(P))$, that is an algorithm given any instance $I$ of $(cal(P))$, it returns a solution. The algorithm has the multiple components which include:
+// - Constants & Variables:
+//   - Constant: a value that stays unchanged throughout the treatment.
+//   - Variable: a memory case that can save a value and admits a change through the treatment.
+// - Affectations ($:=$): changing the value of a variable.
+// - Tests:
+//   - Simple Test (if block): a condition only containing the if block
+//     #code(```pcode
+//       if (condition) 
+//         then <action-1>;
+//              <action-2>;
+//              ...
+//              <action-n>
+//       end
+//     ```)
+//   - Complete Test (if-else block): a condition containing both if and else
+//     #code(```pcode
+//       if (condition) 
+//         then <action1>;
+//         else <action2>;
+//       end
+//     ```)
+//   - Complete Composed Test (if-else if-else block): a condition containing if, else, and a set of else if statements
+//     #code(```pcode
+//       if (condition1)
+//         then <action1>;
+//       else
+//         if (condition2)
+//           then <action2>;
+//         else 
+//           <action3>;
+//         end
+//       end
+//     ```)
+// #colbreak()
+// - Loops:
+//   - For Loop
+//     #code(```pcode
+//       for i = 1 to n do
+//         <action>;
+//       end
+//     ```)
+//
+//

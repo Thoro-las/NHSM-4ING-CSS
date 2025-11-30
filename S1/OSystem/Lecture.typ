@@ -6,11 +6,7 @@
   disclaimer: [Man... Not sure if there is a course, but it follows what is supposed to be in it. Presented by Mr. METROUH. For the purposes of a better understanding of the course, a small library of operations and functions is made to run the programs that will be given in the course. A proper implementation will be found later.]
 )
 
-#set table(
-  fill: (x, _) => if (x == 0) { color.oklch(95%, 12%, 190deg, 40%) },
-  stroke: 0.5mm + color.oklch(66%, 60%, 190deg, 100%)
-)
-
+#set raw(lang: "pcode")
 #show table: content => align(center)[#content]
 
 #chapter([Operating Systems])[
@@ -78,7 +74,7 @@ The usual architecture we use in this case is the Von Neumann architecture to re
 + *Fifth Generation (After 2000s):* The evolution of rebost, secure and cross-platform operating systems that give the best user experience and more user-friendly services and the birth of mobile computers and laptops for portability.
 
 #chapter([Process Management])[
-  Process management is the part of the operating system that is responsible for the creation, execution, synchronization and termination of processes. The goal is to have the best algorithms for sharing and managing the resources of the computer to maximize efficency.
+  Process management is the part of the operating system that is responsible for the creation, execution, synchronization, and termination of processes. The goal is to have the best algorithms for sharing and managing the resources of the computer to maximize efficiency.
 ]
 
 #section("Basic Concepts")
@@ -128,100 +124,135 @@ We will check some standard algorithms for process scheduling.
 #subsection("Process Scheduling Algorithms")
 In the scheduling information of the PCB, we have some parameters that we will use, in each algorithm we have extra information that we will give and how they are used in the algorithm.
 
-#v(5mm)
-+ *FCFS: First-Come, First-Served.*
-  #table(
-    columns: (25%, 75%),
-    align: left + horizon,
-    [*Workflow*], [the processes are executed in their order in the queue.],
-    [*Pros*], [
-      - easy to implement.
-      - fastest execution time.
-    ],
-    [*Cons*], [
-      - short processes may take long to execute.
-      - processes blocking others from execution.
-    ]
-  )
+#alg(name: "FCFS: First-Come, First-Server", ovcount: false)[
+  - *Workflow:* the processes are executed in their order in the queue.
+  - *Advantages:*
+    - Easy to implement.
+    - Fastest execution time.
+  - *Disadvantages:*
+    - Short processes may take long to execute.
+    - Processes blocking others from execution.
+  - *Implementation:*
+    #code(
+      ```
+      type Process
+        - id: identifier
+        - arrival_time: the arrival time
+        - burst_time: time needed for the process
+        - done: is the process done
 
-#let code(title: none, link: none, code) = [
-  #align(center)[
-    #block(
-      fill: color.rgb("#282C34"),
-      inset: 3mm,
-      width: 90%,
-      radius: 1mm,
-      code
+      algorithm FCFS
+        input:
+          - processes: process queue
+
+        sort(processes, arrive_time)
+        current_time = 0
+
+        for process in processes do
+          if current_time < process.arrival_time
+            current_time = process.arrival_time
+          end
+        end
+      ```
     )
-  ]
 ]
 
-#code(```py
-class FCFS(Algorithm):
-  def preprocess(self, processes):
-    return processes.sort(lambda p: p.arrival_time)
+#alg(ovcount: false, name: "SJN: Shortest Job Next.")[
+  - *Workflow* the processes are sorted by burst time from shortest to longest and then executed in this order.
+  - *Pros* 
+    - minimizes time between arrival and completion.
+    - short processes are done quicker.
+  
+  - *Cons* 
+    - slower execution by the sorting.
+    - more complicated to implement.
+    - starvation of longer processes.
+  
+  #code(
+    ```
+    type Process
+      - id: identifier
+      - arrival_time: the arrival time
+      - burst_time: time needed for the process
+      - done: is the process done
 
-  def schedule(self, processes, time):
-    return processes.dequeue()
-```)
+    algorithm SJF
+      input:
+        - processes: process queue
 
-+ *SJN: Shortest Job Next.*
-  #table(
-    columns: (25%, 75%),
-    align: left + horizon,
-    [*Information*], [
-      - _burst time:_ the amount of time needed to complete.
-    ],
-    [*Workflow*], [the processes are sorted by burst time, from shortest to longest, and then executed in this order.],
-    [*Pros*], [
-      - minimizes time between arrival and completion.
-      - short processes are done quicker.
-    ],
-    [*Cons*], [
-      - slower execution by the sorting.
-      - more complicated to implement.
-      - starvation of longer processes.
-    ]
+      sort(processes, burst_time)
+      while not all(processes, done)
+        - get the list of processes not done.
+        - execute the first process until its done.
+      end
+    ```
   )
+]
 
-+ *Priority Scheduling*
+#alg(name: "Priority Scheduling", ovcount: false)[
+  - *Workflow:* the processes are sorted by process priority from highest to lowest and then executed in this order.
+  - *Advantages:*
+    - prioritizes critical processes.
+    - allows control on processes.
+  
+  - *Disadvantages:*
+    - slower execution by the sorting.
+    - starvation of processes with low priority.
+    
+  #code(
+    ```
+    type Process
+      - id: identifier
+      - arrival_time: the arrival time
+      - burst_time: time needed for the process
+      - priority: priority of the process
+      - done: is the process done
 
-  #table(
-    columns: (25%, 75%),
-    align: left + horizon,
-    [*Information*], [
-      - _priority:_ an integer determining process priority.
-    ],
-    [*Workflow*], [the processes are sorted by process priority, from highest to lowest, and then executed in this order.],
-    [*Pros*], [
-      - prioritizes critical processes.
-      - allows control on processes.
-    ],
-    [*Cons*], [
-      - slower execution by the sorting.
-      - starvation of processes with low priority.
-    ]
+    algorithm PriorityScheduling
+      input:
+        - processes: process queue
+
+      sort(processes, priority)
+      while not all(processes, done)
+        - get the list of processes not done.
+        - execute the first process until its done.
+      end
+    ```
   )
+]
 
-+ *RR: Round Robin*
-  #table(
-    columns: (25%, 75%),
-    align: left + horizon,
-    [*Information*], [
-      - _quantum:_ fixed amount of CPU time.
-    ],
-    [*Workflow*], [
-      each process is given a quantum in CPU time and processes are executed in rotation.
-    ],
-    [*Pros*], [
-      - easy implementation.
-      - improved response time.
-      - fairness in distribution of resources to process.
-    ],
-    [*Cons*], [
-      - efficency depends on quantum size.
-    ]
+#alg(name: [RR: Round Robin], ovcount: false)[
+  - *Workflow:*
+    each process is given a quantum in CPU time and processes are executed in rotation.
+  
+  - *Advantages:*
+    - easy implementation.
+    - improved response time.
+    - fairness in distribution of resources to process.
+  
+  - *Disadvantages:*
+    - efficency depends on quantum size.
+  
+  #code(
+    ```
+    type Process
+      - id: identifier
+      - arrival_time: the arrival time
+      - burst_time: time needed for the process
+      - done: is the process done
+
+    algorithm PriorityScheduling
+      input:
+        - processes: process queue
+
+      sort(processes, priority)
+      while not all(processes, done)
+        - get the list of processes not done.
+        - execute the first process until its done.
+      end
+    ```
   )
+]
 
 
 + *Multilevel Queue Scheduling*
@@ -267,44 +298,8 @@ Processes need to use common resources or communicate throughout their execution
 #subsection([Processes Communication])
 + *Pipes:* provide a uni-directional communication channel between processes, usually between a parent process and its children processes.
 + *Message Queues:* allows the exchange of message between processes through a messages queue.
-+ *Shared Memory:* multiple processes can access the same region of memory like files and allows a fast and efficent communication.
++ *Shared Memory:* multiple processes can access the same region of memory like files and allows a fast and efficient communication.
 + *Sockets:* a socket enables communication over a network using some protocols for exchanging data such as TCP/IP or UDP.
-#nte[Will be finished soon]
-
 #subsection([Processes Synchronization])
 
-```java
-class Mutex {
-  private boolean locked = false;
-  
-  public void lock() {
-    while (locked) wait();
-    locked = true;
-  }
-  
-  public void unlock() { locked = false; }
-}
-
-public class MutexSimulation {
-  static int sharedCounter = 0;
-  static Mutex mutex = new Mutex();
-  
-  static void process(int processId) {
-    mutex.lock();
-    
-    sharedCounter++;
-    System.out.println("Process " + processId);
-    System.out.println(": counter = " + sharedCounter);
-    
-    mutex.unlock();
-  }
-  
-  public static void main(String[] args) {
-    process(1);
-    process(2);
-    process(3);
-    
-    System.out.println("Final counter: " + sharedCounter);
-  }
-}
-```
++ *Mutex-Locks*:

@@ -1,0 +1,3 @@
+class Mutex:
+    locked = False
+

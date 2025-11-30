@@ -6,7 +6,6 @@
   writer: "HADIOUCHE Azouaou",
   disclaimer: [This document contains the lectures given by Dr.ZAIMI.],
   comment: [Some contents were added as remainders and extras for the students.],
-  summarize: true
 )
 
 #let subset = $subset.eq$
@@ -17,6 +16,8 @@
 #let iso = $tilde.equiv$
 #let char = math.op("Char")
 #let card = math.op("#")
+#let Aut = math.op("Aut")
+#let order = math.op("order")
 
 #chapter("Remainders", num: 0)[
   This part will just be a remainder of the important definitions, propositions, and theorems of the field extension course that are needed for this course. We assume that rings in this case are commutative rings with unity.
@@ -463,7 +464,6 @@ Using Proposition 1.1.6, we deduce that $f$ is an automorphism of $FF_q$.
 //   Let $p$ prime $FF_p subset FF_(p^2) subset FF_(p^6)$. We have $[FF_(p^2) : FF_p] = 2$, $[FF_(p^6):FF_p]=6$, $[FF_(p^6):FF_(p^2)]=3$ and take $FF_(p^2) = FF_p (eta)$, $FF_(p^6) = FF_p (theta)$. We have that the set of emebeddings from $FF_(p^6) = FF_p (theta)$ into $overline(FF_p)$ are ${f^i}_(i in [|1, 6|])$ with $f(alpha) = alpha^p$.
 // ]
 //
-#nte[Some things may be missing here]
 
 #chapter("Normal Extensions")[
   In what follows $K$ denotes a field, $overline(K)$ an algebraic closure of $K$ and $P(X)$ a non-constant polynomial.
@@ -588,7 +588,7 @@ The extension exists since $overline(K) \/ K$ is normal and by the Proposition 3
     - Since $L\/K$ is finite then $L = K(alpha_1, dots, alpha_n)$ using the multiplicativity property of degree and separable degree we obtain the result.
 ]
 
-#def(name: "Separable Extension/Polynomial/Element")[
+#def(name: "Separable Finite Extension/Polynomial/Element")[
   + Let $L\/K$ be a finite extension then we say that $L\/K$ is separable if $[L:K]_s = [L:K]$.
   + A polynomial $P in K[X]$ with $deg P >= 1$ is said to be separable if its zeros in an algebraically closed field $Omega$ are distinct.
   + Let $alpha in overline(K)$, we say that $alpha$ is separable if $Irr(alpha, K, X)$ is separable.
@@ -630,3 +630,154 @@ The extension exists since $overline(K) \/ K$ is normal and by the Proposition 3
 #pro[
   Let $K subset L subset M$ be a tower of fields then $M\/K$ separable $<=>$ $M\/L$ and $L\/K$ separable.
 ]
+
+#prf[
+  $=>$ suppose $M\/K$ is separable, then $forall alpha in M, alpha$ is separable over $K$, and thus $forall alpha in L subset M, alpha$ is separable over $K$ thus $L\/K$ is separable. Let $alpha in M$, $alpha$ is separable over $K$ then $Irr(alpha, K, X)$ is separable, since $Irr(alpha, K, X) in K[X]$ then $alpha$ is separable over $L$.
+
+  $arrow.double.l$ suppose $M\/L$ and $L\/K$ are separable, let $alpha in M$, $alpha$ is separable over $L$. Consider $Irr(alpha, K, X)=X^d + a_(d-1) X^(d-1) + dots.c + a_1 X + a_0 in L[X]$, consider $L' = K(a_0, dots, a_(d-1)) subset L$, we have by induction that $forall i in [|0; n|], [K(a_0, dots, a_i) : K(a_0, dots, a_(i-1))]_s = [K(a_0, dots, a_i) : K(a_0, dots, a_(i-1))]$ because $a_i$ is separable over $K$ thus over any field containing $K$, by Proposition $4.1$ we have that $[L':K]_s = [L':K]$. Also $[L'(alpha):L']_s = [L'(alpha):L']$ because the separable polynomial $Irr(alpha, L, X) in L'[X]$, again by Proposition $4.1$ $[L'(alpha):K]_s = [L'(alpha):K]$ thus $alpha$ is separable over $K$.
+]
+
+#cor[
+  Let $K\/L$ be a finite separable extension, then $exists theta in L$ such that $L = K(theta)$.
+]
+
+#prf[
+  If $K$ if finite, then $L$ is finite and thus $L = K(theta)$ where $theta$ is the generator of $L^*$. Now if $K$ is infinite, we follow the same steps as Proposition 1.2.12.
+]
+
+#def(name: "Galois Extension")[
+  A field extension $L\/K$ is said to be Galois if it is normal and separable.
+]
+
+#exm(count: true)[
+  + $K\/K$ is Galois.
+  + $overline(K)\/K$ is Galois.
+  + $QQ(sqrt(m))\/QQ$ with $m$ square free integer
+]
+
+#def(name: "Fixed Field", count: false)[
+ Let $L$ be a field and $S subset Aut(L)$, the set $L^S$ defined as $L^S = {alpha in L | forall sigma in S, sigma(alpha) = alpha}$ is the _fixed field_ of $S$ in $L$.
+]
+
+#pro[
+  Let $L$ be a field and the set of automorphisms of $L$, denoted $Aut(L)$.
+  + $(Aut(L), compose)$ is a group.
+  + Let $S subset Aut(L)$, then $L^(S)$ is a subfield of $L$.
+]
+
+#prf[
+  // #ooc[It is clear that $(Aut(L), compose)$ is a subgroup of $(L^L, compose)$ since the composition of automorphisms is an automorphism and the inverse of an automorphism is also an automorphism. $L^S$ is a subfield since $sigma(alpha + beta) = sigma(alpha) + sigma(beta)$, $sigma(alpha beta)=sigma(alpha)sigma(beta)$ and $sigma(alpha^(-1))=sigma(alpha)^(-1)$.]
+  Trivial ?
+]
+
+#nte(count: true)[
+  Let $L\/K$ be a Galois extension of degree $n$, then $L = K(theta)$ for some $theta in L$ because $L\/K$ is separable and there are exactly $n$ $K$-embeddings of $L$ into an algebraically closed field $Omega$ which are automorphisms, let $G(L\/K)$ be the set of such $K$-automorphisms, then $card G(L\/K) = n$ and $G(L\/K) subset Aut(L)$.
+]
+
+#def(name: "Galois Group", count: false)[
+  Let $L\/K$ be an extension, the set of all $K$-automorphisms of $L$ is called the Galois group of the extension $L\/K$ and we denote it $G(L\/K)$.
+  - $L\/K$ is said to be abelian if $G(L\/K)$ is abelian.
+  - $L\/K$ is said to be cyclic if $G(L\/K)$ is cyclic.
+]
+
+#thm[
+  Let $L\/K$ be a Galois field extension of degree $n$, then $G(L\/K)$ the set of all $K$-automorphisms of $L$ is a subgroup of $Aut(L)$. Moreover, if $H$ is a subgroup of $G(L, K)$ then $L^(H) = K => H = G(L\/K)$.
+]
+
+#prf[
+  
+]
+
+#nte(count: false)[
+  #text(fill: red, [COURSE NOT FINISHED])
+]
+
+#chapter("Groups")[]
+
+#section[Remainders]
+#def(count: false, name: "Group/Subgroup")[
+  A non-empty set $G$ and an operation $dot.c: G times G -> G$ is said to be a _group_ if
+  - Closure: $dot.c$ is well defined, that is, $forall x,y in G, x dot.c y in G$.
+  - Associativity: $forall x, y, z in G, x dot.c y dot.c z = (x dot.c y) dot.c z = x dot.c (y dot.c z)$.
+  - Neutral Element: $exists e in G, forall x in G, x dot.c e = e dot.c x = x$.
+  - Inverse Element: $forall x in G, exists x^(-1) in G, x dot.c x^(-1) = x^(-1) dot.c x = e$.
+  $G$ is said to be abelian if $forall x, y in G, x dot.c y = y dot.c x$. $H subset G$ is said to be a subgroup of $G$ if $(H, dot.c)$ is also a group.
+]
+
+The most import groups include $
+  (ZZ, +) quad (QQ, +) quad (RR, +) quad (CC, +) quad (ZZ_n, +_(mod n))\
+  (QQ^*, dot.c) quad (RR^*, dot.c) quad (CC^*, dot.c) quad ({-1, 1}, dot.c)
+$
+To simplify notation we denote $x dot.c y = x y$. We also have $S_n$ the set of bijections from $[|1, n|]$ to itself called the symmetric group, we represent the permutation $sigma: [|1, n|] -> [|1, n|]$ as $
+  sigma = mat(
+    1, 2, 3, dots.c, n;
+    sigma_(1), sigma_(2), sigma_(3), dots.c, sigma_(n);
+  )
+$
+
+#pro(count: false)[
+  Let $G$ be a group and $H subset G$, if $H$ is finite then $H$ is a subgroup of $G$ $<=>$ $forall x, y in H, x dot.c y in H$.
+]
+
+#def(name: "Order", count: false)[
+  Let $G$ be a group and $g in G$.
+  - The order of $g$ is the smallest positive integer such that $g^n = e$.
+  - The order of $G$ is the cardinality of $G$.
+  We denote them as $o(dot.c)$, if the order does not exist then $o(g) = infinity$.
+]
+
+#pro(count: false)[
+  Let $G$ be a group and $g in G$.
+  - $o(g) = o(g^(-1))$.
+  - Lagrange: $o(g)$ divides $o(G)$.
+]
+
+#def(name: "Cyclic", count: false)[
+  Let $G$ be a group and $g in G$, we say that $G$ is cyclic $G = angle.l g angle.r = {g^n | n in NN}$.
+]
+
+#pro(count: false)[
+  A subgroup of a cyclic group is cyclic.
+]
+
+#def(name: "Homomorphism", count: false)[
+  Let $G, G'$ two groups, $f: G -> G'$, $f$ is said to be a homomorphism if $forall x,y in G, f(x y) = f(x) f(y)$. $f$ is said to be an isomorphism if $f$ is bijective.
+]
+
+#pro(count: false)[
+  Let $f: G -> G'$ be a group homomorphism.
+  - $Ker f = {x in G | f(x) = e'}$ is a subgroup of $G$.
+  - $Im f = f(G)$ is a subgroup of $G'$.
+  - $f$ injective $<=>$ $Ker f = {e'}$.
+  - $f$ surjective $<=>$ $Im f = G'$.
+]
+
+#def(name: "Cosets", count: false)[
+  Let $G$ be a group, $H subset G$ a subgroup and $a in G$.
+  - Left Coset: $a H = {a h | h in H}$.
+  - Right Coset: $H a = {h a | h in H}$.
+]
+
+#pro(count: false)[
+  Let $G$ be a group, $H subset G$ a subgroup and $a, b in G$.
+  - $a H = H => a in H$.
+  - $a H = b H => b^(-1) a in H$.
+  - There is a bijection between left cosets and right cosets and we denote the number of cosets as $(G:H)$, if $G$ and $H$ are finite then $(G:H) = card G \/ card H$.
+]
+
+#def(name: "Normal Subgroup/Quotient Group", count: false)[
+  Let $G$ be a group, $H subset G$ a subgroup, $H$ is said to be a normal subgroup if $forall a in G, a H = H a$ or equivalently $forall a in G, a H a^(-1) = H$. If $H$ is normal we define the quotient group $G\/H = {a H | a in G}$ with the operation $a H dot.c b H = a b H$.
+]
+
+#thm(name: "First Isomorphism Theorem", count: false)[
+  Let $f: G -> G'$ be a group homomorphism then we have $Ker f$ is a normal subgroup of $G$ and we have that $G \/ Ker f iso Im f$.
+]
+
+#section[Some Prelimining Results]
+#lem[
+  Let $G$ such that $G != {e}$ be a group without non-trivial subgroups, then $G$ is finite and $card G$ is prime.
+]
+//
+// #prf[
+//   Recall that if $card G = p$ prime by Lagrange there are no trivial subgroups in $G$. Since $G != {e}$ then $exists g in G\\{e}$, then $G = angle.l g angle.r$ so $G$ is cyclic.
+// ]
