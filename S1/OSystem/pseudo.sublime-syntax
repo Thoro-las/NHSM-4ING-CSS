@@ -1,0 +1,109 @@
+%YAML 1.2
+---
+name: Thorolas Pseudocode
+file_extensions:
+  - thrpseudo
+  - tpc
+scope: source.tpc
+
+contexts:
+  ##############################################
+  # MAIN CONTEXT
+  ##############################################
+  main:
+    - include: comments
+    - include: strings
+    - include: keywords
+    - include: numbers
+    - include: types
+    - include: identifiers
+    - include: operators
+    - include: punctuation
+
+  ##############################################
+  # COMMENTS
+  ##############################################
+  comments:
+    # // line comment
+    - match: '//.*$'
+      scope: comment.line.double-slash.pjava
+
+    # /* block comment */
+    - match: '/\*'
+      scope: punctuation.definition.comment.begin.pjava
+      push: block-comment
+
+  block-comment:
+    - meta_scope: comment.block.pjava
+    - match: '\*/'
+      scope: punctuation.definition.comment.end.pjava
+      pop: true
+
+  ##############################################
+  # STRINGS
+  ##############################################
+  strings:
+    - match: '"'
+      scope: punctuation.definition.string.begin.pjava
+      push: string
+
+  string:
+    - meta_scope: string.quoted.double.pjava
+    - match: '\\.'
+      scope: constant.character.escape.pjava
+    - match: '"'
+      scope: punctuation.definition.string.end.pjava
+      pop: true
+
+  ##############################################
+  # NUMBERS
+  ##############################################
+  numbers:
+    - match: '\b\d+\.\d+\b'
+      scope: constant.numeric.float.pjava
+    - match: '\b\d+\b'
+      scope: constant.numeric.integer.pjava
+
+  ##############################################
+  # KEYWORDS
+  ##############################################
+  keywords:
+    - match: \b(class|extends|return|if|else|while|for|break|continue|new)\b
+      scope: keyword.control.pjava
+
+    - match: \b(true|false|null)\b
+      scope: constant.language.pjava
+
+  ##############################################
+  # TYPES
+  ##############################################
+  types:
+    - match: \b(int|float|bool|string|void)\b
+      scope: storage.type.pjava
+
+  ##############################################
+  # IDENTIFIERS & FUNCTIONS
+  ##############################################
+  identifiers:
+    # function definitions: int myFunc(
+    - match: \b([A-Za-z_]\w*)\s*(?=\()
+      captures:
+        1: entity.name.function.pjava
+
+    # general identifier
+    - match: \b[A-Za-z_]\w*\b
+      scope: variable.other.pjava
+
+  ##############################################
+  # OPERATORS
+  ##############################################
+  operators:
+    - match: '==|!=|<=|>=|&&|\|\||\+|\-|\*|/|=|<|>'
+      scope: keyword.operator.pjava
+
+  ##############################################
+  # PUNCTUATION
+  ##############################################
+  punctuation:
+    - match: '[{}();,]'
+      scope: punctuation.terminator.pjava

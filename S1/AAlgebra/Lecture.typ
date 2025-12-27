@@ -7,6 +7,7 @@
   disclaimer: [This document contains the lectures given by Dr.ZAIMI.],
   comment: [Some contents were added as remainders and extras for the students.],
 )
+#set enum(numbering: "1.1.")
 
 #let subset = $subset.eq$
 #let Id = math.op("Id")
@@ -547,7 +548,7 @@ Using Proposition 1.1.6, we deduce that $f$ is an automorphism of $FF_q$.
 - If $L\/K$ and $M\/L$ are normal then $M\/K$ is not necessarily normal. Notice that $K = QQ subset L = QQ(sqrt(2)) subset M = QQ(root(4, 2))$ are both normal but the overall extension is not normal.
 
 #pro[
-  Let $M\/K$ be an algebraic extension and let $(F_i)_(i in I)$ be a family of intermediate fields $forall i in I, K subset F_i subset M$ such that $F_i \/ K$ is normal, then $inter.big_(i in I) F_i\/K$ is normal.
+  Let $M\/K$ be an algebraic extension and let $(F_i)_(i in I)$ be a family of intermediate fields $forall i in I, K subset F_i subset M$ such that $F_i \/ K$ is normal, then $(inter.big_(i in I) F_i)\/K$ is normal.
 ]
 
 #prf[
@@ -567,6 +568,8 @@ The extension exists since $overline(K) \/ K$ is normal and by the Proposition 3
 
 #chapter("Separable Extensions")[]
 
+#v(-0.6cm)
+
 #pro(count: false)[
   Let $L\/K$ be an algebraic extension and let $tau_1$ and $tau_2$ be two embeddings of $K$ into an algebraically closed field $Omega$. Let $E_1$, $E_2$ be the set of extensions of $tau_1, tau_2$ into $Omega$ respectively, then there is a bijection between $E_1$ and $E_2$.
 ]
@@ -578,12 +581,23 @@ The extension exists since $overline(K) \/ K$ is normal and by the Proposition 3
 #pro[
   + Let $K subset L subset M$ be a tower of algebraic extensions then the separable degree satisfies $[M:K]_s = [M:L]_s dot.c [L:K]_s$.
   + If $L\/K$ is a finite extension then $[L:K]_s <= [L:K]$.
+
+  #prfout[
+    + + Consider ${sigma_i: L -> Omega | i in I}$ the set of extensions of $tau$ to $L$ and extend each $sigma_i$ to $M$ which gives ${sigma_i^j | j in J}$.
+      + Deduce that $[M:K]_s >= [M:L]_s [L:K]_s$.
+      + Consider an embedding $phi: M -> Omega$.
+      + Restrict to $K, L$ and deduce that $exists (i, j) in I times J, phi equiv sigma_i^j$.
+      + Deduce that $[M:K]_s <= [M:L]_s [L:K]_s$.
+    + + Deduce from Corollary 1.1.5 that $[K(alpha):K]_s <= [K(alpha):K]$.
+      + Deduce $[K(alpha, beta):K]_s <= [K(alpha, beta):K]$ ($K(alpha, beta) = K(alpha)(beta)$).
+      + By induction $[L: K]_s <= [L:K]$.
+  ]
 ]
 
 #prf[
   + Let $tau$ be an embedding of $K$ into $Omega$ an algebraically closed field, let ${sigma_i | i in I}$ be the set of extensions of $tau$ into $L$. Each extension $sigma_i$ has extension to $M$, we denote the set of those extensions of $sigma_i$ as ${sigma_i^j | j in J}$, so $tau$ has $card I dot.c card J$ extensions into $M$ so we get $[M:K]_s >= [M:L]_s dot.c [L:K]_s$. Now let $phi$ be an embedding of $M$ into $Omega$, then the restriction of $phi$ to $L$ is an embedding of $L$ into $Omega$ and so $phi=sigma_i^j$ for some $(i, j) in I times J$, hence $[M:K]_s <= [M:L]_s dot.c [L:K]_s$ and we get the result $[M:K]_s = [M:L]_s dot.c [L:K]_s$.
   + 
-    - Suppose $L = K(alpha)$, we have that $[K(alpha):K]$ is the number of embeddings of $K(alpha)$ into $Omega$ which is the number of distinct conjugates of $alpha$ over $K$ which is less than the degree of the minimal polynomial of alpha thus $[K(alpha):K] <= deg(Irr(alpha, K, X)) = [K(alpha):K]$.
+    - Suppose $L = K(alpha)$, we have that $[K(alpha):K]$ is the number of embeddings of $K(alpha)$ into $Omega$ which is the number of distinct conjugates of $alpha$ over $K$ which is less than the degree of the minimal polynomial of $alpha$ thus $[K(alpha):K]_s <= deg(Irr(alpha, K, X)) = [K(alpha):K]$.
     - Suppose that $L = K(alpha, beta)$, we have that $K subset K(alpha) subset K(alpha)(beta) = K(alpha, beta)$. By applying the first case we have that $[K(alpha):K]_s <= [K(alpha):K]$ and $[K(alpha)(beta):K(alpha)]_s <= [K(alpha)(beta):K(alpha)]$ and by using the 1. we get $[K(alpha)(beta):K(alpha)]_s dot.c [K(alpha):K]_s <= [K(alpha)(beta):K(alpha)] dot.c [K(alpha):K]$ we obtain directly the result that $[K(alpha, beta):K]_s <= [K(alpha, beta):K]$.
     - Since $L\/K$ is finite then $L = K(alpha_1, dots, alpha_n)$ using the multiplicativity property of degree and separable degree we obtain the result.
 ]
@@ -599,14 +613,11 @@ The extension exists since $overline(K) \/ K$ is normal and by the Proposition 3
 ]
 
 #pro[
-  Let $L\/K$ be a finite extension such that $K$ is finite or $char K = 0$, then $L\/K$ is separable.
-]
+  Let $L\/K$ be a finite extension such that $K$ is finite or $char K = 0$, then $L\/K$ is separable. ]
 
 #prf[
   From Theorem $1.2.12$ and Corollary $2.1.5$, there is $theta in L$ such that $L = K(theta)$ since $Irr(theta, K, X)$ is irreducible it is separable when $char K = 0$ by Corollary $1.2.10$. Also when $K$ is finite $=>$ $L$ is finite, say $card L = p^n$ hence $theta$ is a zero of $X^(p^n) - X in FF_p [X] subset K[X]$ which is separable then we can conclude from Proposition $4.3$.
 ]
-
-#colbreak()
 
 #exm(count: true)[
   - Let $p$ be prime $K = FF_p (y^p)$ and $L = FF_p (y)$, we have that $FF_p subset K subset L = K(y)$ since $y$ is a zero of $X^p - y^p in K[X]$ then $L\/K$ is finite with $[L:K] <= p$, and $Irr(y, K, X)$ divides $X^p - y^p = (X - y)^p$ then $Irr(y, K, X) = (X-y)^t$ with $1 <= t <= p$. Indeed,, if $t=1$ then $y in K$ and so $y = P(y^p)\/Q(y^p)$ for some $P, Q in FF_p [X]$ then $y Q(y^p) = P(y^p)$ but $(y Q(y^p))' = Q(y^p) + y p Q'(y^p) = Q(y^p)$ and $(P(y^p))' = 0$ thus $Q(y^p) = 0$ which is a contradiction.
@@ -777,7 +788,171 @@ $
 #lem[
   Let $G$ such that $G != {e}$ be a group without non-trivial subgroups, then $G$ is finite and $card G$ is prime.
 ]
-//
+
 // #prf[
 //   Recall that if $card G = p$ prime by Lagrange there are no trivial subgroups in $G$. Since $G != {e}$ then $exists g in G\\{e}$, then $G = angle.l g angle.r$ so $G$ is cyclic.
 // ]
+
+#pro(name: "Cauchy's Lemma")[
+  Let $G$ be a finite abelian group, if $p$ is prime dividing $card G$ then there is a subgroup $H$ subset $G$ with $card H = p$.
+]
+
+#prf[
+  By induction on $card G$.
+  - It is trivial for $card G = 1$.
+  - Suppose it is true for all $k <= n$
+    - If $G$ has no proper subgroup, then $card G$ is prime so all its divisors are $p$ and $1$ thus the subgroups are $G$ and ${e}$.
+    - Assume that $G$ has a proper subgroup $K$
+      - If $p divides card K$ then it satisfies the induction hypothesis and thus there is a subgroup of order $p$ of $K$ and thus a subgroup of $G$.
+      - If $p divides.not card K$ then by considering $G\/K$, $card(G\/K) = card G \/ card K$ and since $p divides card G$ and $p divides.not card K$ then $p divides card(G\/K)$ so by hypothesis there is a subgroup $b K$, then $(b K)^p = K$ and $b K != K$, let $m = card K$ then $b^p in K => (b^p)^m = e$. Take $a=b^m$, $a^p =e$, assume that $a=e$ then $b^m = e$ so $p$ divides $m$ which is a contradiction.
+]
+
+#pro(name: "Sylow's Theorem")[
+  Let $G$ be a finite abelian group and let $p$ a prime dividing $card G$ and $v in NN$ such that $p^v divides card G$ and $p^(v+1) divides.not card G$, then there exists a subgroup of order $p^v$.
+]
+#prf[
+  Consider $S = {g in G | exists n in NN, g^(p^n) = e}$.
+  + $e in S$: $e^p = e$.
+  + $S != {e}$: by Proposition $5.2.2$, $exists a in G$ with order $p$, $a != e$ and $a^p = e$.
+  + Let $a, b in S$ with $a^(p^n) = e$ and $b^(p^m) = e$ then $(a b)^(p^(n+m))=(a^(p^n))^(p^m) (b^(p^m))^(p^n) = e$ since $S$ is finite and closed then it is a subgroup.
+  + $card S=p^beta$ for some $beta in NN$: $forall g in G$ order of $g$ is a power of $p$. Suppose on the contrary $forall beta in NN, card S != p^beta$ then there exists a prime $q != p$ dividing $card S$. From Cauchy's theorem $exists g in G$ with order $q$ then $exists t in NN^*, q = p^t => q = p, t=1$ contradiction.
+  + $v eq.quest beta$: since $S$ is a subgroup of $G$, $p^beta = card S | card G = p^v$ thus $beta <= v$. Suppose by  contradiction that $beta < v$, consider the quotient group $G\/S$ then $p | card (G \/ S) = card G \/ card S$ and $G\/S$ is abelian. By Proposition 5.2.2, there exists $b S$ of order $p$ ($b^p S = S$) and $b S != S$ ($b in.not S$) but $b^p in S => exists n in NN, (b^p)^(p^n) = e => b^(p^(n+1)) = e => b in S$ which is a contradiction.
+]
+
+
+#lem[
+  Let $H$ and $K$ be subgroups of a group of $G$ then $H K$ is a subgroup of $G$ if and only if $H K = K H$.
+]
+#prf[
+  - $arrow.double.l$ suppose $H K = K H$, then $H union K subset H K$. Let $h_1 k_1, h_2 k_2 in H K$ with $h_i in H$ and $k_i in K$ then $h_1 (k_1 h_2) k_2 = h_1 (h_3 k_3) k_2 = (h_1 h_3) (k_3 k_2) in H K$ and $(h k)^(-1) = k^(-1) h^(-1) in K H = H K$.
+  - $arrow.double.r$ suppose that $H K$ is a subgroup, let $h in H$ and $k in K$ then $(h k)^(-1) = k^(-1) h^(-1)$, since $(h^(-1) k^(-1))^(-1) in H K$ and thus $k H in K H$ so $H K subset K H$.
+]
+
+#lem[
+  Let $H, K$ be two finite subgroups of a group $G$, then $card H K = (card H card K) \/ (card (H inter K))$.
+]
+#prf[
+  Consider the map $phi: H times K -> H K, phi(h, k) |-> h k
+  $ $phi$ is well defined and surjective by definition. We prove that $forall x in H K$, $card phi^(-1)({x}) = |H inter K|$. Let $(h_1, k_1), (h_2, k_2) in H K$, $phi(h_1, k_1) = phi(h_2, k_2) => h_1 k_1 = h_2 k_2 => h_2^(-1) h_1 = k_2 k_1^(-1)$, since $h_1, h_2 in H$ and $k_1 k_2 in K$ then we have that $h_2^(-1) h_1 in H inter K$ then there exists $x in H inter K$ such that $h_1 = h_2 x$ and $k_1 = x^(-1) k_2$, conversely if $x in H inter K$ then $phi(h_2 x, x^(-1) k_2) = h_2 x x^(-1) k_2 = h_2 k_2 = phi(h_2, k_2)$. Thus we can deduce that $phi^(-1)({h_1 k_1})={((h_1 x, x^(-1) h_2)) | x in H inter K}$ thus $card (H times K) = card H K dot.c card (H inter K)$ and since $card (H times K) = card H card K$ then we get $card H K = (card H card K)\/(card (H inter K))$.
+]
+
+#cor[
+  If $H$ and $K$ are finite subgroups of $G$, $card H card K > card G$ then $card (H inter K) >= 2$.
+]
+#prf[
+  $H K$ is a subgroup of $G$ then $card H K <= card G$ and since $card H card K > card G$ then $card H K = (card H card K) \/ card (H inter K)$ is satisfied only if $card (H inter K) > 1$.
+]
+
+#def(count: false, name: "Commutator Of An Element")[
+  Let $G$ be a group and $x, y in G$. The commutator of $x, y$ is the element $x y x^(-1) y^(-1)$ denoted as $[x,y]$.
+]
+
+#pro(count: false)[
+  Let $G$ be a group and $x, y in G$.
+  + $[x,y] = e <=> x y = y x$.
+  + $[x,y]^(-1) = [y,x]$.
+  + $[y, x] x y = y x$.
+  + $forall g in G, g [x,y] g^(-1) = [g x g^(-1), g y g^(-1)]$.
+]
+
+#prf[
+  + $[x,y] = e <=> x y x^(-1) y^(-1) = e <=> x y x^(-1) = y <=> x y = y x$.
+  + $[x,y]^(-1) = (x y x^(-1) y^(-1))^(-1) = y x y^(-1) x^(-1) = [y, x]$.
+  + $[y,x] x y = y x y^(-1) x^(-1) x y = y x$.
+  + $
+    g [x,y] g^(-1) &= g x y x^(-1) y^(-1) g^(-1)\
+    &= g x g^(-1) g y g^(-1) g x^(-1) g^(-1) g y^(-1) g^(-1)\
+    &= (g x g^(-1)) (g y g^(-1)) (g x g^(-1))^(-1) (g y g^(-1))^(-1)\
+    &= [g x g^(-1),g y g^(-1)]
+  $
+]
+
+#def(count: false, name: "Commutator Of A Group")[
+  Let $G$ be a group. The commutator or derived set of $G$ is the smallest subgroup containing ${[x,y] | x, y in G}$ denoted $G'$, $G'={product_(i=1)^n [x_i,y_i] | n in NN, (x_i)_(i=1)^n, (y_i)_(i=1)^n subset G}$.
+]
+
+#pro[
+  Let $G$ be a group and $G'$ the commutator of $G$.
+  + $G'$ is normal in $G$.
+  + $G\/G'$ is an abelian group.
+  + Let $N$ a normal subgroup of $G$, $G\/N$ abelian $=> G' subset N$.
+]
+
+#prf[
+  + Let $z in G'$ and $g in G$, we have that $z = product_(i=1)^n [x_i, y_i]$ with $n in NN, x_i, y_i in G$, then $g x g^(-1) = g product_(i=1)^n [x_i, y_i] g^(-1) = product_(i=1)^n g[x_i, y_i]g^(-1) = product_(i=1)^n [g x_i g^(-1), g y_i g^(-1)] in G'$, thus $G'$ is normal.
+  + Let $x, y in G$, $x G' y G' = x y G' = (y^(-1) x^(-1) G')^(-1) = (x^(-1) y^(-1) [y,x] G')^(-1) = (x^(-1) y^(-1) G')^(-1) = y x G' = y G' x G'$, thus $G\/G'$ is abelian.
+  + Let $N$ be a normal subgroup with $G\/N$ abelian. Let $x, y in G$, $x N y N = y N x N$ then $x y N = y x N => x y (y x)^(-1) in N => [x,y] = x y x^(-1) y^(-1) in N$ so $G' subset N$.
+]
+
+#def(count: false, name: "Center Of A Group")[
+  Let $G$ be a group, we define the center of $G$ as $cal(Z)(G) = {x in G | forall y in G, x y = y x}$.
+]
+
+#colbreak()
+#pro[
+  Let $G$ be a group and $cal(Z)(G)$ the center of $G$.
+  + $cal(Z)(G)$ is a normal subgroup of $G$.
+  + $G$ is abelian $<=>$ $cal(Z)(G) = G$.
+]
+#prf[
+  + Let $g in G$ and $x in cal(Z)(G)$ then $g x g^(-1) = x g g^(-1) = x$ thus $cal(Z)(G)$ is normal in $G$.
+  + $G$ is abelian $<=>$ $forall x in G, forall y in G, x y = y x$ $<=>$ $G = cal(Z)(G)$.
+]
+
+#pro[
+  #align(center)[
+    $G\/cal(Z)(G)$ is cyclic $<=>$ $G$ is abelian.
+  ]
+]
+
+#prf[
+  $arrow.l.double$ trivial since $cal(Z)(G) = G$ thus $G\/cal(Z)(G) = {e}$. $=>$ Suppose that $G\/Z(G)$ is cyclic, set $Z = cal(Z)(G)$, then $exists g in G, G \/ Z = angle.l g Z angle.r$, let $x, y in G$, we have $x Z = g^n Z$ and $y Z = g^m Z$ and thus $x = g^n z_1$ and $y = g^m z_2$, $x y = (g^n z_1) (g^m z_2)$ since $z_1, z_2 in Z$ then $x y = g^(n+m) z_1 z_2 = g^(m + n) z_2 z_1 = (g^m z_2) (g^n z_1) = y x$.
+]
+
+#lem[
+  Let $G$ and $G'$ be two groups and $phi: G -> G'$ a surjective homomorphism.
+  + Let $H'$ be a subgroup of $G'$ then $phi^(-1)(H')$ is a subgroup of $G$, if $H'$ is normal then so is $G$ containing $Ker phi$.
+  + Let $Phi$ be the (resp. normal) subgroups of $G$ containing $ker phi$ and $Phi'$ be the (resp. normal) subgroups of $G'$ then the map $
+    f: Phi' &-> Phi\
+      H' &|-> f(H') = phi^(-1)(H')
+  $ is bijective with inverse $H |-> phi(H)$.
+]
+
+#prf[
+  You can do it!
+]
+
+#pro[
+  Let $phi: G -> G'$ be a group surjective homomorphism, and let $N'$ be a subgroup of $G'$, then $phi^(-1)(N')$ is a normal subgroup of $G$ containing $Ker phi$, then we have that $G\/N iso G'\/N'$.
+]
+
+#prf[
+  Consider the map $G limits(arrow)^phi G' limits(arrow)^(pi') G'\/N$, then $psi = pi' compose phi$ is a surjective homomorphism with $Ker psi = N$, by the first isomorphism theorem $G\/N iso G'\/N'$
+]
+
+#pro(count: false)[
+  Let $K subset N subset G$, then $G\/N iso (G\/K)\/(N\/K)$.
+]
+
+#prf[
+  Suppose $K$ is normal in $G$, then $K$ is normal in $N$, we have that $N\/K$ is a normal subgroup of $G\/K$, by setting $G'=G\/K$, $N'=N\/K$ and $phi = pi$ we get from the previous proposition that $G\/N iso (G\/K)\/(N\/K)$.
+]
+
+#ooc[
+  #subsection("Dihedral Group")
+]
+
+#subsection("Cayley's Theorem & Premutation Group")
+#lem(count: false)[
+  Let $G$ be a group, $g in G$, the map $phi_g: G -> G, x |-> g x$ is a bijection.
+]
+
+#thm(name: "Cayley's Theorem")[
+  Any group $G$ is isomorphic to a subgroup of a symmetric group $cal(S)(X)$, more specifically, by taking $X = G$ we get that $G$ is isomorphic to a subgroup of $cal(S)(X)$, if $G$ is finite and of order $n$ then $G$ is isomorphic to a subgroup $S_n$.
+]
+
+#prf[
+  Consider $phi: G -> cal(S)(G), g |-> phi_g$. It is enough to prove that $phi$ is an injective homomorphism thus $G$ would be isomorphic to $phi(G) subset cal(S)(G)$ which would be a subgroup since $phi$ is a homomorphism.
+  - $phi$ is a homomorphism: let $g, g' in G$, $forall x in G, phi(g g')(x) = phi_(g g') (x) = (g g') (x) = g (g' x) = (phi_g compose phi_(g')) (x)$ thus $phi(g g') = phi(g) compose phi(g')$ thus we have that $phi$ is a homomorphism.
+  - $phi$ is injective: let $g in Ker phi$ then $g equiv id$, so $forall x in G, phi(g)(x) = phi_g (x) = g x = x$, by taking $x = e$ we get that $g = e$ thus $Ker phi = { id }$.
+]

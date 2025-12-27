@@ -77,4 +77,6 @@ Each algorithm has one or many stop condition, taking for example a search algor
 //       end
 //     ```)
 //
-//
+
+#pagebreak()
+

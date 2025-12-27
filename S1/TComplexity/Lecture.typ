@@ -15,8 +15,6 @@
 #let sp = $triangle.stroked.small.r$
 #let bl = $square.stroked.small$
 
-#show "etc": sub(text(font: "Diwani Letter", fill: red, size: 0.8em, "إِلَى آخِرِهِ"))
-
 #chapter("Introduction")[
   Complexity theory revolves around the idea of measuring execution time of an algorithm giving a measure of the execution time given some taken parameters about the inputs etc.
 ]
@@ -136,4 +134,3 @@ Now we give some classes of problems that are usually uncountered in complexity.
 
 #colbreak()
 #subsection("The Class NP Of Algorithms")
-

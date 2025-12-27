@@ -23,7 +23,7 @@ Suppose there exists $P in ZZ[X]$ such that $(P) = (2) + (X)$, since $2 in (2) +
 - From 1.1.1 we have that $ZZ[X]$ is a PID and $X$ is irreducible then $(X)$ is a maximal ideal so $ZZ[X]\/(X)$ is a field but $ZZ[X]\/(X) tilde.equiv ZZ$ which means that $ZZ$ is a field, contradiction.
 - From 1.1.2 we have that $(2) + (x)$ is an ideal of $ZZ[X]$ but it is not a principle ideal.
 
-#qst[Is $ZZ[X]$ a Euclidean domain ?]
+#qst[Is $ZZ[X]$ a Euclidean domain?]
 $ZZ[X]$ is not a Euclidean domain since it is not a PID.
 
 #exr[
@@ -325,7 +325,25 @@ Consider $P(X) = X^p - 1 = (X-1)(X^(p-1) + dots.c + X + 1) = (X-1)Phi(X)$, $Phi(
 #qst[Give another proof for Proposition 3.10]
 Let $sigma$ be a $L$-embedding of $L$ into $Omega$, since $K subset L$ then $sigma$ is a $K$-embedding of $L$ into $Omega$ since $M\/K$ is normal then $sigma$ is an isomorphism of $M$.
 
-#exr[
+#exr[]
+
+#qst[
+  Find the normal closure of the following fields.
+  + $QQ(sqrt(2)) \/ QQ$.
+  + $QQ(root(3, 5)) \/ QQ$.
+  + $CC \/ QQ(sqrt(3))$.
+  + $QQ(sqrt(2), root(3, 3), root(5, 5)) \/ QQ$.
+  + $QQ(root(40, 2)) \/ QQ(root(20, 2))$.
+  + $QQ(sqrt(2), sqrt(3), root(4, 2)) \/ QQ(root(4, 2))$.
+  + $QQ(root(3, 5), i) \/ QQ$.
 ]
-#qst[]
+
+#ooc[
+  + $QQ(sqrt(2)) \/ QQ$ is normal thus the algebraic closure.
+  + $QQ(root(3, 5)) \/ QQ$, $root(3, 5)$ is a root of $X^3 - 5$ which is $5$-Eisenstein and thus $Irr(root(3, 5), QQ, X) = X^3 - 5$, and thus the extension $QQ(root(3, 5), j root(3, 5), j^2 root(3, 5)^2)=QQ(root(3, 5), j root(3, 5))$ is the normal closure of $QQ(root(3, 5))$ which is normal since it is the splitting field of $X^3 - 5$.
+  + $CC\/QQ(sqrt(3))$ is a normal extension since $CC$ is an algebraically closed field containing $QQ$ then $CC\/QQ$ is normal and since $QQ subset QQ(sqrt(3)) subset CC$ then $CC\/QQ(sqrt(3))$ is normal.
+  + $QQ(sqrt(2), root(3, 3), root(5, 5)) \/ QQ$: we have that $Irr(sqrt(2), QQ, X) = X^2 - 2, Irr(root(3, 3), QQ, X) = X^3 - 3, Irr(root(5, 5), QQ, X) = X^5 - 5$ and thus by considering the family $cal(F) = {X^2 - 2, X^3 - 3, X^5 - 5}$ we get that the normal closure of $QQ(sqrt(2), root(3, 3), root(5, 5))$ is $QQ(sqrt(2), root(3, 3), root(5, 5), j, xi)$ where $xi$ is a root of $X^5 - 1 = 0$.
+  + $QQ(root(40, 2))\/QQ(root(20, 2))$
+]
+
 #qst[Let $alpha, beta in overline(K)$, and $S_alpha, S_beta$ the splitting fields of $Irr(alpha, K, X)$ and $Irr(beta, K, X)$.]

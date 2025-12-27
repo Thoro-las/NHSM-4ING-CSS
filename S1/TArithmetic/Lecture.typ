@@ -278,7 +278,7 @@ We went through the way we represent positive integers in multiple systems. Now 
     #table(
       columns: 2,
       align: left + top,
-      table.header([Pros], [Cons]),
+      table.header([Advantages], [Disadvantages]),
       [
         - Simple conceptually.
         - Easy to negate the values by flipping the sign bit.
@@ -300,7 +300,7 @@ We went through the way we represent positive integers in multiple systems. Now 
     #table(
       columns: 2,
       align: left + top,
-      table.header([Pros], [Cons]),
+      table.header([Advantages], [Disadvantages]),
       [
         - Better for arithmetic with similar circuits to unsigned integers.
         - Easy to negate the values by inverting all the bits.
@@ -320,7 +320,7 @@ We went through the way we represent positive integers in multiple systems. Now 
     #table(
       columns: 2,
       align: left + top,
-      table.header([Pros], [Cons]),
+      table.header([Advantages], [Disadvantages]),
       [
         - Single zero representation.
         - Arithmetic circuits use the exact same as unsigned integers.
@@ -342,15 +342,17 @@ An overflow may happen in all representations, we will give the rules for detect
 ]
 
 #prf[
-  #ooc[
-    + We consider the value of $A+B$
-
-    $
-      A+B &= -a_(n) dot.c 2^(n) sum_(i=0)^(n-1) a_i - b_(n) dot.c 2^(n) sum_(i=0)^(n-1) b_i dot.c 2^i \
-      &= - (a_(n) + b_(n)) dot.c 2^(n) + sum_(i=0)^(n-1) (a_i + b_i) 2^i
-    $
-
-  ]
+  +
+  // #ooc[
+  //   + We consider the value of $A+B$
+  //
+  //   $
+  //     A+B &= -a_(n) dot.c 2^(n) sum_(i=0)^(n-1) a_i - b_(n) dot.c 2^(n) sum_(i=0)^(n-1) b_i dot.c 2^i \
+  //     &= - (a_(n) + b_(n)) dot.c 2^(n) + sum_(i=0)^(n-1) (a_i + b_i) 2^i
+  //   $
+  //
+  //   Suppose that $A+B$ overflows, in 
+  // ]
   + Consider the value of $A' = a_(n+d) a_(n+d-1) dots a_(n+1) a_n dots a_0$, $forall i in [|1, d|], a_(n+i) = a_n$
   $
     A' &= - a_(n+d) dot.c 2^(n+d) + sum_(i=0)^(n+d-1) a_i dot.c 2^i\
@@ -360,13 +362,117 @@ An overflow may happen in all representations, we will give the rules for detect
   by truncating the first $n$ elements we get $- a_n 2^n dot.c (2 - 1) + sum_(i=0)^(n-1) a_i dot.c 2^i = A$.
 ]
 
+#colbreak()
 #section("Decimal Representations In Binary")
 After representing integers with binary, we will represent numbers with decimal digits. So we consider the following representations, we take 
 
 #def(name: "Fixed Point Representation")[\
-  Let $x = x_(w-1) x_(w-2) dots x_(0) x_(-1) dots x_(-m) in BB^(w + m)$.
-  - Value: $-x_(w-1) dot.c 2^(w - 1) + sum_(i=-m)^(w-2) x_i dot.c 2^i$
+  Let $x = x_(n-1) x_(n-2) dots x_(0) x_(-1) dots x_(-m) in BB^(n + m)$ with $n, m in NN$.
+  - Value: $X = -x_(n-1) dot.c 2^(n - 1) + sum_(i=-m)^(n-2) x_i dot.c 2^i$
   - Range: $[|-2^(n-1); 2^(n-1) - 1|]\/2^m$.
 
-  We denote the values represented in this fixed point system as $Q_(n.m)$ where $n$ is the number of bits for integers and $m$ the number of bits for the decimal part.
+  We denote the values represented in this fixed point system as $Q_(n.m)$ where $n$ is the number of bits for integers and $m$ for the decimal part.
+  #align(center)[
+    #table(
+      columns: (1fr, 1fr),
+      align: left + top,
+      table.header([Advantages], [Disadvantages]),
+      [
+        - Simple to implement.
+        - Deterministic precision.
+        - Equally distributed range.
+      ], [
+        - Approximation errors for fractional parts and limited precision.
+        - Overflows occur easily.
+      ]
+    )
+  ]
 ]
+
+#def(name: "Floating Point Representation")[\
+  Let $x = x_(w-1) x_(w-2) dots x_(0) in BB^(1 + e + m)$ with $m, e in NN$.
+  - Value: $X = (-1)^(x_(w-1)) dot.c M dot.c 2^E$ with
+    - $E = x_(m+e) dots x_(m) - E_"bias"$ and $E_"bias" = 2^(e-1) - 1$.
+    - $M = x_(m-1) dots x_0$.
+  - Range: $[-2^(2^(E-1)); 2^(2^(E-1))]$ (not the exact set, many gaps are in this range).
+
+  The first bit is called the sign bit, the $e$ bits after it are called the exponent bits and the $m$ are called the mantissa.
+
+  #align(center)[
+    #table(
+      columns: (1fr, 1fr),
+      align: left + top,
+      table.header([Advantages], [Disadvantages]),
+      [
+        - Large dynamic range.
+        - Support for special numbers.
+        - Standardized (IEEE-754).
+      ], [
+        - Non-uniform distribution of presentable values.
+        - Complex for implementation.
+      ]
+    )
+  ]
+
+  Floating point representation extra special numbers depending on the exponent.
+  #align(center)[
+    #table(
+      columns: (auto, auto, auto, 1fr),
+      align: (center, center, center, left),
+      table.header([sign], [exponent], [mantissa], [represent]),
+      [any], [$00 dots 0$], [$00 dots 0$], [both $0$ and $-0$],
+      [$+$], [$11 dots 1$], [$00 dots 0$], [$+ infinity$],
+      [$-$], [$11 dots 1$], [$00 dots 0$], [$- infinity$],
+      [any], [$11 dots 1$], [non-zero value], [NaN (Not a Number)]
+    )
+  ]
+]
+
+#chapter("Coding Theory")[
+  Man... If you are reading this, it is a genuine call for help. This will be a useless written course from my understanding, which I believe is nowhere usable or useful, maybe consider things like becoming a farmer, a maid or anything that actually makes you accomplish anything, or maybe just go gamble your kidneys.
+]
+
+#section[Radix-2#super[r] Encoding]
+We start by considering a number $K = k_(l-1) dots k_0 in BB^l$, we take $k_j = 0$ if $j in.not [|0, l-1|]$ and $w in NN$ a window size, we can write $K$ in the following way $
+  K &= sum_(i=0)^(ceil((l+1)/w) - 1) Q_i dot.c 2^(w dot i)
+$ with $Q_i = -2^(w-1) k_(w dot i + w - 1) + sum_(j=0)^(w-2) 2^j dot.c k_(w dot i + j) + k_(w dot i - 1)$. We can decompose $Q_i$ into the following form $Q_i = (-1)^(s_i) dot.c 2^(n_i) dot.c m_i$, $s_i = k_(w dot i + w - 1)$ and using the following procedure we get $m_i$ and $n_i$.
+  #code([
+  ```pcode
+  input: Q.
+  output: m, n such that Q = m*2^n.
+
+  m = Q
+  n = 0
+  while m % 2 = 0 do
+    n = n + 1
+    m = m / 2
+  end
+  
+  return m, n
+  ```])
+#colbreak()
+By using this decomposition, we get this writing $
+  K = sum_(i=0)^(ceil((l+1)/w) - 1) (-1)^(s_i) dot.c m_i dot.c 2^(w dot i + n_i)
+$
+and thus we can represent it in the Radix-$2^w$ as follows $
+  K = (underbracket(00 dots r_n underbracket(0 dots 0, n_n), w "digits") dots.c underbracket(00 dots r_2 underbracket(0 dots 0, n_2), w "digits") underbracket(00 dots r_1 underbracket(0 dots 0, n_1), w "digits"))_(2^w)
+$ with $ n = display(ceil((l+1)/2)) - 1 #h(1cm) r_i = display(cases(m_i "if" s_i = 0, overline(|m_i|) "if" s_i = 1)) $
+
+We take the following example $K = overline(10110011110101101101101)^2$, we have that $l = 23$ and $w=4$, we decompose it into $Q_i$ as follows $
+  text(fill: #red, 00) 10110011110101101101101 text(fill: #red, 0)\
+  arrow.b\
+  S_5 = 00101, S_4 = 10011, S_3 = 11101, S_2 = 10110, S_1 = 01101, S_0 = 11010
+$ to calculate the $Q_i$, for example $Q_0$, we take the last digit of $S_0$ and add it to the first $4$ digits, so $Q_0 = 1101 + 0 = 1101$ which is $-3$ in two's complement, by doing thing for each one of them we get $
+  Q_5 = 3, Q_4 = -6, Q_3 = -1, Q_2 = -5, Q_1 = 7, Q_0 = -3
+$ by decomposing into $m_i$ and $n_i$ we get $
+  mat(s_5 = 0; m_5 = 3; n_5 = 0),
+  mat(s_4 = 1; m_4 = 3; n_4 = 1),
+  mat(s_3 = 1; m_3 = 1; n_3 = 0),
+  mat(s_2 = 1; m_2 = 5; n_2 = 0),
+  mat(s_1 = 0; m_1 = 7; n_1 = 0),
+  mat(s_0 = 1; m_0 = 3; n_0 = 0)
+$ and then we get the encoding as $
+  K = (0003 00overline(3)0 000overline(1) 000overline(5) 0007 000overline(3))_(2^4)
+$
+
+#section[SSP Encoding]
