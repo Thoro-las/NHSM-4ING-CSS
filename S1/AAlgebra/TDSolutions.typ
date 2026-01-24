@@ -8,6 +8,7 @@
 #let Irr = math.op("Irr")
 #let iso = $tilde.equiv$
 #let char = math.op("Char")
+#let card = math.op("#")
 
 #section("Embeddings", level: 1)
 #exr[
@@ -347,3 +348,431 @@ Let $sigma$ be a $L$-embedding of $L$ into $Omega$, since $K subset L$ then $sig
 ]
 
 #qst[Let $alpha, beta in overline(K)$, and $S_alpha, S_beta$ the splitting fields of $Irr(alpha, K, X)$ and $Irr(beta, K, X)$.]
+
+
+#pagebreak()
+
+#ooc[
+  #section(level: 1, [Series: Groups.])
+
+  #exr[
+    Let $G$ be a group such that the intersection of all its subgroups other than ${e}$ is a subgroup of $G$ different from ${e}$. Prove that every element of $G$ has a finite order.
+  ]
+  Let ${H_i}_(i in I)$ be the set of non-trivial subgroups of $G$, and suppose $exists y in inter.big_(i in I) H_i \\ {e}$. Let $x in G$, we have that $chevron.l x chevron.r$ is a subgroup of $G$ thus $y in chevron.l x chevron.r$ and since it is a subgroup then $y^(-1) in chevron.l x chevron.r$ too, thus $exists n, m in ZZ\\{0}$ (this comes from the fact that $y != e$), $y = x^n, y^(-1) = x^m$ and thus we have that $x^(n+m) = x^n dot.c x^m = y dot.c y^(-1) = e$ hence $x$ has finite order.
+
+  #exr[
+    Let $G$ be a group, $H$ a subgroup of $G$ and $a in G$, prove that $a H a^(-1)$ is a subgroup of $G$ isomorphic to $H$. What happens when $H$ is finite, $H$ is normal.
+  ]
+  + *$a H a^(-1)$ is a subgroup of $G$*:
+    - $e = a a^(-1) = a e a^(-1) in a H a^(-1)$.
+    - Let $a x a^(-1), a y a^(-1) in a H a^(-1)$, $(a x a^(-1))^(-1) a y a^(-1) = a x^(-1) a^(-1) a y a^(-1) = a (x^(-1) y) a^(-1) in a H a^(-1)$.
+  + *$a H a^(-1)$ is isomorphic to $H$*:\
+    Consider the map $phi: H -> a H a^(-1), x |-> a x a^(-1)$, we have $Im phi = a H a^(-1)$ by definition, and $Ker phi = {h in H | a h a^(-1) = e} = {h in H | h = a^(-1) a = e} = {e}$ thus $phi$ is an isomorphism from $H$ to $a H a^(-1)$.
+  + *What happens when*
+    - $H$ is normal in $G$: then $a H a^(-1) = H$ for any $a in G$.
+    - $H$ is finite: ?
+
+  #exr[
+    Let $H$ and $K$ be two subgroups of $G$ with finite indices in $G$. Prove that $H inter K$ is of finite index in $G$, and find an upperbound for this index.
+  ]
+  Suppose $[G:H]$ and $[G:K]$ are finite. We have $
+    [G: H inter K] &= card G\/(H inter K)\
+    &= card {g (H inter K) | g in G}\
+    &= card {(g H) inter (g K) | g in G}\
+    &<= card {(g H) inter (g' K) | g, g' in G}\
+    &<= card {h inter k | h in G\/H, k in G\/K}\
+    &<= card G\/H dot.c card G\/K = [G:H] dot.c [G:K].
+  $ the last inequality comes from the fact that if $h inter k = h' inter k'$ then $exists x in (h inter k) inter (h' inter k') => x in (h inter h')$ and $x in (k inter k')$ so $h = h'$ and $k = k'$. Since both $[G:H]$ and $[G:K]$ are finite then so is $[G: H inter K] <= [G:H] dot.c [G:K]$.
+
+  #exr[]
+  #qst[
+    Let $a$ be an element of $G$ and define $N(a) = {g in G | g a = a g}$. Show that $N(a)$ is a subgroup of $G$ called the normalized of $a$ in $G$.
+  ]
+  Let $x, y in N(a)$ we have that $a x = x a$ and $a y = y a$
+    - $e in N(a)$: $e a = a = a e$.
+    - $x^(-1) in N(a)$: $(a x)^(-1) = (x a)^(-1) => x^(-1) a^(-1) = a^(-1) x^(-1) => a x^(-1) = x^(-1) a$
+    - $x y in N(a)$: $a (x y) = (a x) y = (x a) y = x (a y) = x (y a) = (x y) a$.
+  Thus, $N(a)$ is a subgroup.
+
+  #qst[
+    Let $H$ be a subgroup of $G$, define
+    - Centralizer: $Z(H) = {g in G | forall h in H, g h = h g}$.
+    - Normalizer: $N(H) = {g in G | g H g^(-1) = H}$.
+    Prove that $Z(H)$ and $N(H)$ are subgroups of $G$.
+  ]
+  - Centralizer: Notice that $Z(H) = inter.big_(h in H) N(h)$ which are all subgroups so $Z(H)$ is a subgroup.
+  - Normalizer: let $x, y in N(H)$
+    - $e in N(H)$: $e H e^(-1) = H$.
+    - $x^(-1) in N(H)$: $x H x^(-1) = H => H = x^(-1) H x$.
+    - $x y in N(H)$: $x y H (x y)^(-1) = x (y H y^(-1)) x^(-1) = x H x^(-1) = H$.
+
+  #qst[
+    - Prove that $H subset N(H)$.
+    - Give an example of $Z(H) != N(H)$.
+  ]
+  - let $x in H$ then $forall h in H, x h x^(-1) in H$ since it is closed.
+  - it is easy to notice that $Z(H) subset N(H)$. Consider $G = S_3$ and $H=chevron.l sigma chevron.r$ with $
+    sigma = mat(0, 1, 2; 2, 0, 1)
+  $ notice that $Z(H) = H$ and $N(H) = G$ so $Z(H) != N(H)$.
+
+  #exr(count: false, ovcount: false)[
+    - - Prove that $N(H)$ is the largest subgroup of $G$ in which $H$ is normal.
+      - Prove that $H$ is normal in $G$ $<=>$ $N(H) = G$.
+    - - Prove that $Z(G)$ is a normal subgroup in $G$.
+      - Deduce that a group of order $9$ is abelian.
+  ]
+
+  - - It is clear that $H$ is normal in $N(H)$. Let $K$ be a subgroup of $G$ such that $H$ is normal in $K$, let $k in K$, since $H$ is normal in $K$ then $k H k^(-1) = H$ but since $K subset G$ then $k in N(H)$. Thus, $K subset N(H)$, $N(H)$ is the largest subgroup of $G$ where $H$ is normal.
+    - $=>$ suppose $H$ is normal, then $forall g in G, g H g^(-1) = H$ thus $G subset N(H) subset G => G = N(H)$. $arrow.double.l$ if $N(H) = G$ then $forall g in G, g H g^(-1) = H$ so $H$ is normal in $G$.
+
+  - - Proving that $Z(G)$ is a normal subgroup of $G$, let $z in Z(G), g in G$, $g z g^(-1) = (g z) g^(-1) = (z g) g^(-1) = z (g g^(-1)) = z in Z(G)$.
+    - ?
+
+  #exr[]
+  #qst[
+    Let $G$ be a finite group of order $p^2$. Show that $G$ is abelian when its center is not reduced to the identity element.
+  ]
+  Suppose $Z(G) != {e}$, then we have that $card G \/ Z(G) = p$ so $G \/ Z(G) iso F_p$ which is cyclic, and thus $G$ is abelian.
+
+  #qst[
+    Show that a group $G$ of order $6$ is isomorphic to $S_3$ or $ZZ_6$.
+  ]
+  - Case 1: $exists x in G, o(x) = 6$, then $G = chevron.l x chevron.r$ so $G iso ZZ_6$.
+  - Case 2: $G$ has no element of order $6$.
+
+  #exr[
+    Let $G$ be a group and let $G' = {[x:y] | x, y in G}$ be the commutator of $G$.
+  ]
+
+  #qst[
+    Prove that $G'$ is a normal subgroup of $G$.
+  ]
+  Let $g in G$, then let $x, y, g in G$, we have that $
+    [g:[x:y]] &= g [x:y] g^(-1) [x:y]^(-1) \
+    => g[x:y]g^(-1) &= [g:[x:y]][x:y]
+  $ notice that both $[g:[x:y]],[x:y] in G'$ then $g [x:y] g^(-1) in G'$ so $forall g in G, g G' g subset G'$ so $G'$ is a normal subgroup of $G$.
+
+  #qst[
+    Prove that $G\/G'$ is abelian.
+  ]
+  Let $x, y in G$, $x G' dot.c y G' = x y G'$ but since $x, y in G$ then $[x:y] in G'$ so $[x:y]^(-1) in G'$, then $y x = [x:y]^(-1) x y in x y G'$ thus $x y G' = y x G'$ so the group $G\/G'$ is abelian.
+
+  #qst[
+    Let $H$ be a normal subgroup of $G$, if $G\/H$ is abelian then $G' subset H$.
+  ]
+  Let $H$ be a normal subgroup of $G$ and $G\/H$ is abelian. Let $x, y in G$ we have then $
+    [x:y] H &= x y x^(-1) y^(-1) H\
+    &= (x y) H dot.c (x^(-1) H) (y^(-1) H)\
+    &= (x y) H dot.c (y^(-1) H) (x^(-1) H)\
+    &= x y y^(-1) x^(-1) H = H
+  $ thus $G' subset H$.
+
+  #qst[
+    If $H$ is a subgroup of $G$ and $G' subset H$, then $H$ is normal in $G$.
+  ]
+  Let $H$ be a subgroup of $G$ with $G' subset H$, let $g in G$ and $h in H$. We have that $[g:h] = g h g^(-1) h^(-1)$ thus $g h g^(-1) = [g:h] h^(-1)$, and since $[g:h] in G' subset H$ and $h^(-1) in H$ then $g h g^(-1) = [g:h] h^(-1) in H$ thus $H$ is normal in $G$.
+
+  #exr[
+    Let $n in NN$ and $s, r$ two formal variables satisfying $s^2 = e, r^n = e, s r = r^(-1) s$, define $D_(2 n) = {s^i r^i | i, j in NN}$.
+  ]
+
+  #qst[
+    Find the number of subgroups of order $2$, $3$ of $D_(2 n)$.
+  ]
+  - Subgroups of order $2$: The subgroups of order $2$ should be of the form ${e, x}$ with $o(x) = 2$, thus we start with finding the elements of order $2$.
+    - Case 1: $x=s r^k => x^2 = (s r^k)^2 = s r^k s r^(k) = s r^(k) r^(-k) s = s^2 = e$ thus any element of the form $s r^k$ is of order $2$.
+    - Case 2: $x=r^k => x^2 = (r^k)^2 = r^(2k)$ but $r$ has order $n$ thus if $x$ is of order $2$, $n$ is even and we have that $x=r^(n\/2)$ is the only element of the form $r^k$ that has order $2$.
+    To count now we have that the number of subgroups of order $2$, we count how many different elements of order $2$ do we have: we have $n$ elements from the first case $s r^k, k in [|0, n-1|]$, if $n$ is even then there is an extra element so:
+      - if $n$ is even: $n + 1$ subgroups of order $2$.
+      - if $n$ is odd: $n$ subgroups of order $2$.
+  - Subgroups of order $3$: it is the same here, since any group of order $3$ is cyclic then necessarily any subgroup would be of the form $chevron.l x chevron.r$ where $o(x) = 3$.
+    - Case 1: $x = s r^k => x^3 = (s r^k)^2 s r^k = s r^k = x$ thus $x = e$ so there is no element of the form $s r^k$ that has order $3$.
+    - Case 2: $x = r^k => x^3 = r^(3k)$ then $3$ should divide $n$ and we get one element of order $3$.
+    so same as before:
+      - if $n$ is divisible by $3$: there is one subgroup of order $3$.
+      - if $n$ is not divisible by $3$: there is no subgroup of order $3$.
+
+  #qst[
+    Determine the center of the Dihedral group $D_(2n)$.
+  ]
+  For the ease of calculation, we can easily prove by induction that $r^j s^i = s^i r^((-1)^i j)$, consider the element $x in cal(Z)(D_(2n))$ and $y in D_(2n)$ of the form $y = s^i r^j$ for all $i, j$, there are two cases
+  - $x = r^k$: $x y = y x => r^k s^i r^j = s^i r^j r^k => s^i r^((-1)^i k) r^j = s^i r^j r^k => r^((-1)^i k) = r^(k) => r^((1 - (-1)^i) k) = e$ thus by taking $i$ odd we get that $2k = n$ so if $n$ is even then $r^(n\/2)$ is in the center.
+  - $x = s r^k$: $x y = y x => s r^k s^i r^j = s^i r^j s r^k => s^(i+1) r^(j - k) = s^(i+1) r^(k - j) => (r^(j - k))^2 = e$ which is impossible for all $j$.
+  Thus the center of $D_(2n)$ is $
+    cal(Z)(D_(2n)) = cases(
+      {e} "if" n "odd",
+      {e, r^(n\/2)} "if" n "even"
+    )
+  $
+
+  #colbreak()
+  #qst[
+    Prove that the commutator of $D_(2n)$ is generated by $r^2$.
+  ]
+
+  Let $x, y in D_(2n)$, $x = s^i r^j$ and $y = s^(i') r^(j')$ then $
+    x y &= s^i r^j s^(i') r^(j')\
+    &= s^i s^(i') r^((-1)^(i') j) r^(j')\
+    &= s^(i + i') r^((-1)^(i') j + j')\
+    x y x^(-1) &= s^(i+i') r^((-1)^(i') j + j') r^(-j) s^(-i)\
+    &= s^(i + i') r^((-1)^(i') j + j' - j) s^(-i)\
+    &= s^(i') r^((-1)^i ((-1)^(i') j + j' - j))\
+    [x,y] = x y x^(-1) y^(-1) &= s^(i') r^((-1)^i ((-1)^(i') j + j' - j)) r^(-j') s^(-i') \
+    &= s^(i') r^((-1)^i ((-1)^(i') j + j' - j) -j') s^(-i') \
+    &= r^((-1)^(-i') ((-1)^i ((-1)^(i') j + j' - j) -j'))
+  $ by expanding the last term we get $[x,y] = r^(((-1)^(i') - (-1)^i)j)$ and since $(-1)^i' - (-1)^i in {0, 2, -2}$ then $[x,y] in chevron.l r^2 chevron.r$, and by taking $k in NN, r^(2k) = [s r^k,r^k]$ thus $[D_(2n),D_(2n)] = chevron.l r^2 chevron.r$.
+
+  #exr[
+    Let $H$ and $K$ be two subgroups of $G$.
+  ]
+
+  #qst[
+    Prove that if $H$ or $K$ is normal then $H K$ is a subgroup of $G$.
+  ]
+  Suppose that $H$ is normal, we have from the course that $H K$ is a subgroup if and only if $H K = K H$. Since $H$ is normal, then $forall k in K, k H k^(-1) = H$ and thus $forall k in K, k H = H k => K H = H K$, so $H K$ is a subgroup of $G$.
+
+  #qst[
+    Prove that if $H$ and $K$ are normal then so are $H K$ and $H inter K$.
+  ]
+  Suppose that $H$ and $K$ are normal
+  - $H K$ is normal: Let $g in G$, $g H K g^(-1) = g H g^(-1) g K g^(-1) = (g H g^(-1)) (g K g^(-1)) = H K$ thus $H K$ is normal.
+  - $H inter K$ is normal: Let $g in G$, $g (H inter K) g^(-1) = (g H g^(-1)) inter (g K g^(-1)) = H inter K$ thus $H inter K$ is normal.
+
+  #qst[
+    Prove that $H K \/ K$ and $H \/ (H inter K)$ are isomorphic.
+  ]
+  Define the map $phi: H -> H K, h |-> h$, it is well defined and it is a homomorphism. We have that $phi^(-1)(K) = {h in H | h in K} = H inter K$ and since $H inter K$ is normal in $G$ then it is in $H$ and thus we get by the course lemma that $ H\/(H inter K) iso H K\/K$.
+
+  #qst[
+    Prove that $H K \/ H$ and $K \/ (H inter K)$ are isomorphic.
+  ]
+  In similar fashion, take $phi: K -> H K, k |-> k$, $phi^(-1)(k) = K inter H$ and thus $H K \/ H iso K \/ (H inter K)$.
+
+  #exr[
+    Let $G$ be a non-abelian group of order $8$.
+  ]
+
+  #qst[
+    Show there exists $y in G$ of order $4$ and $x in G\\H$ where $H = chevron.l y chevron.r$ and $G = H union x H$.
+  ]
+  Since the group is non-abelian then all non-neutral elements have order either $2$ or $4$. If every non-neutral element of $G$ has order $2$, then $G$ would be abelian since $forall x, y in G, x = x^(-1), y = y^(-1), x y = (x y)^(-1)$, $y x = y^(-1) x^(-1) = (x y)^(-1) = x y$, thus there is necessarily an element of order $4$, denote it $y$. Let $x in G\\H$, we have that $H inter x H = emptyset$ since if $H inter x H != emptyset$ then $exists n, m in NN, y^n = x y^m => x = y^(n-m) in H$ thus $x in H$ which is a contradiction, and since $H union x H subset G$ and $card (H union x H) = card H + card x H - card (H inter x H) = card H + card x H = 8$ then $H union x H = G$. ($card x H = 4$ since $forall n, m in NN, x y^n = x y^m => n = m mod 4$ thus are the same element).
+
+  #qst[
+    Prove that $x^2 in {e, y^2}$.
+  ]
+  We have that $G = H union x H$, since $G$ is a group then $x^2 in G => x^2 in H union x H$, $x^2 in.not x H$ since if it was, then $x^2 = x y^m => x = y^m in H$ which is a contradiction, thus $x^2 in H$. The order of $x$ is either $2, 4$ since the order of the element should divide the order of the group, if $x$ has order $2$ then $x^2 = e$, else then the order of $x^2$ is $2$, and the order of elements of $H$ are as follows: $o(y) = 4, o(y^2) = 2, o(y^3) = 4$ thus $x^2 = y^2$.
+
+  #qst[
+    Show that if $x y = y x$ then $forall i, j in ZZ, x^i y^j = y^j x^i$ thus $G$ is abelian.
+  ]
+  Suppose that $x y = y x$. We prove by double induction that $x^i y^j = y^j x^i$, it is enough to prove for $i, j in NN$ since $x, y$ have finite order.
+  - $i = 0, j = 0$: $x^0 y^0 = e = y^0 x^0$.
+  - suppose its true for $i, j$: 
+    - $x^(i+1) y^j = x x^i y^j = x y^j x^i = y^j x x^i = y^j x^(i+1)$.
+    - $x^i y^(j+1) = x^i y^j y = y^j x^i y = y^j y x^i = y^(j+1) x^i$.
+  Since the elements of $G$ are of the form $x^i y^j$ then taking two elements $x^i y^j, x^(i') y^(j') in G$ we have $
+    (x^i y^j) (x^i' y^j') &= x^i (y^j x^i') y^j'\
+    &= x^i x^i' y^j y^j'\
+    &= x^(i+i') y^(j+j')\
+    &= x^(i'+i) y^(j'+j)\
+    &= x^i' (x^i y^j') y^j\
+    &= (x^i' y^j') (x^i y^j)
+  $ thus $G$ is abelian.
+
+  #qst[
+    Deduce that $y x = x y^3$, $y^2 x = x y^2$, $y^3 x = x y$.
+  ]
+
+  We have that $y x in.not H$ since $y x = y^m => x = y^(m-1) in H$, $y x != x$ since $y x = x => y = e$, $y x != x y$ since $G$ is not abelian, and $y x != x y^2$ since if $y x = x y^2$ then $ x = y^(-1) x y^2 => x^2 = y^(-1) x y x y^2$, if $x^2 = y^2$ then $y^(-1) x y x = e => y^(-1) x y^3 = x$ which results in $y = e$ contradiction, if $x^2 = e$ then $y^(-1) x y x y^2 = e => (x y)^2 = e => y x y = x => y x = x y^3$ then $y = e$ contradiction. So the only element $y x$ can be is $x y^3$. $y x = x y^3 => y^2 x = y x y^(3) = x y^3 y^3 = x y^6 = x y^2 => y^3 x = y x y^2 = x y^3 y^2 = x y^5 = x y$.
+
+  #qst[
+    Suppose that $x^2 = e$, prove that $G$ is the Dihedral group $D_(8)$.
+  ]
+
+  If $x^2 = e$, then by taking the mapping $phi: G -> D_8$ such that $phi(x) = s$ and $phi(y) = r$ then we get that $phi$ is an isomorphism.
+
+  #qst[
+    Suppose that $x^2 = y^2$, dress the multiplication table of $G$ and verify it is a group.
+  ]
+
+  #align(center)[
+    #grid(
+      columns: (..(0.8cm,)*9),
+      rows: (..(0.8cm,)*9),
+      align: horizon + center,
+      stroke: 0.2mm + black,
+      gutter: (0.5mm, auto),
+      inset: 1mm,
+      fill: (x, y) => if (x == 0 or y == 0) { blue.opacify(-85%) },
+      [$dot.c$], [$e$], [$y$], [$y^2$], [$y^3$], [$x$], [$x y$], [$x y^2$], [$x y^3$],
+      [$e$], [$e$], [$y$], [$y^2$], [$y^3$], [$x$], [$x y$], [$x y^2$], [$x y^3$],
+      [$y$], [$y$], [$y^2$], [$y^3$], [$e$], [$x y$], [$x y^2$], [$x y ^3$], [$x$],
+      [$y^2$], [$y^2$], [$y^3$], [$e$], [$y$], [$x y^ 2$], [$x y^3$], [$x$], [$x y$],
+      [$y^3$], [$y^3$], [$e$], [$y$], [$y^2$], [$x y^3$], [$x$], [$x y$], [$x y^2$],
+      [$x$], [$x$], [$x y^3$], [$x y^2$], [$x y$], [$y^2$], [$y$], [$e$], [$y$],
+      [$x y$], [$x y$], [$x$], [$x y^3$], [$x y^2$], [$y^3$], [$y^2$], [$y$], [$e$],
+      [$x y^2$], [$x y^2$], [$x y$], [$x$], [$x y^3$], [$e$], [$y^3$], [$y^2$], [$y$],
+      [$x y^3$], [$x y^3$], [$x y^2$], [$x y$], [$x$], [$y$], [$e$], [$y^3$], [$y^2$]
+    )
+  ]
+  Which is indeed a group generated by $chevron.l x, y chevron.r$.
+
+  #qst[
+    Deduce there are exactly $2$ non-abelian groups of order $8$.
+  ]
+  The group will either be isomorphic to $D_8$ or $Q_8$.
+
+  #exr[
+    Let $Q_8$ be the quaternion group.
+  ]
+  Notice that $Q_8 = chevron.l x, y chevron.r$. To simplify the calculations, we use the formula that is easy to prove by induction $y^j x^i = x^i y^((-1)^i j)$ and the following lemma
+  #lem(count: false)[
+    Let $G = chevron.l S chevron.r$ be a group, and $cal(Z)(G)$ be its center. We have that $x in cal(Z)(G) <=> forall s in S, s x = x s$.
+  ]
+  #prf[
+    $=>$ Trivial since $S subset G$. $arrow.l.double$ Suppose that $forall s in S, s x = x s$, let $y in G$ then $y = product_(i=1)^n s_i$ with $s_i in S$, then $y x = product_(i=1)^n s_i x = product_(i=1)^(n-1) s_i (s_n x) = product_(i=1)^(n-1) s_i x s_n = dots.c = x product_(i=1)^n s_i = x y$.
+  ]
+
+  #qst[
+    Determine the center and commutator of $Q_8$.
+  ]
+  - The center $cal(Z)(Q_8)$: let $x^i y^j in cal(Z)(Q_8)$. We have $x x^i y^j = x^(i+1) y^j$ and $x^i y^j x = x^(i+1) y^(-j)$ so $j = -j mod 4 => 2j = 4k => j = 2k$ thus $j$ should be even. $y x^i y^j = x^i y^((-1)^i + j)$ and $x^i y^(j) y = x^i y^(j+1)$ thus $j + 1 = (-1)^i + j mod 4 => (-1)^i - 1 = 4k$ so necessarily $i = 0$. Thus we obtain that $cal(Z)(Q_8) = {e, y^2}$.
+  - The commutator $[Q_8, Q_8]$:
+
+  #qst[
+    Proving that $ZZ_4 times ZZ_4$ and $ZZ_2 times Q_8$ are not isomorphic even though they have elements all of the same orders.
+  ]
+  Notice that in this case the order of an element $(x, y)$ is the same as the order of an element $(y, x)$. The tables below show the order of each element of the form $(x, y)$.
+
+  #align(center)[
+    #grid(
+      columns: (1fr, 1fr),
+      align: horizon, 
+      [
+        $ZZ_4 times ZZ_4$
+
+        #grid(
+          columns: (..(0.9cm,)*5),
+          rows: (..(0.9cm,)*5),
+          align: horizon + center,
+          stroke: 0.2mm + black,
+          gutter: (0.5mm, auto),
+          inset: 2mm,
+          fill: (x, y) => if (x == 0 or y == 0) { blue.opacify(-85%) },
+          $dot.c$, $0$, $1$, $2$, $3$,
+              $0$, $1$, $4$, $2$, $4$,
+              $1$, $4$, $4$, $4$, $4$,
+              $2$, $2$, $4$, $2$, $4$,
+              $3$, $4$, $4$, $4$, $4$,
+        )
+      ],
+      [
+        $ZZ_2 times Q_8$
+
+        #grid(
+          columns: (..(0.9cm,)*3),
+          rows: (..(0.9cm,)*9),
+          align: horizon + center,
+          stroke: 0.2mm + black,
+          gutter: (0.5mm, auto),
+          inset: 2mm,
+          fill: (x, y) => if (x == 0 or y == 0) { blue.opacify(-85%) },
+          $dot.c$, $0$, $1$,
+              $e$, $1$, $2$,
+              $y$, $4$, $4$,
+            $y^2$, $2$, $2$,
+            $y^3$, $4$, $4$,
+              $x$, $4$, $4$,
+            $x y$, $4$, $4$,
+          $x y^2$, $4$, $4$,
+          $x y^3$, $4$, $4$
+        )
+      ]
+    )
+  ]
+
+  Thus, they both have $1$ element of order $1$, $3$ elements of order $2$ and $12$ elements of order $4$. Suppose that $ZZ_4 times ZZ_4$ is isomorphic to $ZZ_2 times Q_8$,
+
+  #__cbox-count.update(0)
+  #colbreak()
+  #section(level: 1, [Series: Symmetric Groups.])
+  #exr[
+    Let $G$ be a non-abelian group with order $10$. Show that $G$ is isomorphic to $D_10$.
+  ]
+  It is easy to generalize, so we prove the following proposition.
+  #thm(count: false)[
+    Let $G$ be a non-abelian group with order $2p$, then $G$ is isomorphic to $D_(2p)$.
+  ]
+
+  #prf[
+    We separate the proof into claims.
+    - _Claim 1_: $exists r in G, o(y) = p$. Suppose by contradiction that there is no element of order $p$, then every element has order $2$, but this makes $G$ abelian, contradiction, thus there is $r in G$ such that $o(r) = p$. Take $H = chevron.l r chevron.r$.
+    - _Claim 2_: $exists s in G \\ H, G = H union s H$. Consider $s in G \\ H$, we have that $card H = card s H = p$ and $H inter s H = emptyset$ (since if $H inter s H eq.not emptyset$ then $exists n, m in NN, s r^n = r^m => s = r^(m-n) in H$ which is a contradiction) thus $H inter s H = emptyset$, thus $H union s H subset G$ and $card (H union s H) = card G => G = H union s H$. 
+    - _Claim 3_: $s^2 = e$. We have that $s^2 in.not s H$, since if it were then $s^2 = s z, z in H$ thus $s = z in H$ contradiction, therefore $s^2 in H$, thus $s^2$ has either order $1$ or $p$, if its order is $p$ then $s$ has order $s^(2p)$ thus $G$ is cyclic so abelian so it is necessarily $1$, thus $s^2 = e$.
+    - _Claim 4_: $r s = s r^(-1)$. Through the same proof as the previous exercise we get that $r s = s r^(-1)$.
+    Therefore, we have that $G$ is isomorphic to $D_(2p)$.
+  ]
+
+  #exr[
+
+  ]
+
+  #exr[
+    Consider the permutation $
+      sigma = mat(
+        1, 2, 3, 4, 5, 6;
+        6, 5, 4, 3, 1, 2;
+      )
+    $
+  ]
+
+  #qst[
+    Computing $sigma^k$ for $k in NN$, and calculate the order of each $sigma^k$.
+  ]
+
+  $
+    sigma^1 &= mat(
+      1, 2, 3, 4, 5, 6;
+      6, 5, 4, 3, 1, 2;
+    ) #h(1cm)
+    sigma^2 &= mat(
+      1, 2, 3, 4, 5, 6;
+      2, 1, 3, 4, 6, 5;
+    )\
+
+    sigma^3 &= mat(
+      1, 2, 3, 4, 5, 6;
+      5, 6, 4, 3, 2, 1;
+    ) #h(1cm)
+    sigma^4 &= mat(
+      1, 2, 3, 4, 5, 6;
+      1, 2, 3, 4, 5, 6;
+    )\
+  $
+
+  We have that $sigma$ has order $4$, $sigma^2$ has order $2$ and $sigma^3 = sigma^(-1)$ which has order $4$.
+
+  #qst[
+    Find the cycles of $sigma$ and write it as a product of transpositions.
+  ]
+  We have that $(1 6 2 5)$ and $(3 4)$ are the cycles of $sigma$ thus $sigma = (1 6 2 5) (3 4)$. We use the fact that $(i_1 dots i_k) = (i_1 i_k) dots.c (i_1 i_2)$ then we have that $sigma = (1 5) (1 2) (1 6) (3 4)$.
+
+  #qst[
+    Find the parity of $sigma$ and the parity of each $sigma^k, k in ZZ$.
+  ]
+  The parity of $sigma$ is even since it has $4$ transpositions, thus $sigma^k$ would have parity even too, since $sigma^k = ((1 5) (1 2) (1 6) (3 4))^k$, which would have $4 k$ transpositions.
+
+  #exr[ ]
+
+  #qst[
+    Prove $(1 space 2 dots n)^(-1) = (n space n - 1 dots 1)$.
+  ]
+
+  $
+    (1 space 2 dots n) dot.c (n space n-1 dots 1) &= (1)
+  $
+
+  #qst[
+    What is the order of an $l$-cycle, and the order of products of disjoint cycles of lengths $l_1, dots, l_s$.
+  ]
+]
