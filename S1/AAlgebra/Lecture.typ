@@ -695,16 +695,15 @@ The extension exists since $overline(K) \/ K$ is normal and by the Proposition 3
   Let $L\/K$ be a Galois field extension of degree $n$, then $G(L\/K)$ the set of all $K$-automorphisms of $L$ is a subgroup of $Aut(L)$. Moreover, if $H$ is a subgroup of $G(L, K)$ then $L^(H) = K => H = G(L\/K)$.
 ]
 
-#prf[
-  
+#thm(name: "Galois Theorem")[
+  Let $L\/K$ be a Galois extension of degree $n$ and let $cal(F)$ be the set of intermediate fields of $L\/K$ and $cal(G)$ be the set of subgroups of $G(L\/K)$. Then there is a correspondence between $cal(F)$ and $cal(G)$ with the map defined as $
+    phi: cal(F) &-> cal(G) #h(2cm) phi^(-1): &cal(G) &-> cal(F)\
+    F &|-> G(L\/F) &H &|-> L^((H))
+  $
 ]
 
-#nte(count: false)[
-  #text(fill: red, [COURSE NOT FINISHED])
-]
 
 #chapter("Groups")[]
-
 #section[Remainders]
 #def(count: false, name: "Group/Subgroup")[
   A non-empty set $G$ and an operation $dot.c: G times G -> G$ is said to be a _group_ if

@@ -428,9 +428,11 @@ After representing integers with binary, we will represent numbers with decimal 
   ]
 ]
 
-#chapter("Coding Theory")[
-  Man... If you are reading this, it is a genuine call for help. This will be a useless written course from my understanding, which I believe is nowhere usable or useful, maybe consider things like becoming a farmer, a maid or anything that actually makes you accomplish anything, or maybe just go gamble your kidneys.
-]
+#chapter("Coding Theory")[]
+#v(-0.7cm)
+#text(fill: red, [
+  Hello, so this is a warning more than anything, if you arrived here and you are still with Oudjida, he will become like the so-called-now mythical Berrachedi. Consider this warning seriously, you will maybe lose it from now on if you care, or you will just not care. Try to not care, best advice...
+])
 
 #section[Radix-2#super[r] Encoding]
 We start by considering a number $K = k_(l-1) dots k_0 in BB^l$, we take $k_j = 0$ if $j in.not [|0, l-1|]$ and $w in NN$ a window size, we can write $K$ in the following way $
@@ -450,7 +452,6 @@ $ with $Q_i = -2^(w-1) k_(w dot i + w - 1) + sum_(j=0)^(w-2) 2^j dot.c k_(w dot 
   
   return m, n
   ```])
-#colbreak()
 By using this decomposition, we get this writing $
   K = sum_(i=0)^(ceil((l+1)/w) - 1) (-1)^(s_i) dot.c m_i dot.c 2^(w dot i + n_i)
 $
@@ -476,3 +477,36 @@ $ and then we get the encoding as $
 $
 
 #section[SSP Encoding]
+The process is significantly easier than Radix-$2^r$. We start by considering a number $K = k_(l-1) dots k_0 in BB^l$ and $w in NN$ a window size. We start with smallest $i$ such that $k_i != 0$, we consider the block $k_(i+w-1) dots k_i$, we take its value in the in two's complement representation as $d$ and replace the block $k_(i+w-1) dots k_i$ with $00 dots 0 d$, if the sign of $d$ is negative then add $1$ to the number $k_(l-1) dots k(i+w)$.
+
+For (I suppose, I hope, I honestly don't know) making the algorithm quicker, we define a look-up table, that takes a number and returns its two's complement representation, we define it as ```pcode LUT(K[w-1,...,0])``` and returns $d = - k_(w-1) 2^(w-1) + sum_(i=0)^(w-2) k_i 2^i$. I would like to take in the algorithms the notation ```pcode K[i]``` to mean $k_i$ and ```pcode K[j,...,i]``` to mean $k_j k_(j-1) dots k_(i+1) k_i$.
+#code([
+```pcode
+input:
+  - K: number
+  - l: length of K
+  - w: window
+output: SSP representation of K with window w
+
+i = 0
+while i < l do
+  while do K[i] == 0 and i < l do
+    i++
+  end
+
+  s = K[i+w-1]
+  d = LUT(K[i+w-1,...,i])
+  K[i+w-1,...,i] = [0,0,...,0,d]
+  i = i + r
+
+  if s == 1 then
+    j = i
+    while K[j] == 1 do
+      K[j] = 0
+      j = j + 1
+    end
+    K[j] = 1
+  end
+end
+return K
+```])

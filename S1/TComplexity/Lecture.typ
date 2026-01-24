@@ -134,3 +134,6 @@ Now we give some classes of problems that are usually uncountered in complexity.
 
 #colbreak()
 #subsection("The Class NP Of Algorithms")
+
+#colbreak()
+t
