@@ -5,6 +5,8 @@
 
 #let Oh = math.op("O")
 
+#ctitle[Complexity TD Series Za3ma]
+
 #exr(ovcount: false)[
   Asymptotic complexity of the functions
   - $6n^3 + 10n^2 + 5n + 2 -> Oh(n^3)$.
@@ -16,47 +18,124 @@
 ]
 
 #exr(ovcount: false)[
-  Compare the functions near infinity $
+  Compare the functions near infinity, for checking just use the fact that $abs(f(n) \/ g(n))$ is bounded near infinity, then $f(n) = Oh(g(n))$.
+
+  $
     (1/3)^n < 17 < log(n) < n/(log(n)) <\
     sqrt(n) < n < (3/2)^n < 2^n
   $
+
+  #align(center)[
+    #{
+      let n = linspace(2, 5)
+
+      diagram(
+        legend: (position: top + left, fill: white.opacify(-20%), inset: 1mm),
+        width: 100%,
+        height: 6cm,
+        plot(label: [$1\/3^n$], n, n => calc.pow((1/3), n)),
+        plot(label: [$17$], n, n => 17),
+        plot(label: [$log(n)$], n, n => calc.log(n)),
+        plot(label: [$n\/log(n)$], n, n => n / (calc.log(n))),
+        plot(label: [$sqrt(n)$], n, n => calc.sqrt(n)),
+        plot(label: [$n$], n, n => n),
+        plot(label: [$(3\/2)^n$], n, n => calc.pow((3/2), n)),
+        plot(label: [$2^n$], n, n => calc.pow(2, n)),
+      )
+    }
+  ]
 ]
 
 #exr(ovcount: false)[
-  Find number of operations and complexity
-  - A: $1 + 2n -> Oh(n)$.
-  - B: $1 + 2n(2n + n) -> Oh(n^2)$.
-  - C: $2 (n(n+1))/2 n -> Oh(n^3)$.
+  Find number of operations and complexity, given that we have no way to know what should be counted as a step or not, I will consider additions, declarations and evaluations to be elementary steps.
+  - A: $1 + 2n^2 -> Oh(n^2)$.
+  - B: $1 + 2 dot.c n dot.c 2n -> Oh(n^2)$.
+  - C: $2 n^2(n+1)\/2 -> Oh(n^3)$.
 ]
 
 #exr(ovcount: false)[
-  Find number of operations and complexity
-  - $"f"_1$: $1 + 2(n(n+1))/2 -> Oh(n^2)$.
-  - $"f"_2$: $2 + 4log_2(n) -> Oh(log_2 (n))$.
-  - $"f"_3$: $2 + 4log_2(n) -> Oh(log_2 (n))$.
-  - $"f"_4$: $2 + 2n log_2(n) + 2 log_2(n) -> Oh(n log_2(n))$.
+  Find number of operations and complexity, same here, just rewriting the program because of the extremely bad idententation.
+  - $"f"_1$:
+  #code[
+    ```pcode
+    x = 0;
+
+    for i = 0 to n - 1 do
+      for j = 0 to i - 1 do
+        x = x + 1;
+      end
+    end
+    ```
+  ]
+  $ 1 + 2n(n+1)\/2 -> Oh(n^2) $
+
+  - $"f"_2$: 
+  #code[
+    ```pcode
+    x = 0;
+    i = n;
+
+    while i > 1 do
+      x = x + 1;
+      i = i / 2;
+    end
+    ```
+  ]
+  $ 2 + 4log_2(n) -> Oh(log_2 (n)) $
+  $log_2 (n)$ in this case from the fact that in each iteration, we halve how many steps we go through, thus, we need how many $2$ divides $n$ times to pass through all $n$, which is $log_2 (n)$ in this case ($2^k = n => k = log_2 (n)$).
+
+  - $"f"_3$:
+  #code[
+    ```pcode
+    x = 0;
+    i = n;
+
+    while i > 1 do
+      for j = 0 to n - 1 do
+        x = x + 1;
+      end
+      i = i / 2;
+    end
+    ```
+  ]
+  $ 2 + log_2(n)(2 + 2n) -> Oh(n log_2 (n)) $
+  same reasoning here 
+
+  - $"f"_4$:
+  #code[
+    ```pcode
+    x = 0;
+    i = n;
+
+    while i > 1 do
+      for j = 0 to i - 1 do
+        x = x + 1;
+      end
+      i = i / 2;
+    end
+    ```
+  ]
+  $ 2 + sum_(j=0)^(ceil(log_2(n))) 4 n/2^j -> Oh(n)) $
+  You can try it for $i = 2^k$ for some $k$, you can see that at each iteration, there would be $2^k$ evaluations and additions, thus giving the result.
 ]
 
 #exr(ovcount: false)[
   +
     #code[
     ```pcode
-    input: n > 0
-    output: n!
-
     S := 1
     for i = 2 to n do
-      S = S*i
+      S = S * i
     end
     return S
     ```
     ]
-  + The complexity is $1 + 2(n-1) = O(n)$.
+  + The complexity is $1 + 2(n-1) = Oh(n)$.
 ]
 
 #exr(ovcount: false)[
-  + + $T_1(n) = 9n^2 = O(n^2)$.
-    + $T_2(n) = 100n + 96 = O(n)$.
+  + + $T_1(n) = 9n^2 = Oh(n^2)$.
+    + $T_2(n) = 100n + 96 = Oh(n)$.
   + + For $T_1$: $(n_0, c) = (1, 9)$ clearly.
     + For $T_2$: $(n_0, c) = (1, 200)$ since $200 n = 100 n + 100 n > 100 n + 100 > 100 n + 96$.
   + #align(center)[
@@ -103,5 +182,5 @@
       ```
     )
   ]
-  + $T(n) = 3*(n-1)^3 -> Oh(n)$.
+  + $T(n) = 3(n-1)^3 -> Oh(n^3)$.
 ]
