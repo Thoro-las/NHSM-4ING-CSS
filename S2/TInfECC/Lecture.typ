@@ -1,18 +1,17 @@
 #import "@preview/commute:0.3.0": node, arr, commutative-diagram
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
 #import "@THR/Wide:1.0.0": *
 #show: template.with(
   title: "Information Theory & Error Correcting Codes",
   writer: "HADIOUCHE Azouaou",
-  disclaimer: [This document contains the lectures given by Dr.Seffah.],
+  disclaimer: [This document contains the lectures given by Dr. Seffah.],
 )
-#set enum(numbering: "1.1.")
 
 #let Z(m) = $ZZ \/ #m ZZ$
 #let card = math.op("#")
 
 #chapter("Remainders", num: 0)[]
-
 #section(level: 1)[Congruences & $bold(ZZ\/m ZZ)$ Arithmetic]
 #def(name: "Congruence Of Integers / Congruence Class")[
   Let $a, b, m in ZZ$ with $m > 0$, we say that $a$ is congruent to $b$ modulo $m$ and we write $a equiv b mod m$ if $m divides a - b$ which gives an equivalence relation. The class of $a$ in the congruence relation by $m$ is called the congruence class of $a$ modulo $m$, which is $overline(a) = a + m ZZ$.
@@ -27,26 +26,69 @@
 
 We denote $ZZ\/m ZZ$, the set of all congruence classes modulo $m$.
 
-#section(level: 1)[Euler $Phi$ Function]
-#def(name: [$Phi$ Function])[
-  The Euler $Phi$ function is defined as $Phi: ZZ -> NN$, where $Phi(n) = card { x in [|0, m-1|] | gcd(x, m) = 1}$.
+#section(level: 1)[Euler $phi$ Function]
+#def(name: [$phi$ Function])[
+  The Euler $phi$ function is defined as $phi: ZZ -> NN$, where $phi(n) = card { x in [|0, m-1|] | gcd(x, m) = 1}$.
+]
+
+#ooc[
+  #lem(count: false)[
+    Let $r, m, p in NN$ where $p$ is prime, then $gcd(m, p^r) != 1 <=> p divides m$
+  ]
+
+  #prf[
+    $=>$ let $d = gcd(m, p^r)$, since $d | p^r$ and $p$ is prime then $d = p^k$ for some $k in NN$, and $p^k = d | m$ thus $p | p^k$ and $p^k | m$ so $p | m$. $arrow.double.l$ suppose that $p | m$ and since $p | p^r$ too then $p | gcd(m, p^r)$ given $p > 1$ then $gcd(m, p^r) != 1$.
+  ]
 ]
 
 #pro[
-  Let $p$ be a prime number, then $Phi(p) = p - 1$ and $phi(p^r) = p^r - p^(r-1) = p^r (1 - 1/p)$.
+  Let $p$ be a prime number, then $phi(p) = p - 1$ and $phi(p^r) = p^r - p^(r-1) = p^r (1 - 1/p)$.
 ]
 
-#thm(name: "Euler")[
-  Let $m$ be a positive integer modulo $a$ be an integer relatively prime to $m$ then $a^(Phi(m)) equiv 1 mod m$.
-]
-
-#thm(name: "Fermat")[
-  Let $p$ be a prime, if the integer $a$ is not divisible by $p$ then $a^p equiv a mod p$.
+#ooc[
+  #prf[
+    Let $p, r in NN$ with $p$ prime. From the lemma, we have that for $m in NN$, $gcd(p^r, m) = 1 <=> p divides.not m$, the numbers that are divisible by $p$ in $[|0, p^r - 1|]$ are of the form $k p$ where $k in [|0, p^(r-1) - 1|]$, so the number of numbers that are divisible by $p$ in $[|0, p^r - 1|]$ is $p^r - p^(r-1)$ so $phi(p^r)=p^r - p^(r-1)$.
+  ]
 ]
 
 #thm(name: "Lagrange")[
   Let $G$ be a finite group and $H$ a subgroup of $G$, then $card H divides card G$.
 ]
+
+This theorem is already done multiple times in algebra so no need to prove it here.
+
+#ooc[
+  #lem[
+    Let $n in NN$, $x in (ZZ\/n ZZ)^*$ (invertible) $<=>$ $gcd(x, n) = 1$.
+  ]
+
+  #prf[
+    $=>$ Suppose that $x in (ZZ\/n ZZ)^*$, then $exists y in ZZ\/n ZZ$ such that $x y = 1 mod n$, then $x y = 1 + k n => x y - k n = 1$ by Bezout theorem we have $gcd(x, n) = 1$. $arrow.double.l$ SUppose that $gcd(x, n) = 1$, by Bezout theorem, $exists y, k in ZZ, x y + k n = 1$ and thus $x y + k n = 1 mod n => x y = 1 mod n$ so $x in (ZZ\/n ZZ)^*$.
+  ]
+
+  We need this lemma since $phi(n) = card (ZZ\/n ZZ)^*$.
+]
+
+#thm(name: "Euler")[
+  Let $m$ be a positive integer modulo $a$ be an integer relatively prime to $m$ then $a^(phi(m)) equiv 1 mod m$.
+]
+
+#ooc[
+  #prf[
+    Let $a$ relatively prime to $m$, then $gcd(a, m) = 1 => a in (ZZ\/m ZZ)^*$, $a$ has finite order thus $exists k in NN, a^k = 1 mod m$, $chevron.l a chevron.r$ is a subgroup of $(ZZ\/m ZZ)^*$ so $k | card(ZZ\/m ZZ)^* = phi(m)$ and thus $phi(m) = k b$, thus $a^(phi(m)) = a^(k b) = (a^k)^b = 1^b = 1 mod m$, which completes the proof.
+  ]
+]
+
+#cor(name: "Fermat")[
+  Let $p$ be a prime, if the integer $a$ is not divisible by $p$ then $a^p equiv a mod p$.
+]
+
+#ooc[
+  #prf[
+    Just take $m = p$ in Euler's theorem, then $phi(m) = p - 1$ so $a^(phi(m)) = a^(p-1) = 1 mod m$, so $a^p = a mod m$.
+  ]
+]
+
 
 #section[Quadratic Residues]
 #def(name: "Quadratic Residue")[
@@ -57,23 +99,40 @@ We denote $ZZ\/m ZZ$, the set of all congruence classes modulo $m$.
   An integer $a$ is a quadratic residue modulo $p$ if and only if $gcd(a, p) = 1$ and $a$ has a square rest modulo $p$.
 ]
 
+#prf[
+  $=>$ Suppose that $a$ is a quadratic residue modulo $p$, that is, there exists $x in ZZ$ such that $x^2 equiv a mod p$. If $gcd(a, p) != 1$ then $p | a$ so $a equiv 0 mod p$ thus $x = 0$, so necessarily $gcd(a, p) = 1$ and $a$ has $x^2$ remainder when divided by $p$ thus the rest is a perfect square. $arrow.double.l$ Suppose now that $gcd(a, p) = 1$ and $a$ has a square rest modulo $p$, then $a equiv.not 0 mod p$ and $a equiv x^2 mod p$ thus $a$ is quadratic residue.
+]
+
 #def(name: "Legendre Symbol")[
   Let $p$ be an odd prime, define the Legendre symbol as:
   $
     (a/p) = 
       cases(
         1 &"if" gcd(a, p) = 1 "and" a "is a quadratic residue" mod p,
-        -1 &"if" gcd(a, p) = -1 "and" a "is not a quadratic residue",
+        -1 &"if" gcd(a, p) = 1 "and" a "is not a quadratic residue",
         0 &"if" p "divides" a
       )
   $
 ]
 
 #thm[
-  Let $p$ be an odd prime for every integer $a$
+  Let $p$ be an odd prime, for every integer $a$
   $
     (a/p) = a^((p-1)/2) mod p
   $
+]
+
+#colbreak()
+
+#ooc[
+  #prf[
+    We treat by cases
+    + $p | a$: then $a = 0 mod p => a^((p-1)/2) = 0^((p-1)/2) = 0 mod p$.
+    + $p divides.not a$: then $gcd(a, p) = 1$, by Fermat's little theorem we have that $a^(p-1) equiv 1 mod p$, the square roots of $1$ are $-1$ and $1$ only thus $a^((p-1)/2) equiv 1 "or" -1 mod p$.
+      + If $a$ is a quadratic residue then $exists x in ZZ, x^2 equiv a mod p => a^((p-1)/2) equiv x^(2(p-1)/2) equiv x^(p-1) equiv 1 mod p$.
+      + If $a^((p-1)/2) equiv 1 mod p$, we have that $ZZ_p$ is a finite field thus there exists a generator $g$ of $(ZZ_p)^*$ (primitive element theorem in finite fields), then $a equiv g^k mod p$, we have then $a^((p-1)/2) equiv g^(k (p-1)/2) equiv 1 mod p$. Given that the generator $g$ has order $p-1$ then $k (p-1)/2 equiv 0 mod p - 1$ thus $k (p-1)/2 = m(p-1) => k = 2m$ so $k$ is even, thus $a equiv g^(2m) = (g^m)^2 mod p$ so $a$ is a quadratic residue modulo $p$.
+    Given that $a$ is a quadratic residue modulo $p$ if and only if $a^((p-1)/2) equiv 1 mod p$ and $a^((p-1)/2) equiv 1 "or" -1 mod p$ then necessarily if $a$ is not a quadratic residue, $a equiv -1 mod p$.
+  ]
 ]
 
 #exr[
@@ -83,6 +142,224 @@ We denote $ZZ\/m ZZ$, the set of all congruence classes modulo $m$.
   + Let $K$ be a commutative field, and let $p: x^2 + lambda x + mu$ be a monic polynomial of degree $2$, show that $p$ is reducible over $K$ if and only if it has a root in $K$.
   + Let $K = ZZ\/5 ZZ$ be the field of residue classes, factor the polynomial $(x^2 + 4)(x^2 + 3)$ into irreducible factors over $K$.
   + Still with $K = ZZ\/5 ZZ$, decompose into partial fractions the rational function $
-    (x - 2)/((x^2 + 4)(x^2 + 3))
+    (x - overline(2))/((x^2 + overline(4))(x^2 + overline(3)))
   $
+]
+
+#colbreak()
+
++ Decomposing into partial fractions: we have that the denominator decomposes into the following two irreducible polynomials $
+  x^4 + x^2 + 1 &= x^4 + 2 x^2 + 1 - x^2\
+  &= (x^2 + 1)^2 - x^2\
+  &= (x^2 + x + 1)(x^2 - x + 1)
+$ and thus we have that the fraction decomposes as follows $
+  x/(x^4 + x^2 + 1) &= (a x + b)/(x^2 + x + 1) + (c x + d)/(x^2 - x + 1)\
+$ by multiplying both sides by $x^4 + x^2 + 1$ we get $
+  x &= (a x + b)(x^2 - x + 1) + (c x + d)(x^2 + x + 1)\
+  0 &= a x^3 - a x^2 + a x + b x^2 - b x + b + c x^3 + c x^2 + c x + d x^2 + d x + d - x\
+  0 &= (a + c) x^3 + (- a + b + c + d) x^2 + (a - b + c + d - 1) x + (b + d)\
+  & #h(1.5cm) => cases(
+    a + c &= 0,
+    - a + b + c + d &= 0,
+    a - b + c + d - 1 &= 0,
+    b + d &= 0
+  ) quad => quad cases(
+    a = 0,
+    b = -1\/2,
+    c = 0,
+    d = 1\/2
+  )
+$ thus we get $
+  x/(x^4 + x^2 + 1) = 1/(2(x^2 - x + 1)) - 1/(2(x^2 + x + 1))
+$
++ Let $K$ be a commutative field and let $P(x) = x^2 + lambda x + mu$. $=>$ Suppose that $P(x)$ is reducible, then $P(x) = Q(x) dot.c R(x)$ with $deg(Q) != 0$ and $deg(R) != 0$ and since $deg(Q) + deg(R) = deg(P)$ then necessarily $deg(Q) = deg(R) = 1$, so $Q(x) = a x + b$ and $R(x) = c x + d$ and since $a, b in K$ then $-a/b in K$ which is a root of $Q$ and thus a root of $P$ so $P$ has a root in $K$. $arrow.double.l$ Suppose that $P(x)$ has a root $alpha$, then $(x - alpha)$ divides $P$ and thus we get that $P$ is reducible.
++ Let $K = ZZ\/5ZZ$, factor $(x^2 + 4)(x^2 + 3)$ into irreducible factors over $K$, $-3=2 mod 5$ is not a quadratic residue since $2^((5-1)/2) = 4 = -1 mod 5$ thus $x^2 + 3$ is irreducible given it has no roots. While $-4=1$ is a quadratic residue with roots $-1$ and $1$ so $(x^2 + 4)(x^2 + 3) = (x^2 - 1)(x^2 + 3) = (x - 1)(x + 1)(x^2 + 3)$.
++ Decomposing now the partial fraction in $ZZ\/5ZZ$, $
+  (x-2)/((x^2 + 4)(x^2 + 3)) &= (x-2)/((x + 4)(x + 1)(x^2 + 3))\
+  &= a/(x + 4) + b/(x + 1) + (c x + d)/(x^2 + 3)
+$ by multiplying all parts by $(x^2 + 4)(x^2 + 3)$ we get $
+  x - 2 = a(x+1)(x^2 + 3) + b(x+4)(x^2 + 3) + (c x + d)(x + 4)(x + 1)
+$ we set the following values for $x$
+  - $x = -1$: $-3 = b(-1 + 4)(1 + 3) = 12 b = 2 b => b = 3*(-3) = -9 = 1$.
+  - $x = +1$: $-1 = a(1 + 1)(1 + 3) = 8 a = 3 a => a = 2*(-1) = -2 = 3$.
+
+#exr[
+  + Decompose $561$ into prime factors.
+  + Let $a$ be an indeterminate, for any integer $n >= 1$, justify the formula $
+    a^n - 1 = (a - 1) (a^(n-1) + a^(n - 2) + dots.c + a + 1)
+  $
+  + Justify for any integer $m >= 1$ and any integer $n >= 1$ the formula $
+    a^(m n) - 1 = (a^m - 1) (a^((n-1)m) + a^((n-2)m) + dots.c + a^m + 1)
+  $
+  + Let $a in ZZ$ be an integer, prove $a^(561) - a = a (a^(2 dot.c 280) - 1) = a (a^2 - 1) m$ for some integer $m$.
+  + For any $a in ZZ$, show that $a (a - 1) (a + 1)$ is divisible by $3$.
+  + Show that $a^(561) - a$ is a multiple of $3$.
+  + Show that $a^(561) - a$ is a multiple of $17$.
+  + Show that $a^(561) - a$ is a multiple of $11$.
+  + Show that $a^(561) equiv a mod 561$.
+]
+
++ The prime decomposition of $561$ is $3 dot.c 11 dot.c 17$.
++ Let $a$ be a formal variable, we have $
+  (a - 1)sum_(i = 0)^(n-1) a^i = sum_(i=0)^(n-1) a^(i+1) - a^i
+  &= sum_(i = 1)^n a^i - sum_(i=0)^(n-1) a^i = a^n - 1
+$
++ By taking $a = a^m$ in the previous inequality we get the result.
++ Clearly $561 = 2 dot.c 280 + 1$ thus $a^561 - a = a(a^560 - 1) = a(a^(2 dot.c 280) - 1)$ and we have from the previous question by taking $m = 2$ and $n = 280$ that $a^(561) - a = a (a^2 - 1)(sum_(i=1)^(279) a^(2i)) = a (a^2 - 1) m$.
++ Let $a in ZZ$, we have that $a = 3 q + r$ with $0 <= r < 2$ from the Euclidean division algorithm, then $a (a - 1) (a + 1) = (3 q + r) (3 q + (r - 1)) (3 (q + 1) + (r - 2))$ and since $0 <= r < 2$ then necessarily either $r$, $r-1$ or $r-2$ is $0$, and thus it has one of the factors divisible by $3$.
++ $a^(561) - a$ is divisible by $3$ since $a^(561) - a = a (a + 1) (a - 1) m$ which is divisible by $3$ from the previous question.
++ $a^16 = 1 mod 17$ by Fermat little theorem, then $a^(560) = a^(16 dot.c 35) = 1 mod 17$ thus, $a^(561) = a mod 17 => 17 | a^561 - a$.
++ Same here, $a^10 = 1 mod 11$ by Fermat little theorem, then $a^(560) = a^(10 dot.c 56) = 1 mod 11$ thus, $a^(561) = a mod 11 => 11 | a^561 - a$.
++ Given that all the divisors of $561$ divide $a^561 - a$ then it is divisible by their product so $561 | a^561 - a => a^561 equiv a mod 561$.
+
+#__chp-sect-count.update(0)
+#chapter[Introduction To \ Information Theory][
+  The digital revolution has transformed how we communicate, store and process information. This chapter introduces the fundamental concepts of information theory, a discipline at the intersection of mathematics, computer science and telecommunication.
+]
+
+#align(center)[
+  #set text(fill: white)
+  #diagram(
+    edge-stroke: 1pt,
+    node-corner-radius: 5pt,
+    edge-corner-radius: 8pt,
+    mark-scale: 80%,
+
+    node((0,0), name: "1", width:  2.5cm, [Source], fill: maroon),
+    node((0.9,0), name: "2", [Transmit], fill: eastern),
+    node((1.7,0), name: "3", [Noise], fill: eastern),
+    node((2.6,0), name: "4", [Receive], fill: eastern),
+    node((3.75,0), name: "5", [Destination], fill: olive, shape: fletcher.shapes.hexagon),
+
+    edge(label("1"), label("2"), "-|>"),
+    edge(label("2"), label("3"), "-|>"),
+    edge(label("3"), label("4"), "-|>"),
+    edge(label("4"), label("5"), "-|>"),
+  )
+]
+
+This diagram present the general structure of any communication system. The communication process begins with an information source.
+
+#ntt[
+  Let $Sigma$ be a set:
+  - $Sigma^n = Sigma times dots.c times Sigma$ is the set of words of length $n$. We take that $Sigma^0 = {epsilon}$ where $epsilon$ is the empty word.
+  - $Sigma^* = union_(i >= 0) Sigma^n$ the set of all possible words over $Sigma$.
+  - $Sigma^+ = union_(i >= 1) Sigma^n$ the set of all possible non-empty words over $Sigma$.
+  - For $x in Sigma^*$, we define $|x| = min {n in NN | x in Sigma^n}$.
+  - The set of binary letters as $BB = {0, 1}$
+]
+
+#def(name: "Symbol/Message")[
+  Let $cal(X)={x_1, dots, x_m}$ be a finite set of alphabets. An element of $cal(X)$ is called a symbol, and elements of $cal(X)^+$ are called a message with alphabet $cal(X)$.
+]
+
+To model information that was given from a message, we consider the fact that a message contains more information the more unpredictable it is. For example, consider a sender that keeps sending the message "Hello!" over and over again, at each iteration, it becomes predictable what the next message would be, thus there is no more information that is passed. Uncertainty is a property of a random process, thus a good way to model a message is to consider it as a random variable $X$ that has values in $cal(X)$. From the previous example too, we can think that the information in a message is related to how uncertain it is, that is, how less probable it would be sent. 
+#ntt[
+  For the sake of simplifying notation, we will denote $P(X = x)$ as $P(x)$, same for other random variables, like $P(Y = y)$ as $P(y)$. Same for all the remaining notations like $P(y|x)$ which is $P(Y = y|X = x)$.
+]
+
+#def(name: "Measure Of Information")[
+  Let $X$ be a random variable that represents the probability that a message $x$ is sent as $P(X = x) = P(x)$, we define the measure of information of the message $x$ as $
+    I(x) = - log_2 P(x)
+  $
+]
+
+$log_2$ is taken for the usual reason that information is represented in binary, and that if it is represented in any other base, it would have just a linear factor added. In practice, transmission lines tend to cause irregularities in the signal, that is, it alters the contents of the message with some noise. Thus, in transmission lines we are interested in the distribution of the message $y$ that are received, given some sent message $x$, which will be measured by $P(y|x)$.
+
+#section[Entropy]
+After we defined a measure of information, which we discussed to be a measure of uncertainty, we need a way to quantify the average amount of uncertainty for all the values of $X$. Thus, we define the entropy as follows.
+
+#def(name: "Entropy")[
+  Let $X$ be a random variable with values in $cal(X)$, we define the entropy $H(X)$ as the average amount of information, that is $
+    H(x) = EE[I(X)] = - sum_(x in X) P(x) dot.c log_2 P(x)
+  $
+]
+
+
+
+
+Notice that the information of some message $x$ depends only on its unpredictability, that is, its probability of occurrence $P(x)$ not its value.
+
+#exm[
+  Let $cal(X) = {0, 1}$, and $X$ a discrete random variable with values in $cal(X)$, which has the distribution $
+    P(x) = cases(
+      0.9 &"if" x = 0,
+      0.1 &"if" x = 1
+    )
+  $ We obtain that $
+    I(x) = cases(
+      0.152 &"if" x = 0,
+      3.321 &"if" x = 1
+    )
+  $. And the measure of average amount of information is $H(X) = 0.4689$.
+]
+
+#subsection[Source Coding]
+The most important part of coding theory is achieving the most efficient reliable and secure coding. The first part is the focus of this section, by assigning a code from each symbol in $cal(X)$, we try to achieve the minimum bound possible of letters to send to transmit our message.
+
+#def(name: "Coding Function")[
+  Let $c: cal(X) -> BB^+$, we call it a coding function, which takes characters of our set of symbols, and represent it a binary string in $BB^+$.
+]
+
+To measure the efficiency of our coding function, we define the average code length, the less the average, the more efficient the transmission will be.
+
+#def(name: "Average Code Length")[
+  Let $c: cal(X) -> BB^+$, a coding function, and consider the function $
+    tau: {c: cal(X) -> BB^x} -> RR quad quad c |-> tau_c = sum_(x in cal(X)) p(x) dot.c |c(x)|
+  $
+]
+
+#exm[
+  Take a horse race with $8$ horses, we want to send a message in binary that indicates which horse has won. And suppose that the probabilities of winning for each horse is as follows
+  #table(
+    columns: 9,
+    inset: (x: 2mm, y: 3mm),
+    align: center + horizon,
+    [Horse], ..range(1, 9).map(x => $#x$),
+    [Probability Of Winning], ..($1/2$, $1/4$, $1/8$, $1/64$, $1/64$, $1/64$, $1/64$, $1/64$).map(x => $display(#x)$)
+  )
+
+  If we just send the index of the winner horse, we get the following coding function
+
+  #table(
+    columns: 9,
+    align: center + horizon,
+    [Horse $i$], ..range(1, 9).map(x => $#x$),
+    [$c_1 (i)$], $000$, $001$, $010$, $011$, $100$, $101$, $110$, $111$
+  )
+
+  If we do it just blindly, we will need $3$ bits to describe all the possible winner horses from $000, 001, 010, dots.c, 110, 111$, calculating the average of description length we get $
+    tau_(c_1) = sum_(x in X) 3 dot.c p(x) = 3 "bits"
+  $
+
+  Giving us an average of $3$ bits for the transmission to give exactly who horse is the winner. An aspect that we did not use in the previous part is how likely do horses win in this case, which we can use to improve the amount of bits that would be sent on the channel. Consider the distribution of the horses winning as follows
+
+  Notice that if we give a smaller message for the horses that are more probable to win, and less to horses that are less likely to win, then we can reduce some of the data that will be used to specify the winner. We take the following encoding
+
+  #table(
+    columns: 9,
+    inset: (x: 2mm, y: 3mm),
+    align: center + horizon,
+    [Horse $i$], ..range(1, 9).map(x => $#x$),
+    [$c_2(i)$], $0$, $10$, $110$, $1110$, $111100$, $111101$, $1111110$, $111111$
+  )
+
+  Now, we recalculate the average description length to get $   tau_(c_2) = sum_(x in X) |c(x)| dot.c p(x) = 2 "bits"
+  $
+  we have reduced the average description length by $1$ bit. If we calculate the entropy in this case we get $H(X) = - sum_(x in X) P(x) dot.c log_2 P(x) = 1.83475$, we see that the reduced average code length is more than the entropy.
+]
+
+
+#thm(name: "Shannon's First Theorem")[
+  Let $X$ be a random variable with values in $cal(X)$, for any coding function $c: cal(X) -> BB^+$ we have $
+    tau_c >= H(X)
+  $
+]
+
+#ooc[
+  #prf[
+    #lem(name: "Kraft Inequality")[
+      Let $X$ be a random variable with values in $cal(X)$, $c: cal(X) -> BB^+$ a coding function and $l(x) = |c(x)|$
+    ]
+  ]
 ]
