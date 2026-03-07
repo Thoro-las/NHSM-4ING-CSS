@@ -1,8 +1,8 @@
 #import "@THR/Sum:1.0.0": *
-#show: template
+#show: template.with(mainpage: false)
 #import "@preview/timeliney:0.4.0": *
 
-#sect("Tutorial 1", level: 1)
+#section("Tutorial 1", level: 1)
 
 #exr[Explain the difference between the following scheduling algorithms:
   - Round Robin Scheduling.

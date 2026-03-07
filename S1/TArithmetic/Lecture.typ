@@ -10,7 +10,7 @@
   warning: "USE IT AT YOUR OWN RISK!",
 )
 
-#let xor = $times.circle$
+#let xor = $times.o$
 #let nand = $bar$
 #let card = math.op("#")
 

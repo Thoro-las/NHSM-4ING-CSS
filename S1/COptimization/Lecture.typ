@@ -2,9 +2,6 @@
 #show: template.with(
   title: "Combinatorial Optimization",
   writer: "HADIOUCHE Azouaou",
-  disclaimer: [
-    That typed course follows the course Pr.YAGOUNI.
-  ]
 )
 
 #chapter("Introduction")[]

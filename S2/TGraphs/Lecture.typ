@@ -493,10 +493,10 @@ The BFS builds a BFS-Tree as it searches the graph. The tree corresponds to the 
     node((2cm,  0cm), $B$, stroke: 0.5pt, name: "B", radius: 0.4cm)
     node((4cm,  0cm), $C$, stroke: 0.5pt, name: "C", radius: 0.4cm)
     node((6cm,  0cm), $D$, stroke: 0.5pt, name: "D", radius: 0.4cm)
-    node((0cm, -2cm), $E$, stroke: 0.5pt, name: "E", radius: 0.4cm)
-    node((2cm, -2cm), $F$, stroke: 0.5pt, name: "F", radius: 0.4cm)
-    node((4cm, -2cm), $G$, stroke: 0.5pt, name: "G", radius: 0.4cm)
-    node((6cm, -2cm), $H$, stroke: 0.5pt, name: "H", radius: 0.4cm)
+    node((0cm, -1.5cm), $E$, stroke: 0.5pt, name: "E", radius: 0.4cm)
+    node((2cm, -1.5cm), $F$, stroke: 0.5pt, name: "F", radius: 0.4cm)
+    node((4cm, -1.5cm), $G$, stroke: 0.5pt, name: "G", radius: 0.4cm)
+    node((6cm, -1.5cm), $H$, stroke: 0.5pt, name: "H", radius: 0.4cm)
 
     edge(label("A"), label("B"))
     edge(label("A"), label("E"))
@@ -516,10 +516,10 @@ Going through the same procedure as the previous example to get
   node((2cm,  0cm), $B$, stroke: 0.5pt, name: "B", radius: 0.4cm)
   node((4cm,  0cm), $C$, stroke: 0.5pt, name: "C", radius: 0.4cm)
   node((6cm,  0cm), $D$, stroke: 0.5pt, name: "D", radius: 0.4cm)
-  node((0cm, -2cm), $E$, stroke: 0.5pt, name: "E", radius: 0.4cm)
-  node((2cm, -2cm), $F$, stroke: 0.5pt, name: "F", radius: 0.4cm)
-  node((4cm, -2cm), $G$, stroke: 0.5pt, name: "G", radius: 0.4cm)
-  node((6cm, -2cm), $H$, stroke: 0.5pt, name: "H", radius: 0.4cm)
+  node((0cm, -1.5cm), $E$, stroke: 0.5pt, name: "E", radius: 0.4cm)
+  node((2cm, -1.5cm), $F$, stroke: 0.5pt, name: "F", radius: 0.4cm)
+  node((4cm, -1.5cm), $G$, stroke: 0.5pt, name: "G", radius: 0.4cm)
+  node((6cm, -1.5cm), $H$, stroke: 0.5pt, name: "H", radius: 0.4cm)
 
   edge(label("A"), label("B"))
   edge(label("A"), label("E"))
@@ -529,3 +529,10 @@ Going through the same procedure as the previous example to get
   edge(label("C"), label("D"))
   edge(label("D"), label("H"))
 }))
+#exr(count: false)[
+  The square of a directed graph $G=(V, E)$ is the graph $G^2 = (V, E^2)$ with $E^2$ defined as, $u v in E^2 <=> u v in E "or" exists w in V, u w, w v in E$. Write an efficient algorithm for computing $G^2$ from $G$ for both adjacency list and adjacency matrix representations of $G$. Analyze the complexity of the algorithm.
+]
+
+#exr(count: false)[
+  The transpose of a directed graph $G=(V, E)$ is the graph $G^T=(V, E^T)$ where $E^T = {u v | u, v in V, v u in E}$. Write an efficient algorithm for computing $G^T$ for both representations. Analyze its complexity.
+]

@@ -90,7 +90,7 @@ This theorem is already done multiple times in algebra so no need to prove it he
 ]
 
 
-#section[Quadratic Residues]
+#section(level: 1)[Quadratic Residues]
 #def(name: "Quadratic Residue")[
   Let $p$ be an odd prime and $a$ an integer not divisible by $p$, we say that $a$ is a quadratic residue modulo $p$ if there exists $x in ZZ$, such that $x^2 equiv a mod p$.
 ]
@@ -213,7 +213,7 @@ $
 + Given that all the divisors of $561$ divide $a^561 - a$ then it is divisible by their product so $561 | a^561 - a => a^561 equiv a mod 561$.
 
 #__chp-sect-count.update(0)
-#chapter[Introduction To \ Information Theory][
+#chapter[Introduction To Information Theory][
   The digital revolution has transformed how we communicate, store and process information. This chapter introduces the fundamental concepts of information theory, a discipline at the intersection of mathematics, computer science and telecommunication.
 ]
 
@@ -314,6 +314,8 @@ Notice that the information of some message $x$ depends only on its unpredictabi
 #subsection[Source Coding]
 The most important part of coding theory is achieving the most efficient reliable and secure coding. The first part is the focus of this section, by assigning a code from each symbol in $cal(X)$, we try to achieve the minimum bound possible of letters to send to transmit our message.
 
+
+
 #def(name: "Coding Function", ovcount: false)[
   Let $c: cal(X) -> BB^+$, we call it a coding function, which takes characters of our set of symbols, and represent it a binary string in $BB^+$.
 ]
@@ -321,8 +323,8 @@ The most important part of coding theory is achieving the most efficient reliabl
 To measure the efficiency of our coding function, we define the average code length, the less the average, the more efficient the transmission will be.
 
 #def(name: "Average Code Length", ovcount: false)[
-  Let $overline(L): cal(X) -> BB^+$, a coding function, and consider the function $
-    overline(L): {c: cal(X) -> BB^+} -> RR quad quad c |-> overline(L)_c = sum_(x in cal(X)) p(x) dot.c |c(x)|
+  Let $c: cal(X) -> BB^+$, a coding function, and consider the function $
+    overline(L): {c: cal(X) -> BB^+} &-> RR \ c &|-> overline(L)_c = sum_(x in cal(X)) p(x) dot.c |c(x)|
   $
 ]
 
@@ -386,9 +388,9 @@ To measure the efficiency of our coding function, we define the average code len
     A uniquely decodable code $c$ can be turned into a prefix code $c'$ such that $forall i in [|1, n|], |c(x_i)| = |c'(x_i)|$.
   ]
 
-  #prf[
-    Let $c = {c_1, dots, c_m}$ be a uniquely Without loss of generality, consider 
-  ]
+  // #prf[
+  //   Let $c = {c_1, dots, c_m}$ be a uniquely Without loss of generality, consider 
+  // ]
 
 
   #lem(name: "Kraft Inequality", ovcount: false)[
@@ -431,5 +433,77 @@ To reduce the probability of error, we need to make the sent message more robust
 ]
 
 #chapter[Information \& Entropy][
-  Information theory is a theory founded by Claude Shannon, providing a mathematical framework for quantifying information, studying its transmission, processing, and storage. This chapter focuses on the fundamental 
+  Information theory is a theory founded by Claude Shannon, providing a mathematical framework for quantifying information, studying its transmission, processing, and storage. This chapter focuses on the fundamental concepts of information measurement through entropy and related measures.
 ]
+
+#section[The Communication System Model]
+Shannon's groundbreaking contribution was a formal model that describes communication between two entities, whether machine on humans. This model highlights the essential components:
+- Source: the originator of the information.
+- Channel: The medium through which information is transmitted.
+- Recipient: The receiver of the information.
+
+#subsection[Source \& Message]
+The sources generate a message composed of symbols from a specific alphabet.
+- Discrete data: text, numbers, symbols.
+- Digitized analog data: image, voice, video converted to digital form.
+
+#subsection[Transmitter Processing]
+The transmitter performs three crucial operations.
++ Source Coding: data compression to minimize message size.
++ Channel Coding: adding redundancy for error correction.
++ Modulation: converting digital messages to physical signal.
+
+#subsection[Receiver Processing]
+The receiver performs these receiver operations.
++ Demodulation: converting physical signal into a digital message.
++ Channel Decoding: error detection and correction.
++ Source Decoding: reconstruction of the original message.
+
+#section[Quantifying Information]
+Shannon's revolutionary idea was to assign a measurable value to information based on probability rather than meaning or semantics.
+
+#subsection[Fundamental Postulates Of Information]
+- Postulate 1: Information depends only on probability $I(A) = Psi(P(A))$.
+- Postulate 2: Certain events provide no information $Psi(1) = 0$.
+- Postulate 3: Information decreases with increasing probability.
+- Postulate 4: Impossible events provide infinite information $P(0) = infinity$.
+- Postulate 5: Information from independent events $Psi(p q) = Psi(p) + Psi(q)$.
+Which gives the function $Psi(x) = - log_2 x$, thus, the self-information of an event $A$ with probability $P(A)$ is $I(A) = - log_2 (P(A))$.
+
+#section[Entropy]
+While self-information measures the information content of individual events, we often need to characterize the average information by a source.
+
+#subsection[Definition Of Entropy]
+For a discrete random variable $X$ with probability mass function $p(x)$, the entropy is defined as $
+  H(X) = E[I(x)] = - sum_(x in X)  p(x) log_2 (p(x))
+$
+#exm[
+  Consider a binary source with $P(0) = p$ and $P(1) = 1-p$ then $H(X) = -p log_2 (p) - (1 - p) log_2 (1-p)$.
+]
+
+#subsection[Properties Of Entropy]
++ Non-negativity: $H(X) >= 0$.
++ Maximum entropy: for a source with symbols in $cal(X)$, $H(X) <= log_2 card cal(X)$.
++ Positivity for independent sources: if $X, Y$ are independent then $H(X, Y) = H(X) + H(Y)$.
+
+#exm[
+  DNA sequences provide an excellent example of entropy application. Let's consider:
+  - Primate DNA: $P(A) = P(G) = P(C) = P(T) = 1\/4$. $H(X) = 2$
+  - Bacterial DNA: $P(G) = P(C) = 0.38$, $P(A) = P(T) = 0.12$. $H(X) = 1.795$.
+  The entropy of bacterial DNA indicates more predictable sequences compared to the primate DNA.
+]
+
+#subsection[Joint Entropy]
+When dealing with random variables, we need to quantity combined information.
+
+#def(name: "Joint Entropy", count: false)[
+  Let $X$, $Y$ be two random variables with joint distribution $p(x,y)$, the joint entropy is $
+    H(X, Y) = - sum_(x in X) sum_(y in Y) p(x, y) log_2 p(x, y)
+  $
+]
+
+#subsection[Properties Of Joint Entropy]
++ Symmetry: $H(X, Y) = H(Y, X)$.
++ Non-Negativity: $H(X, Y) >= 0$.
++ Upperbound: $H(X, Y) <= H(X) + H(Y)$.
++ Lowerbound: $H(X, Y) >= max(H(X), H(Y))$.
