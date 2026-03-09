@@ -238,7 +238,9 @@ $
   )
 ]
 
-This diagram present the general structure of any communication system. The communication process begins with an information source.
+This diagram present the general structure of any communication system. The communication process begins with an information source. We start by thinking what a message could be. In general, we can consider a message to be constructed by a set of symbols $cal(X) = {x_1, dots, x_n}$ and given a context, has a distribution of which of those symbols are sent. Thus, we consider a message consecutive realizations of a random variable $X$ defined in $cal(X)$.
+
+Now the goal is to quantify information, thus given $X tilde P_X (x)$, we define the amount of information for some symbol $x$ to be $I(x) = - log_2 (P_X (x))$ (justifications for these definitions will be in the next chapter). Then, we can define an average amount of information from a source $X$, which is called the entropy $H(X) = EE[I(X)]$. Such a quantity is important given Shannon's first theorem, which gives a lower bound for any data compression.
 
 #ooc(ntt[
   Let $Sigma$ be a set:
