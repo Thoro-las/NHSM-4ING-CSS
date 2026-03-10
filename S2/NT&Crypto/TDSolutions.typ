@@ -1,5 +1,5 @@
-#import "@THR/Sum:1.0.0": *
-#show: template.with(mainpage: false)
+#import "@THR/Document:1.0.0": *
+#show: template.with(cover: (hide-page: true))
 
 #let subset = $subset.eq$
 #let Id = math.op("Id")
@@ -176,7 +176,7 @@ $ thus $alpha$ is a primitive element.
 #qst[$QQ(omega, sqrt(5))=QQ(omega sqrt(5)).$]
 
 #pagebreak()
-#__cbox-count.update(0)
+#counter("boxes-counter").update(0)
 #section("Finite Fields", level: 1)
 #exr[
   Decide whether there exists a finite field having the given number of elements.
@@ -284,7 +284,7 @@ We will find all the fields of the form $FF_(p^n)$ such that $p^n <= 15$.
 ]
 
 #pagebreak()
-#__cbox-count.update(0)
+#counter("boxes-counter").update(0)
 #section("Normal Extensions", level: 1)
 
 #exr[
@@ -693,7 +693,7 @@ Let $sigma$ be a $L$-embedding of $L$ into $Omega$, since $K subset L$ then $sig
 
   Thus, they both have $1$ element of order $1$, $3$ elements of order $2$ and $12$ elements of order $4$. Suppose that $ZZ_4 times ZZ_4$ is isomorphic to $ZZ_2 times Q_8$,
 
-  #__cbox-count.update(0)
+  #counter("boxes-counter").update(0)
   #colbreak()
   #section(level: 1, [Series: Symmetric Groups.])
   #exr[

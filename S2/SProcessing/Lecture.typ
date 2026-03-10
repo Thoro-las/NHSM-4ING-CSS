@@ -1,10 +1,12 @@
 #import "@preview/lilaq:0.5.0" as lq
 
-#import "@THR/Wide:1.0.0": *
+#import "@THR/Course:1.0.0": *
 #show: template.with(
-  title: "Signal Processing",
-  writer: "HADIOUCHE Azouaou",
-  disclaimer: [This document contains the lectures that were supposed to be given by Dr. HOCINE, but instead he chose to teach us about electricity, anyway, hope it helps.],
+  cover: (
+    title: "Signal Processing",
+    writer: "HADIOUCHE Azouaou",
+    disclaimer: [This document contains the lectures that were supposed to be given by Dr. HOCINE, but instead he chose to teach us about electricity, anyway, hope it helps.],
+  )
 )
 
 #let sgn = math.op("sgn")

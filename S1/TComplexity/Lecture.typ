@@ -1,10 +1,10 @@
-#import "@THR/Wide:1.0.0": *
+#import "@THR/Course:1.0.0": *
 #show: template.with(
-  title: [Complexity Theory],
-  writer: [HADIOUCHE Azouaou],
-  disclaimer: [
-  The course will be heavily changed due to all needs in computational theory and the pure misinformation given throughout the course.
-]
+  cover: (
+    title: [Complexity Theory],
+    writer: [HADIOUCHE Azouaou],
+    disclaimer: [ The course will be heavily changed due to all needs in computational theory and the pure misinformation given throughout the course. ]
+  )
 )
 #set math.cases(gap: 3mm)
 

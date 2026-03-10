@@ -2,12 +2,13 @@
 #import "@preview/circuiteria:0.2.0" as circuiteria: *
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
-#import "@THR/Wide:1.0.0": *
+#import "@THR/Course:1.0.0": *
 #show: template.with(
-  title: "Computer Arithmetic",
-  disclaimer: [This document follows the slides and lessons given by Mr.OUDJIDA, written in a mathematical textbook format, freedoms are taken when writing the course.],
-  writer: "HADIOUCHE Azouaou",
-  warning: "USE IT AT YOUR OWN RISK!",
+  cover: (
+    title: "Computer Arithmetic",
+    disclaimer: [This document follows the slides and lessons given by Mr.OUDJIDA, written in a mathematical textbook format, freedoms are taken when writing the course.],
+    writer: "HADIOUCHE Azouaou",
+  )
 )
 
 #let xor = $times.o$
@@ -438,20 +439,19 @@ After representing integers with binary, we will represent numbers with decimal 
 We start by considering a number $K = k_(l-1) dots k_0 in BB^l$, we take $k_j = 0$ if $j in.not [|0, l-1|]$ and $w in NN$ a window size, we can write $K$ in the following way $
   K &= sum_(i=0)^(ceil((l+1)/w) - 1) Q_i dot.c 2^(w dot i)
 $ with $Q_i = -2^(w-1) k_(w dot i + w - 1) + sum_(j=0)^(w-2) 2^j dot.c k_(w dot i + j) + k_(w dot i - 1)$. We can decompose $Q_i$ into the following form $Q_i = (-1)^(s_i) dot.c 2^(n_i) dot.c m_i$, $s_i = k_(w dot i + w - 1)$ and using the following procedure we get $m_i$ and $n_i$.
-  #code([
-  ```pcode
-  input: Q.
-  output: m, n such that Q = m*2^n.
+```pcode
+input: Q.
+output: m, n such that Q = m*2^n.
 
-  m = Q
-  n = 0
-  while m % 2 = 0 do
-    n = n + 1
-    m = m / 2
-  end
-  
-  return m, n
-  ```])
+m = Q
+n = 0
+while m % 2 = 0 do
+  n = n + 1
+  m = m / 2
+end
+
+return m, n
+```
 By using this decomposition, we get this writing $
   K = sum_(i=0)^(ceil((l+1)/w) - 1) (-1)^(s_i) dot.c m_i dot.c 2^(w dot i + n_i)
 $
@@ -480,7 +480,6 @@ $
 The process is significantly easier than Radix-$2^r$. We start by considering a number $K = k_(l-1) dots k_0 in BB^l$ and $w in NN$ a window size. We start with smallest $i$ such that $k_i != 0$, we consider the block $k_(i+w-1) dots k_i$, we take its value in the in two's complement representation as $d$ and replace the block $k_(i+w-1) dots k_i$ with $00 dots 0 d$, if the sign of $d$ is negative then add $1$ to the number $k_(l-1) dots k(i+w)$.
 
 For (I suppose, I hope, I honestly don't know) making the algorithm quicker, we define a look-up table, that takes a number and returns its two's complement representation, we define it as ```pcode LUT(K[w-1,...,0])``` and returns $d = - k_(w-1) 2^(w-1) + sum_(i=0)^(w-2) k_i 2^i$. I would like to take in the algorithms the notation ```pcode K[i]``` to mean $k_i$ and ```pcode K[j,...,i]``` to mean $k_j k_(j-1) dots k_(i+1) k_i$.
-#code([
 ```pcode
 input:
   - K: number
@@ -509,4 +508,4 @@ while i < l do
   end
 end
 return K
-```])
+```

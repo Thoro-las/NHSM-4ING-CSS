@@ -1,13 +1,16 @@
 #import "@preview/commute:0.3.0": node, arr, commutative-diagram
 
-#import "@THR/Wide:1.0.0": *
+#import "@THR/Course:1.0.0": *
 #show: template.with(
-  title: "Mathematical Tools For Cryptography",
-  writer: "HADIOUCHE Azouaou",
-  disclaimer: [This document contains the lectures given by Dr.ZAIMI.],
-  comment: [Some contents were added as remainders and extras for the students.],
+  cover: (
+    title: "Mathematical Tools For Cryptography",
+    writer: "HADIOUCHE Azouaou",
+    disclaimer: [This document contains the lectures given by Dr.ZAIMI.],
+    comment: [Some contents were added as remainders and extras for the students.],
+  )
 )
 #set enum(numbering: "1.1.")
+#let prfout(body) = ooc[Proof Outline.\ #body]
 
 #let subset = $subset.eq$
 #let Id = math.op("Id")

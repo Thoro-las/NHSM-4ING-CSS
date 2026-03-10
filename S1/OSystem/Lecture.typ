@@ -1,9 +1,11 @@
-#import "@THR/Wide:1.0.0": *
+#import "@THR/Course:1.0.0": *
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 #show: template.with(
-  title: "Operating Systems",
-  writer: "HADIOUCHE Azouaou",
-  disclaimer: [Man... Not sure if there is a course, but it follows what is supposed to be in it. Presented by Mr. METROUH. For the purposes of a better understanding of the course, a small library of operations and functions is made to run the programs that will be given in the course. A proper implementation will be found later.]
+  cover: (
+    title: "Operating Systems",
+    writer: "HADIOUCHE Azouaou",
+    disclaimer: [Man... Not sure if there is a course, but it follows what is supposed to be in it. Presented by Mr. METROUH. For the purposes of a better understanding of the course, a small library of operations and functions is made to run the programs that will be given in the course. A proper implementation will be found later.]
+  )
 )
 
 #set raw(lang: "pcode")

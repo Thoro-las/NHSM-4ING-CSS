@@ -1,10 +1,12 @@
 #import "@preview/commute:0.3.0": node, arr, commutative-diagram
 
-#import "@THR/Wide:1.0.0": *
+#import "@THR/Course:1.0.0": *
 #show: template.with(
-  title: "Theory Of Cryptography",
-  writer: "HADIOUCHE Azouaou",
-  disclaimer: [This document contains the lectures given by Dr. OUDJIDA.],
+  cover: (
+    title: "Theory Of Cryptography",
+    writer: "HADIOUCHE Azouaou",
+    disclaimer: [This document contains the lectures given by Dr. OUDJIDA.],
+  )
 )
 
 #let card = math.op("#")

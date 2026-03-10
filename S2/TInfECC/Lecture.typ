@@ -1,11 +1,13 @@
 #import "@preview/commute:0.3.0": node, arr, commutative-diagram
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
-#import "@THR/Wide:1.0.0": *
+#import "@THR/Course:1.0.0": *
 #show: template.with(
-  title: "Information Theory & Error Correcting Codes",
-  writer: "HADIOUCHE Azouaou",
-  disclaimer: [This document contains the lectures given by Dr. Seffah.],
+  cover: (
+    title: "Information Theory & Error Correcting Codes",
+    writer: "HADIOUCHE Azouaou",
+    disclaimer: [This document contains the lectures given by Dr. Seffah.],
+  )
 )
 
 #let Z(m) = $ZZ \/ #m ZZ$

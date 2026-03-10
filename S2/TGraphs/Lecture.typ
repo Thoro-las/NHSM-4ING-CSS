@@ -1,10 +1,12 @@
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge, shapes
 
-#import "@THR/Wide:1.0.0": *
+#import "@THR/Course:1.0.0": *
 #show: template.with(
-  title: "Advanced Graph Theory",
-  writer: "HADIOUCHE Azouaou",
-  disclaimer: [This document contains the lectures given by Dr. MEHDAOUI.],
+  cover: (
+    title: "Advanced Graph Theory",
+    writer: "HADIOUCHE Azouaou",
+    disclaimer: [This document contains the lectures given by Dr. MEHDAOUI.],
+  )
 )
 
 #let card = math.op("#")

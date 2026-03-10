@@ -1,7 +1,9 @@
-#import "@THR/Wide:1.0.0": *
+#import "@THR/Course:1.0.0": *
 #show: template.with(
-  title: "Combinatorial Optimization",
-  writer: "HADIOUCHE Azouaou",
+  cover: (
+    title: "Combinatorial Optimization",
+    writer: "HADIOUCHE Azouaou",
+  )
 )
 
 #chapter("Introduction")[]

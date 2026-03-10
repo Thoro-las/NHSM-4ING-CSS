@@ -1,11 +1,13 @@
 #import "@preview/commute:0.3.0": node, arr, commutative-diagram
 
-#import "@THR/Wide:1.0.0": *
+#import "@THR/Course:1.0.0": *
 #show: template.with(
-  title: "Number Theory & Cryptography",
-  writer: "HADIOUCHE Azouaou",
-  disclaimer: [This document contains the lectures given by Dr. ZAIMI.],
-  comment: [Some contents were added as remainders and extras for the students.],
+  cover: (
+    title: "Number Theory & Cryptography",
+    writer: "HADIOUCHE Azouaou",
+    disclaimer: [This document contains the lectures given by Dr. ZAIMI.],
+    comment: [Some contents were added as remainders and extras for the students.],
+  )
 )
 #set enum(numbering: "1.1.")
 
@@ -20,7 +22,7 @@
 #let Aut = math.op("Aut")
 #let order = math.op("ord")
 
-#__chp-sect-count.update(2)
+#counter("title-counter").update(2)
 #chapter[Group Actions][]
 
 #def(name: "Group Actions")[
