@@ -22,7 +22,7 @@
   set table(stroke: 0.2mm)
 
   show raw.where(block: true): contents => code(contents)
-  show table: contents => align(center, align(left, contents))
+  show table: contents => align(center, contents)
 
   if (not cover.at("hide-page", default: false)) {
     set par(justify: false)
@@ -33,6 +33,7 @@
     set par(justify: true)
 
     v(1fr)
+    v(1cm)
 
     block(
       stroke: (left: 1mm + black),
@@ -49,14 +50,16 @@
         }
 
         #if ("comment" in cover and cover.comment != none) [
-          #cover.comment
           #linebreak()
+          #cover.comment
         ]
         To separate the contents of the course to actual additions or out of context information, a black band will be added by its side like the one on this comment.
 
-        #linebreak()
 
-        #if("warning" in cover and cover.warning != none) { text(fill: red, [#cover.warning]); linebreak(); }
+        #if("warning" in cover and cover.warning != none) {
+          linebreak()
+          text(fill: red, [#cover.warning]);
+        }
       ]
     )
 

@@ -12,6 +12,10 @@
 
 #let Z(m) = $ZZ \/ #m ZZ$
 #let card = math.op("#")
+#let argmax = math.op("argmax")
+#let argmin = math.op("argmin")
+
+#set enum(tight: false)
 
 #chapter("Remainders", num: 0)[]
 #section(level: 1)[Congruences & $bold(ZZ\/m ZZ)$ Arithmetic]
@@ -124,8 +128,6 @@ This theorem is already done multiple times in algebra so no need to prove it he
   $
 ]
 
-#colbreak()
-
 #ooc[
   #prf[
     We treat by cases
@@ -147,8 +149,6 @@ This theorem is already done multiple times in algebra so no need to prove it he
     (x - overline(2))/((x^2 + overline(4))(x^2 + overline(3)))
   $
 ]
-
-#colbreak()
 
 + Decomposing into partial fractions: we have that the denominator decomposes into the following two irreducible polynomials $
   x^4 + x^2 + 1 &= x^4 + 2 x^2 + 1 - x^2\
@@ -214,7 +214,7 @@ $
 + Same here, $a^10 = 1 mod 11$ by Fermat little theorem, then $a^(560) = a^(10 dot.c 56) = 1 mod 11$ thus, $a^(561) = a mod 11 => 11 | a^561 - a$.
 + Given that all the divisors of $561$ divide $a^561 - a$ then it is divisible by their product so $561 | a^561 - a => a^561 equiv a mod 561$.
 
-#__chp-sect-count.update(0)
+#counter("title-counter").update(0)
 #chapter[Introduction To Information Theory][
   The digital revolution has transformed how we communicate, store and process information. This chapter introduces the fundamental concepts of information theory, a discipline at the intersection of mathematics, computer science and telecommunication.
 ]
@@ -244,6 +244,39 @@ This diagram present the general structure of any communication system. The comm
 
 Now the goal is to quantify information, thus given $X tilde P_X (x)$, we define the amount of information for some symbol $x$ to be $I(x) = - log_2 (P_X (x))$ (justifications for these definitions will be in the next chapter). Then, we can define an average amount of information from a source $X$, which is called the entropy $H(X) = EE[I(X)]$. Such a quantity is important given Shannon's first theorem, which gives a lower bound for any data compression.
 
+After being able to measure the amount of information, we can measure efficiency of some encodings both for source and channel by how much redundancy is added to how much is actually needed.
+
+#colbreak()
+#section[The Communication System Model]
+Shannon's groundbreaking contribution was a formal model that describes communication between two entities, whether machine or humans. This model highlights the essential components:
+- Source: the originator of the information.
+- Channel: The medium through which information is transmitted.
+- Recipient: The receiver of the information.
+
+#subsection[Source \& Message]
+The sources generate a message composed of symbols from a specific alphabet.
+- Discrete data: text, numbers, symbols.
+- Digitized analog data: image, voice, video converted to digital form.
+
+#subsection[Transmitter Processing]
+The transmitter performs three crucial operations.
++ Source Coding: data compression to minimize message size.
++ Channel Coding: adding redundancy for error correction.
++ Modulation: converting digital messages to physical signal.
+
+#subsection[Receiver Processing]
+The receiver performs these receiver operations.
++ Demodulation: converting physical signal into a digital message.
++ Channel Decoding: error detection and correction.
++ Source Decoding: reconstruction of the original message.
+
+#chapter[Information \& Entropy][
+  Information theory is a theory founded by Claude Shannon, providing a mathematical framework for quantifying information, studying its transmission, processing, and storage. This chapter focuses on the fundamental concepts of information measurement through entropy and related measures.
+]
+
+
+#section[Quantifying Information]
+
 #ooc(ntt[
   Let $Sigma$ be a set:
   - $Sigma^n = Sigma times dots.c times Sigma$ is the set of words of length $n$. We take that $Sigma^0 = {epsilon}$ where $epsilon$ is the empty word.
@@ -259,22 +292,25 @@ Now the goal is to quantify information, thus given $X tilde P_X (x)$, we define
 ]
 
 #ooc[
-  To model information that was given from a message, we consider the fact that a message contains more information the more unpredictable it is. For example, consider a sender that keeps sending the message "Hello!" over and over again, at each iteration, it becomes predictable what the next message would be, thus there is no more information that is passed. Uncertainty is a property of a random process, thus a good way to model a message is to consider it as a random variable $X$ that has values in $cal(X)$. From the previous example too, we can think that the information in a message is related to how uncertain it is, that is, how less probable it would be sent.
+  To model information that was given from a message, we consider the fact that a message contains more information the more unpredictable it is. For example, consider a sender that keeps sending the message "Hello!" over and over again, at each iteration, it becomes predictable what the next message would be, thus there is no more information that is passed. Uncertainty is a property of a random process, thus a good way to model a message is to consider it as a random variable $X$ that has values in $cal(X)$. From the previous example too, we can think that the information in a message is related to how uncertain it is, that is, how less probable it would be sent. Also, notice that the information from independent events should be additive, that is, if even $p$ and $q$ happen that are independent, then the amount of information gained from the even $p q$ happening is the sum of information gained from both the events $p$ and $q$.
 
   #ntt[
     For the sake of simplifying notation, we will denote $P(X = x)$ as $P(x)$, same for other random variables, like $P(Y = y)$ as $P(y)$. Same for all the remaining notations like $P(y|x)$ which is $P(Y = y|X = x)$.
   ]
+]
 
-  To define a measure for information $I: cal(X) -> RR$, we start by considering some random variable $X$ that represents a source of symbols $cal(X)$. As discussed before, $I$ would be inversely proportional to the probability $P(x)$ thus we have that $
-    I(x) = f(1/(P(x)))
-  $ $f$ would satisfy the following properties:
-  - $f$ is continuous, that is, a slight amount of information is gained from a slight difference in probability.
-  - $lim_(t -> 1) f(t) = 0$, that is, the information given from a certain event is none.
-  - The amount of information given by a joint of two independent events $x_1, x_2$ is the sum of information from each of the events, thus $I(x_1, x_2) = I(x_1) + I(x_2)$. $
-    I(x_1, x_2) &= f(1/(P(x_1, x_2))) = f(1/P(x_1) dot.c 1/P(x_2)) \
-    I(x_1, x_2) &= I(x_1) + I(x_2) = f(1/(P(x_1))) + f(1/P(x_2))
-  $
-  Thus, $f$ would satisfy $f(a b) = f(a) + f(b)$ which gives us that $f$ is just a logarithm function. Therefore, we obtain the following definition below.
+To define a measure for information $I: cal(X) -> RR$, we start by considering some random variable $X$ that represents a source of symbols $cal(X)$. As discussed before, the information will be a function of probability, thus we take $I(x) = phi(P(x))$ from our previous discussion it would satisfy the following postulates:
+
+- Postulate 1: Information depends only on probability $I(A) = phi(P(A))$.
+- Postulate 2: Certain events provide no information $phi(1) = 0$.
+- Postulate 3: Information decreases with increasing probability, $phi$ is decreasing.
+- Postulate 4: Impossible events provide infinite information $P(0) = infinity$.
+- Postulate 5: Information from independent events $phi(p q) = phi(p) + phi(q)$.
+
+Also, clearly $phi$ would be continuous since a tiny difference in probability would result in a tiny difference in the amount of information that it would result in.
+
+#ooc[
+  We will briefly prove that $phi equiv - log_b$ for any base $b$. By induction we have that $phi(a^n) = n f(a)$ and since $phi(a) = phi(a^(q\/q)) = q phi(a^q)$ then necessarily $phi(a^(p\/q)) = (p\/q) phi(a)$. By continuity, we have $forall x in RR, phi(a^x) = x phi(a)$. Now take $t = log_a x$, then $phi(x) = phi(a^t) = t phi(a) = phi(a) log_a x$, thus $phi(x) = phi(a) log_a (x)$, by taking $x -> 0$, we have that $phi(a) log_a (x) -> +infinity$ so $phi(a) < 0$. Therefore, $phi equiv - log_b$ for some $b$.
 ]
 
 #def(name: "Measure Of Information", ovcount: false)[
@@ -301,194 +337,36 @@ Now the goal is to quantify information, thus given $X tilde P_X (x)$, we define
 
 Notice that the information of some message $x$ depends only on its unpredictability, that is, its probability of occurrence $P(x)$ not its value.
 
+#pro[
+  Let $X, Y$ with symbols in $cal(X), cal(Y)$ be two i.i.d sources.
+  + Non-negativity: $H(X) >= 0$.
+  + Maximum Entropy: $H(X) <= log_2 card cal(X)$.
+  + Independent Additivity: $X perp Y$ $=>$ $H(X Y) = H(X) + H(Y)$.
+]
+
+#ooc[
+  #prf[
+    + $forall x in cal(X), I(x) >= 0$, then $H(X) = EE[I(X)] >= 0$
+    + Here, we optimize on the distribution of $X$, $max_(P) H(X) = - min_P sum_(x in X) P(x) dot.c log_2 P(x),$ hence for $I$ a finite set $min_({y_i in [0, 1]}_(i in I)) sum_(i in I) y_i log_2 (y_i)$ with $sum_(i in I) y_i = 1$. Notice that all the terms have the same sign so $min sum_(i in I) dots = sum_(i in I) min dots$. $y_i$ all having the same range would mean that we just need to find $c$ such that $y_i = c$ and satisfies the second inequality, which is clearly $c = 1/(card I)$. 
+
+    So $X$ would be a uniform distribution over $cal(X)$, $H_u (X) = EE[I(X)] = - sum_(x in X) 1\/(card cal(X)) log_2 (1\/(card cal(X))) = log_2 card cal(X) >= H(X)$.
+    + Let $X, Y$ be two independent variables, then $H(X Y) = EE[I(X Y)] = EE[I(X) + I(Y)] = EE[I(X)] + EE[I(Y)] = H(X) + H(Y)$.
+  ]
+]
+
 #exm[
   Let $cal(X) = {0, 1}$, and $X$ a discrete random variable with values in $cal(X)$, which has the distribution $
     P(x) = cases(
       0.9 &"if" x = 0,
       0.1 &"if" x = 1
-    )
-  $ We obtain that $
+    ) 
+    quad quad => quad quad
     I(x) = cases(
       0.152 &"if" x = 0,
       3.321 &"if" x = 1
     )
-  $. And the measure of average amount of information is $H(X) = 0.4689$.
+  $ And the measure of average amount of information is $H(X) = 0.4689$.
 ]
-
-#subsection[Source Coding]
-The most important part of coding theory is achieving the most efficient reliable and secure coding. The first part is the focus of this section, by assigning a code from each symbol in $cal(X)$, we try to achieve the minimum bound possible of letters to send to transmit our message.
-
-
-
-#def(name: "Coding Function", ovcount: false)[
-  Let $c: cal(X) -> BB^+$, we call it a coding function, which takes characters of our set of symbols, and represent it a binary string in $BB^+$.
-]
-
-To measure the efficiency of our coding function, we define the average code length, the less the average, the more efficient the transmission will be.
-
-#def(name: "Average Code Length", ovcount: false)[
-  Let $c: cal(X) -> BB^+$, a coding function, and consider the function $
-    overline(L): {c: cal(X) -> BB^+} &-> RR \ c &|-> overline(L)_c = sum_(x in cal(X)) p(x) dot.c |c(x)|
-  $
-]
-
-#ooc[
-  #exm[
-    Take a horse race with $8$ horses, we want to send a message in binary that indicates which horse has won. And suppose that the probabilities of winning for each horse is as follows
-    #table(
-      columns: 9,
-      inset: (x: 2mm, y: 3mm),
-      align: center + horizon,
-      [Horse], ..range(1, 9).map(x => $#x$),
-      [Probability Of Winning], ..($1/2$, $1/4$, $1/8$, $1/64$, $1/64$, $1/64$, $1/64$, $1/64$).map(x => $display(#x)$)
-    )
-
-    If we just send the index of the winner horse, we get the following coding function
-
-    #table(
-      columns: 9,
-      align: center + horizon,
-      [Horse $i$], ..range(1, 9).map(x => $#x$),
-      [$c_1 (i)$], $000$, $001$, $010$, $011$, $100$, $101$, $110$, $111$
-    )
-
-    If we do it just blindly, we will need $3$ bits to describe all the possible winner horses from $000, 001, 010, dots.c, 110, 111$, calculating the average of description length we get $
-      overline(L)_(c_1) = sum_(x in X) 3 dot.c p(x) = 3 "bits"
-    $
-
-    Giving us an average of $3$ bits for the transmission to give exactly who horse is the winner. An aspect that we did not use in the previous part is how likely do horses win in this case, which we can use to improve the amount of bits that would be sent on the channel. Consider the distribution of the horses winning as follows
-
-    Notice that if we give a smaller message for the horses that are more probable to win, and less to horses that are less likely to win, then we can reduce some of the data that will be used to specify the winner. We take the following encoding
-
-    #table(
-      columns: 9,
-      inset: (x: 2mm, y: 3mm),
-      align: center + horizon,
-      [Horse $i$], ..range(1, 9).map(x => $#x$),
-      [$c_2(i)$], $0$, $10$, $110$, $1110$, $111100$, $111101$, $1111110$, $111111$
-    )
-
-    Now, we recalculate the average description length to get $   overline(L)_(c_2) = sum_(x in X) |c(x)| dot.c p(x) = 2 "bits"
-    $
-    we have reduced the average description length by $1$ bit. If we calculate the entropy in this case we get $H(X) = - sum_(x in X) P(x) dot.c log_2 P(x) = 1.83475$, we see that the reduced average code length is more than the entropy.
-  ]
-]
-
-#section[Shannon Theorems]
-#ooc[
-  To prove Shannon theorems, we need the following statements.
-
-  #def(name: "Prefix Code", ovcount: false)[
-    A coding function $c: cal(X) -> BB^+$ is said to have the prefix property if $forall x, y in cal(X), forall u in BB^*, c(x) != c(y) u$.
-  ]
-
-  That is, no code is a prefix of another. An example of a prefix code is ${0, 10}$ while a non-prefix code is ${1, 10}$ since $1$ is a prefix of $10$. These codes are also called instantaneous codes, that is because given a binary string, even incomplete, one can know if it maps to a symbol or not. The proof of such statement is left for the reader.
-
-  #def(name: "Uniquely Decodable Code", ovcount: false)[
-    A coding function $c: cal(X) -> BB^+$ is said to be uniquely decodable if $c$ is injective, that is, each coding is unique to the symbol.
-  ]
-
-  #pro(ovcount: false)[
-    A uniquely decodable code $c$ can be turned into a prefix code $c'$ such that $forall i in [|1, n|], |c(x_i)| = |c'(x_i)|$.
-  ]
-
-  // #prf[
-  //   Let $c = {c_1, dots, c_m}$ be a uniquely Without loss of generality, consider 
-  // ]
-
-
-  #lem(name: "Kraft Inequality", ovcount: false)[
-    Let $X$ be a random variable with values in $cal(X)$, $c: cal(X) -> BB^+$ a coding function and $l(x) = |c(x)|$, then we have that $
-      sum_(i=1)^n 2^(- l(x_i)) <= 1
-    $
-  ]
-
-]
-
-#thm(name: "Shannon's First Theorem", ovcount: false)[
-  Let $X$ be a random variable with values in $cal(X)$, for any coding function $c: cal(X) -> BB^+$ we have $
-    overline(L)_c >= H(X)
-  $
-]
-
-Huffman's algorithm provides a systematic way to construct an optimal prefix code, where symbols with higher probability should have shorter code words, and achieves a lower bound of average coding weight.
-
-#alg(name: "Huffman", ovcount: false)[
-  + Sort symbols by probability in descending order.
-  + Combine the two smallest probabilities.
-  + Repeat until one node remains.
-  + Build the tree.
-  + Assign 0 and 1 to branches.
-  + Read codewords.
-  + Compute the average code length.
-]
-
-#exm[
-]
-
-The closer this value is to the entropy, the more efficient the compression is, using Huffman coding, the message is compressed, meaning that fewer bits are needed on average per symbol compared to a fixed length code such code is called optimal code which is a code that minimizes average code length. In source coding, our goal was to remove redundancy in order to compress the message. Now, we move to a different problem, what happens when the channel is noisy?
-
-#subsection[Noise And Errors]
-To reduce the probability of error, we need to make the sent message more robust to disturbances through channel coding.
-
-
-#thm(name: "Shannon's Second Theorem", ovcount: false)[
-  For any noisy channel, there exists a code that allows reliable transmission if the rate is less than the channel capacity.
-]
-
-#chapter[Information \& Entropy][
-  Information theory is a theory founded by Claude Shannon, providing a mathematical framework for quantifying information, studying its transmission, processing, and storage. This chapter focuses on the fundamental concepts of information measurement through entropy and related measures.
-]
-
-#section[The Communication System Model]
-Shannon's groundbreaking contribution was a formal model that describes communication between two entities, whether machine on humans. This model highlights the essential components:
-- Source: the originator of the information.
-- Channel: The medium through which information is transmitted.
-- Recipient: The receiver of the information.
-
-#subsection[Source \& Message]
-The sources generate a message composed of symbols from a specific alphabet.
-- Discrete data: text, numbers, symbols.
-- Digitized analog data: image, voice, video converted to digital form.
-
-#subsection[Transmitter Processing]
-The transmitter performs three crucial operations.
-+ Source Coding: data compression to minimize message size.
-+ Channel Coding: adding redundancy for error correction.
-+ Modulation: converting digital messages to physical signal.
-
-#subsection[Receiver Processing]
-The receiver performs these receiver operations.
-+ Demodulation: converting physical signal into a digital message.
-+ Channel Decoding: error detection and correction.
-+ Source Decoding: reconstruction of the original message.
-
-#section[Quantifying Information]
-Shannon's revolutionary idea was to assign a measurable value to information based on probability rather than meaning or semantics.
-
-#subsection[Fundamental Postulates Of Information]
-- Postulate 1: Information depends only on probability $I(A) = Psi(P(A))$.
-- Postulate 2: Certain events provide no information $Psi(1) = 0$.
-- Postulate 3: Information decreases with increasing probability.
-- Postulate 4: Impossible events provide infinite information $P(0) = infinity$.
-- Postulate 5: Information from independent events $Psi(p q) = Psi(p) + Psi(q)$.
-Which gives the function $Psi(x) = - log_2 x$, thus, the self-information of an event $A$ with probability $P(A)$ is $I(A) = - log_2 (P(A))$.
-
-#section[Entropy]
-While self-information measures the information content of individual events, we often need to characterize the average information by a source.
-
-#subsection[Definition Of Entropy]
-For a discrete random variable $X$ with probability mass function $p(x)$, the entropy is defined as $
-  H(X) = E[I(x)] = - sum_(x in X)  p(x) log_2 (p(x))
-$
-#exm[
-  Consider a binary source with $P(0) = p$ and $P(1) = 1-p$ then $H(X) = -p log_2 (p) - (1 - p) log_2 (1-p)$.
-]
-
-#subsection[Properties Of Entropy]
-+ Non-negativity: $H(X) >= 0$.
-+ Maximum entropy: for a source with symbols in $cal(X)$, $H(X) <= log_2 card cal(X)$.
-+ Positivity for independent sources: if $X, Y$ are independent then $H(X, Y) = H(X) + H(Y)$.
 
 #exm[
   DNA sequences provide an excellent example of entropy application. Let's consider:
@@ -498,16 +376,45 @@ $
 ]
 
 #subsection[Joint Entropy]
-When dealing with random variables, we need to quantity combined information.
 
 #def(name: "Joint Entropy", count: false)[
-  Let $X$, $Y$ be two random variables with joint distribution $p(x,y)$, the joint entropy is $
-    H(X, Y) = - sum_(x in X) sum_(y in Y) p(x, y) log_2 p(x, y)
+  Let $X$, $Y$ be two random variables with joint distribution $P(x,y)$, the joint entropy is $
+    H(X, Y)  = - sum_(x in X) sum_(y in Y) P(x, y) log_2 P(x, y)
   $
 ]
 
-#subsection[Properties Of Joint Entropy]
-+ Symmetry: $H(X, Y) = H(Y, X)$.
-+ Non-Negativity: $H(X, Y) >= 0$.
-+ Upperbound: $H(X, Y) <= H(X) + H(Y)$.
-+ Lowerbound: $H(X, Y) >= max(H(X), H(Y))$.
+#pro[
+  Let $X, Y$ be two i.i.d sources.
+  + Symmetry: $H(X, Y) = H(Y, X)$.
+  + Non-Negativity: $H(X, Y) >= 0$.
+  + Upperbound: $H(X, Y) <= H(X) + H(Y)$.
+  + Lowerbound: $H(X, Y) >= max(H(X), H(Y))$.
+]
+
+#ooc[
+  #prf[
+    + trivial by $P(x, y) = P(X = x, Y = y) = P(Y = y, X = x) = P(y, x)$.
+    + $forall x in X, forall y in Y, 0 <= P(x, y) <= 1 => log_2 P(x, y) <= 0$ so we have $P(x, y) log_2 P(x, y) <= 0$. Hence, $
+      H(X, Y) = - sum_(x in X) sum_(y in Y) P(x, y) log_2 P(x, y) >= 0
+    $
+    + We have $H(X, Y) - H(X) - H(Y) = sum_(x in X) P(x) log_2 P(x) + sum_(y in Y) P(y) log_2 P(y) - sum_((x, y) in X times Y) P(x, y) log_2 P(x, y)$, by using the fact that $P(x) = sum_(y in Y) P(x, y)$, we can transform all the sums to be indexed with $X times Y$ as follows: $
+      sum_(x in X) P(x) log_2 P(x) &= sum_((x, y) in X times Y) P(x, y) log_2 P(x) \
+      sum_(y in Y) P(x) log_2 P(y) &= sum_((x, y) in X times Y) P(x, y) log_2 P(y)
+    $ Thus we obtain the writing $
+      H(X, Y) - H(X) - H(Y) = sum_((x,y) in X times Y) P(x, y) log_2 ((P(x) P(y))/(P(x, y)))
+    $ We have that $forall t >= 0, log_2 (t) <= t - 1$ thus $
+      H(X, Y) - H(X) - H(Y) &= sum_((x, y) in X times Y) P(x, y) log_2 ((P(x) P(y))/(P(x, y))) \
+      & <= sum_((x, y) in X times Y) P(x, y) ((P(x) P(y))/(P(x,y)) - 1)\
+      & <= sum_((x, y) in X times Y) P(x) P(y) - P(x, y) \
+      & <= sum_((x, y) in X times Y) P(x) P(y) - sum_((x, y) in X times Y) P(x, y) \
+      & <= 1 - 1 = 0
+    $ Therefore $
+      H(X, Y) <= H(X) + H(Y)
+    $
+    + Without loss of generality, we prove that $H(X, Y) >= H(X)$, we have from before that $P(x) = sum_(y in Y) P(x,y)$ and since $forall (x, y) in X times Y, P(x, y) >= 0$ then $forall (x, y) in X times Y, P(x, y) <= P(x)$.
+    $
+      H(X, Y) &= - sum_((x, y) in X times Y) P(x, y) log_2 P(x, y) \
+      &>= - sum_((x, y) in X times Y) P(x) log_2 P(x) = H(X)
+    $ and same to prove that $H(X, Y) >= H(Y)$ and hence we obtain the inequality $H(X, Y) >= max(H(X), H(Y))$.
+  ]
+]

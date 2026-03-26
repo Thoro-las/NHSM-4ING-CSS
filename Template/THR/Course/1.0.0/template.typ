@@ -4,5 +4,6 @@
   #set page(margin: 1.5cm, flipped: true, columns: 2)
   #set par(justify: true)
   #show: Base.template.with(..args)
+
   #doc
 ]

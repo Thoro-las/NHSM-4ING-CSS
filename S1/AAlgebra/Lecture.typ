@@ -52,8 +52,7 @@
         node((0, 1), $A\/I$),
         arr($A$, $B$, $f$, curve: 20deg),
         arr($A$, $A\/I$, $pi$, label-pos: right),
-        arr($A\/I$, $B$, $f_*$, label-pos: right)
-      )
+        arr($A\/I$, $B$, $f_*$, label-pos: right))
     ]
   ]
 

@@ -9,7 +9,6 @@
     comment: [Some contents were added as remainders and extras for the students.],
   )
 )
-#set enum(numbering: "1.1.")
 
 #let subset = $subset.eq$
 #let Id = math.op("Id")
@@ -168,4 +167,36 @@ Notice that the conjugate of a Sylow $p$-subgroup of $G$, is also a Sylow $p$-su
   $ Let $P in phi$ then $O_p = phi$ by theorem $2$, then the class equation gives $
     n_p = card phi = card O_p = (G:S_P)
   $ and $card O_p$ divides $card G$ then $n_p$ divides $card G$.
+]
+
+#chapter[Free Abelian Groups][]
+
+For an abelian group $G$, the identity $e = 0$, operation $+$, $forall n in NN^*$ define $
+  0 x = 0 \
+  n x = underbrace(x + dots.c + x, n)\ 
+  (-n) x = underbrace(-x + dots.c + -x, n)
+$
+
+If $X subset G$, $X$ generates $G$ if $forall g in G, exists {x_i}_(i=1)^n subset X, exists {k_i}_(i=1)^n subset ZZ, g = k_1 x_1 + dots.c + k_n x_n$.
+
+#pro[
+  Let $X$ be a subset of a non-zero abelian group $G$. Then the following are equivalent:
+  + $forall g in G\\{0}$, $g$ is uniquely written as a linear combination $g=k_1 x_1 + dots.c k_n x_n$ with non-null coefficients $k_i in ZZ^*$ and $x_i in X$.
+  + $X$ generates $G$ and $forall n in NN^*, forall x_1, dots, x_n in X, forall k_1, dots.c, k_n in ZZ, k_1 x_1 + dots.c k_n x_n = 0 => k_1 = dots.c = k_n = 0$.
+]
+
+#prf[
+  $1 => 2.$ since $0 = 0 x$ we have that $X$ generates $G$. If $X = {0} => G = {0}$ which is not the case thus $X != {0}$. Suppose now $k_1 x_1 + dots.c + k_n x_n = 0$, we have then $x_1 = 1 x_1 + 0 = 1 x_1 + k_1 x_1 + dots.c + k_n x_n = (1 + k_1) x_1 + k_1 x_1 + dots.c + k_n x_n$, from the unicity of writing we have that necessarily $k_1 + 1 = 1$ and $forall i in [|2, n|], k_i = 0$ thus $forall i in [|1,n|], k_i = 0$. $2 => 1.$ Suppose that for some $g in G\\{0}$, we have that $g = k_1 x_1 + dots.c + k_n x_n = l_1 y_1 + dots.c + l_m y_m$, by adding terms with zero coefficients we get that $g = k_1 x_1 + dots.c + k_n x_n + k_(n+1) x_(n+1) + dots.c + k_s x_s = m_1 x_1 + dots.c + l_n x_n + l_(n+1) x_(n+1) + dots.c + l_s x_s$, hence $0 = g - g = (x_1 l_1$
+  #nte[Undone]
+]
+
+#def(name: "Free Abelian Group")[
+  An abelian group having the property $1$ or $2$ is said to be free and $X$ is called a basis of $G$.
+]
+
+#exm[
+  + $ZZ$ is free with basis ${1}$.
+  + $ZZ^n$ is free with basis ${e_i = (0, dots, 0, 1, 0, dots, 0)}_(i=1)^n$
+  + $ZZ_n$ is not free, we have that $forall a in ZZ_n, n a = 0$.
+  + All finite groups are not free, since by Lagrange, if $G$ is a finite group with order $n$ then $forall g in G, n g = e$.
 ]
