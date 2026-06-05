@@ -28,7 +28,7 @@
 
 #let ctitle(title) = align(center)[
   #v(2mm)
-  #text(size: 1.5em, title)
+  #text(size: 1.8em, weight: "bold", title)
 ]
 
 #let chapter(title, body, num: -1) = [

@@ -867,7 +867,7 @@ for v in V do makeset(v) end
 
 - sort E in non-decreasing order of weight
 
-for edge (u, v) in E do
+for edge uv in E do
   if findset(u) ≠ findset(v) then
     T = T ∪ {(u, v)}
     union(u, v)
@@ -981,7 +981,7 @@ Djikstra's algorithm solves the single source shortest path problem. The algorit
 ```pcode
 procedure Djikstra(G, s):
   - initialize distance d[v] = ∞ for all vertices v
-  - initialize d[s] = 0.4
+  - initialize d[s] = 0.
   - create a parent array P
   - create a distance priority queue with all vertices
 
@@ -1016,14 +1016,14 @@ The complexity of the Djikstra algorithm is dependent on the implementation of t
 Which Djikstra's algorithm works efficiently for graphs with non-negative weights if fails when negative weights are present. The Bellman-Ford algorithm solves this single source.
 
 ```pcode
-procedure Bellman-Ford(G, s):
+procedure BellmanFord(G, s):
   - initilize distances d[v] to infinity
   for v vertex in G do
     d[s] = 0
   end
 
   for i = 1 to #V - 1 do
-    for each edge (v, u) with weight w in G do
+    for each edge vu with weight w in G do
       if d[v] + w < d[v] do
         d[v] = d[u] + w
         p[v] = u
@@ -1031,7 +1031,7 @@ procedure Bellman-Ford(G, s):
     end
   end
 
-  for each edge (u, v) with weight w in G do
+  for each edge uv with weight w in G do
     if d[u] + w < d[v] then
       return "negative cycle"
     end
@@ -1105,3 +1105,103 @@ What if the problem has several sources ${s_1, dots, s_n}$ and several sinks ${t
 #def(name: "Augmenting Path", ovcount: false)[
   Let $G$ be a flow network, an augmenting path $p$ is a simple path from $s$ to $t$ in the residual network $G_f$, the residual capacity of $p$ is $C_f (p) = min_((u, v) in p) C_f (u, v)$.
 ]
+
+#def(name: "Cut", ovcount: false)[
+  A cut $(s, t)$ of a flow network $G=(V, E)$ is a partition of $V$ into $S$ and $T = V\\S$ such that $s in S$ and $t in T$. 
+  - Net flow across the cut: $f(S, T) = limits(sum)_((u, v) in S times T) f(u, v) - limits(sum)_((u, v) in S times T) f(v, u)$.
+
+  - Capacity of the cut: $C(S, T) = limits(sum)_((u, v) in S times T) C(u, v)$
+]
+
+#def(name: "Minimum Cut", ovcount: false)[
+  A minimum cut is a cut of minimum capacity over all cuts of $G$.
+]
+
+#lem(ovcount: false)[
+  Let $f$ be a flow in $G$ and $(s, t)$ any cut, then $f(S, T) = |f|$.
+]
+
+#prf[
+  By flow conservation, for every internal vertex $u in S\\{s}$: $sum_(v in V) f(u, v) - sum_(v in V) f(v, u) = 0$. $
+    |f| &= sum_(v in V) f(s, v) - sum_(v in V) f(v, s)\
+    |f| &= sum_(u in S) sum_(v in V) f(u, v) - sum_(u in S) sum_(v in V) f(v, u)
+  $ setting the sum over $V$ into $S$ and $T$: $
+    |f| &= sum_(u in S) sum_(v in T) f(u, v) - sum_(u in S) sum_(v in T) f(v, u) = sum_(u in S) sum_(v in V) f(u, v) - sum_(u in S) sum_(v in S) f(v, u)
+  $
+]
+
+#cor(ovcount: false)[
+  For any flow $f$ and any cut $(S, T)$, $|f| <= C(S, T)$.
+]
+
+#prf[
+  $
+    |f| = f(S, T) &= sum_(u in S) sum_(v in T) f(u, v) - sum_(u in S) sum_(v in T) f(v, u)\
+    &<= sum_(u in S) sum_(v in T) f(u, v)\
+    &<= sum_(u in S) sum_(v in V) C(u, v) = C(S, T)
+  $
+]
+
+#thm(ovcount: false)[
+  Let $f$ be a flow in $G$, the following statements are equivalent:
+  + $f$ is a maximum flow in $G$.
+  + The residual network $G_f$ contains no augmenting path from $s$ to $t$.
+  + $|f| = C(S, T)$ for some cut $(S, T)$ of $G$.
+]
+
+#prf[Exercise]
+
+#subsection[Ford-Fulkerson Method]
+The Ford-Fulkerson method is a framework that repeatdly finds any augmenting path in $G_f$ and augment the flow along it until no augmenting path exists. By the max flow min cut theorem, the resulting flow is maximum.
+
+
+```pcode
+procedure FordFulkerson(G, s, t):
+  - Initialize flow f(u, v) = 0 for all edges uv in E.
+  - Construct the residual graph Gf
+
+  while there exists a path P from s to t in Gf do
+    Cf(P) = min{Cf(u, v) | uv in P}
+    for each edge uv in P do
+      if uv is a forward edge
+        then f(u, v) = f(u, v) + Cf(P)
+        else f(v, u) = f(v, u) - Cf(P)
+    end
+  end
+
+  return flow f
+```
+
+If BFS is always used for augmenting path, we get Edmonds-Karp algorithm with complexity $O(card E |f|)$.
+
+#subsection[Minimum Cost, Maximum Flow]
+The maximum flow problem asks for the largest possible flow from source $s$ to sink $t$, in many practical settings, sending flow along different arcs include different costs, pipeline tarifs, energy consumption, transportation fees, and the cheapest maximum flow is the desired objective.
+
+#def(name: "Min Cost - Max Flow", ovcount: false)[
+  Given a directed graph $G = (V, E)$, a source $s$ and a sink $t$, a capacity function $C: E -> NN$ and a cost function $w: E -> RR$. The minimum cost maximum flow problem asks for a flow $f^*: E -> RR$ such that:
+  - Capacity: $forall u v in E, 0 <= f^* (u, v) <= C(u, v)$.
+  - Conservation: $forall u in V\\{s, t}, sum f^* (u, v) = sum f^* (v, u)$.
+  - Maximum value: $|f^*|$ is maximum.
+  - Minimum costs: $"cost"(f^*) = sum_(u v in E) w(u, v) f^*  (u, v)$.
+]
+
+#def(name: "Cost Of Augmenting Path", ovcount: false)[
+  The cost of an $s - t$ path $P$ in $G_f$ is $w(P) = sum_(u v in P) tilde(w) (u, v)$ where $
+    tilde(w) (u, v) = cases(
+      w(u, v) &"if" u v "is a forward edge",
+      -w(u, v) &"if" u v "is a backward edge"
+    )
+  $
+]
+
+The successive shortest paths algorithm:
+- Input: Network $(G, C, w)$, source $s$ and sink $t$.
+- Output: A minimum cost, maximum flow $f^*$.
+
++ Initilize the flow $f(u, v)$ for all $u v in E$ and construct the residual graph $G_f$.
++ While there exists an $s, t$ path in $G_f$ do
+  + Find a shortest (minimum cost) path in $G_f$ using Bellman-Ford.
+  + Compute the bottleneck capacity $delta = min_(u v in P) C_f (u, v)$.
+  + Augment $f(u, v) = delta$ on forward edges, $f(u, v) = - delta$ on backward edges.
++ Return $f$.
+It has complexity $O(card V card E |f^*|)$.

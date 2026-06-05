@@ -35,20 +35,6 @@ To simplify notations, in general we consider signals to be smooth.
 
 Notice that in the definition of noise, there is nothing specific about a certain part of signal to be noise or not, it's all up to the observer to decide.
 
-#def(name: "Fourier Transform")[
-  Let $x: RR -> RR$ a function representing a signal dependent of time $t$. The Fourier transform of the function $x$ is a function of frequency $f$, $X(f)$ such that $
-    cal(F)(x)(f) = X(f) = integral_(-infinity)^infinity x(t) e^(- i 2pi f t) dif t
-  $
-  where $i$ is the imaginary unit.
-]
-
-The Fourier transform is used to transform a function from the time domain to frequency/phase domain. This operation is not one way only, in many cases, we can go back to the time domain just from the frequency/phase domain, which is done by the Inverse Fourier Transform.
-
-#def(name: "Inverse Fourier Transform")[
-  Let $X: RR -> RR$ a function representing the strength of frequencies of a signal with parameter $f$. The inverse Fourier transform of the function $X$ is a function of time $x(t)$ such that $
-    cal(F)^(-1)(X)(t) = x(t) = integral_(-infinity)^infinity X(f) e^(i 2 pi f t) dif f
-  $
-]
 
 #section[Dirac $delta$ Function]
 
@@ -173,13 +159,13 @@ Let $x(t), y(t)$ two signals and $t_1, t_2 in RR$ such that $t_1 <= t_2$.
   [Average quadratic value \ (Total power)], $ P_x = lim_(T -> infinity) 1/(T) integral_(T\/2)^(T\/2) x^2(t) dif t $,
 )
 
+
+
 #def(name: "Period Sequence Of Dirac Impulses")[
   Let $T > 0$, we define the sequence of Dirac impulses with period $T$ as $
     delta_T (t) = sum_(k = -infinity)^(infinity) delta(t - k T)
   $
 ]
-
-If we multiply this sequence by a signal $x(t) delta_T (t) = x(t) sum_(k = -infinity)^(infinity) x(t) delta(t - k T) = sum_(k = -infinity)^infinity x(k T) delta(t - k T)$, sampling of the signal at each period $T$.
 
 #def(name: "Repetition Operator")[
   Let $T > 0$ and $x(t)$ a signal, the operator $"rep"_T (x)$ takes a function and duplicates it all over the real line $RR$.
@@ -187,16 +173,6 @@ If we multiply this sequence by a signal $x(t) delta_T (t) = x(t) sum_(k = -infi
     rep_T (x) (t) = sum_(k=-infinity)^infinity x(t - k T) = x(t) convolve delta_T (t)
   $
 ]
-
-A useful function that will be used often later is the sinc function defined as follows $
-  sinc (x) = (sin(pi x))/(pi x)
-$ which has the following properties $
-  integral_(-infinity)^infinity sinc (t) dif t = 1 quad quad integral_(-infinity)^infinity sinc^2 (t) dif t = 1
-$ also, by abuse of notation $
-  lim_(T -> infinity) T sinc (T t) = delta(t)
-$ a function that comes from this is the sinus integral function defined as $
-  Si(x) = integral_0^x sinc(t) dif t
-$
 
 #section[Signal Energy And Power]
 
@@ -206,4 +182,27 @@ $
 
 #def(name: "Finite Average Power Signal")[
   A signal is said to have a finite average power if the power is finite and non-zero $0 < P_x < infinity$.
+]
+
+#def(name: "Classification Of Signals")[
+  Let $x$ be a signal, we define the following classes depending on the time and amplitude nature.
+  - *Analogical signal:* continuous time, continuous amplitude.
+  - *Quantified signal:* continuous time, discrete amplitude.
+  - *Sampled signal:* discrete time, continuous amplitude.
+  - *Numerical (Digital) signal:* discrete time, discrete time.
+]
+
+#def(name: "Fourier Transform")[
+  Let $x: RR -> RR$ a function representing a signal dependent of time $t$. The Fourier transform of the function $x$ is a function of frequency $f$, $X(f)$ such that $
+    cal(F)(x)(f) = X(f) = integral_(-infinity)^infinity x(t) e^(- i 2pi f t) dif t
+  $
+  where $i$ is the imaginary unit.
+]
+
+The Fourier transform is used to transform a function from the time domain to frequency/phase domain. This operation is not one way only, in many cases, we can go back to the time domain just from the frequency/phase domain, which is done by the Inverse Fourier Transform.
+
+#def(name: "Inverse Fourier Transform")[
+  Let $X: RR -> RR$ a function representing the strength of frequencies of a signal with parameter $f$. The inverse Fourier transform of the function $X$ is a function of time $x(t)$ such that $
+    cal(F)^(-1)(X)(t) = x(t) = integral_(-infinity)^infinity X(f) e^(i 2 pi f t) dif f
+  $
 ]

@@ -4,10 +4,10 @@
 #import "@THR/Course:1.0.0": *
 #show: template.with(
   cover: (
-    title: [Complexity Theory],
+    title: [Computation & \ Complexity Theory],
     writer: "HADIOUCHE Azouaou",
-    disclaimer: [This course is one I write from some sources I read. Please be careful about the information given here.]
-  )
+    disclaimer: [This course is one I write from some sources I read. Please be careful about the information given here.],
+  ),
 )
 
 #let card = math.op("#")
@@ -36,7 +36,7 @@ We will present briefly some more basic machines and their workflow, to give a g
 
 #subsection("Deterministic Automaton")
 #def(name: "DFA", count: false)[
-  Let $M = (Sigma, Q, delta, q_0, F)$ a _deterministic finite automaton_ (DFA), it satisfies: 
+  Let $M = (Sigma, Q, delta, q_0, F)$ a _deterministic finite automaton_ (DFA), it satisfies:
   - $Sigma$ an alphabet.
   - $Q$ a finite set of states.
   - $delta: Q times Sigma -> Q$ a transition function.
@@ -70,15 +70,15 @@ We will present briefly some more basic machines and their workflow, to give a g
         [$q_1$], [$a$], [$q_2$],
         [$q_1$], [$b$], [$q_1$],
         [$q_2$], [$a, b$], [$q_3$],
-        [$q_3$], [$a, b$], [$q_2$]
-      )
+        [$q_3$], [$a, b$], [$q_2$],
+      ),
     )
   ]],
   [
     Note that the finite in DFA comes from the fact that the set of states is finite. We have a natural way to represent DFAs as a graph which is similar to discrete Markov chains. We take the following example: Let $M = (Sigma, Q, delta, q_0, F)$ with $Sigma = {a, b}$, $Q = {q_0, q_1, q_2, q_3}$ and $F = {q_3}$ and the transition function is
 
     We represent the machine in the previous diagram, the starting state has an arrow "start" pointing to it, the final states having a double circle around them, the states are represented using circles with the name of the state inside, and the transitions are represented going from the state to the one it has to go through with the input given.
-  ]
+  ],
 )
 
 
@@ -88,14 +88,14 @@ We will present briefly some more basic machines and their workflow, to give a g
       q0: (q1: "a", q3: "b"),
       q1: (q2: "a", q1: "b"),
       q2: (q3: "a, b"),
-      q3: (q3: "a, b")
-    ), 
+      q3: (q3: "a, b"),
+    ),
     final: "q2",
     layout: (
       q0: (0, 0),
       q1: (3, 0),
       q2: (6, 0),
-      q3: (3, -2)
+      q3: (3, -2),
     ),
     style: (
       q3-q3: (anchor: bottom),
@@ -107,7 +107,7 @@ We will present briefly some more basic machines and their workflow, to give a g
   )
 ]
 
-We will run it on multiple examples, 
+We will run it on multiple examples,
 - $S = a b b a$
   + $D_0 = q_0$, $S <- a b b a$
   + $D_1 = delta(D_0, s_1) = delta(q_0, a) = q_1$, $S <- b b a$
@@ -127,14 +127,14 @@ Notice that $D_4 = q_2 in F$ thus $S in cal(L)(M)$, we will represent these tran
           q0: (q1: "a", q3: "b"),
           q1: (q2: "a", q1: "b"),
           q2: (q3: "a, b"),
-          q3: (q3: "a, b")
-        ), 
+          q3: (q3: "a, b"),
+        ),
         final: "q2",
         layout: (
           q0: (0, 0),
           q1: (3, 0),
           q2: (6, 0),
-          q3: (3, -2)
+          q3: (3, -2),
         ),
         style: (
           q3-q3: (anchor: bottom),
@@ -142,8 +142,7 @@ Notice that $D_4 = q_2 in F$ thus $S in cal(L)(M)$, we will represent these tran
           q1-q2: (curve: 0),
           q0-q3: (curve: -1, label: (dist: -.43, angle: 0deg)),
           q2-q3: (curve: 1, label: (dist: .43, angle: 0deg)),
-          
-          q0: (fill: green.lighten(50%))
+          q0: (fill: green.lighten(50%)),
         ),
       )
     ]
@@ -155,14 +154,14 @@ Notice that $D_4 = q_2 in F$ thus $S in cal(L)(M)$, we will represent these tran
           q0: (q1: "a", q3: "b"),
           q1: (q2: "a", q1: "b"),
           q2: (q3: "a, b"),
-          q3: (q3: "a, b")
-        ), 
+          q3: (q3: "a, b"),
+        ),
         final: "q2",
         layout: (
           q0: (0, 0),
           q1: (3, 0),
           q2: (6, 0),
-          q3: (3, -2)
+          q3: (3, -2),
         ),
         style: (
           q3-q3: (anchor: bottom),
@@ -170,39 +169,41 @@ Notice that $D_4 = q_2 in F$ thus $S in cal(L)(M)$, we will represent these tran
           q1-q2: (curve: 0),
           q0-q3: (curve: -1, label: (dist: -.43, angle: 0deg)),
           q2-q3: (curve: 1, label: (dist: .43, angle: 0deg)),
-          
-          q1: (fill: green.lighten(50%))
+          q1: (fill: green.lighten(50%)),
         ),
       )
     ]
   ],
-  table.cell([
-    #scale(100%)[
-      #automaton(
-        (
-          q0: (q1: "a", q3: "b"),
-          q1: (q2: "a", q1: "b"),
-          q2: (q3: "a, b"),
-          q3: (q3: "a, b")
-        ), 
-        final: "q2",
-        layout: (
-          q0: (0, 0),
-          q1: (3, 0),
-          q2: (6, 0),
-          q3: (3, -2)
-        ),
-        style: (
-          q3-q3: (anchor: bottom),
-          q0-q1: (curve: 0),
-          q1-q2: (curve: 0),
-          q0-q3: (curve: -1, label: (dist: -.43, angle: 0deg)),
-          q2-q3: (curve: 1, label: (dist: .43, angle: 0deg)),
-          q2: (fill: green.lighten(50%))
-        ),
-      )
-    ]
-  ], colspan: 1),
+  table.cell(
+    [
+      #scale(100%)[
+        #automaton(
+          (
+            q0: (q1: "a", q3: "b"),
+            q1: (q2: "a", q1: "b"),
+            q2: (q3: "a, b"),
+            q3: (q3: "a, b"),
+          ),
+          final: "q2",
+          layout: (
+            q0: (0, 0),
+            q1: (3, 0),
+            q2: (6, 0),
+            q3: (3, -2),
+          ),
+          style: (
+            q3-q3: (anchor: bottom),
+            q0-q1: (curve: 0),
+            q1-q2: (curve: 0),
+            q0-q3: (curve: -1, label: (dist: -.43, angle: 0deg)),
+            q2-q3: (curve: 1, label: (dist: .43, angle: 0deg)),
+            q2: (fill: green.lighten(50%)),
+          ),
+        )
+      ]
+    ],
+    colspan: 1,
+  ),
 )
 
 // #exr(count: false)[
@@ -225,9 +226,9 @@ It is easy to notice that $cal(L)(M) = {a b^k a | k in NN}$, we will prove it
 ]
 #prf[
   Let $S=s_1 s_2 dots.c s_n in cal(L)(M)$ and $D_i$ the associated sequence of steps.
-    - $s_1 = a$: suppose by contradiction that $s_1 = b$, then $D_1 = delta(D_0, b) = q_3$ thus we get $forall i in [|1, n|], D_i = q_3$ but $q_3 in.not F$, so $s_1 = a$.
-    - $forall i in [|2, n-1|], s_i = b$: since $s_1 = a$ then $D_2 = q_1$, if for some $i in [|2, n-1|], s_i = a$ then $D_i = q_2$ thus $D_(i+1) = q_3$ and using the same argument as before we get that $q_3 in.not F$ which is a contradiction, thus $forall i in [|2, n-1|], s_i = b$.
-    - $s_n = a$: notice that $D_(n-1) = q_1$ thus if $s_n = b$, $D_n = q_1 in.not F$ hence $s_n = a$.
+  - $s_1 = a$: suppose by contradiction that $s_1 = b$, then $D_1 = delta(D_0, b) = q_3$ thus we get $forall i in [|1, n|], D_i = q_3$ but $q_3 in.not F$, so $s_1 = a$.
+  - $forall i in [|2, n-1|], s_i = b$: since $s_1 = a$ then $D_2 = q_1$, if for some $i in [|2, n-1|], s_i = a$ then $D_i = q_2$ thus $D_(i+1) = q_3$ and using the same argument as before we get that $q_3 in.not F$ which is a contradiction, thus $forall i in [|2, n-1|], s_i = b$.
+  - $s_n = a$: notice that $D_(n-1) = q_1$ thus if $s_n = b$, $D_n = q_1 in.not F$ hence $s_n = a$.
 ]
 #v(-2mm)
 
@@ -248,7 +249,7 @@ We will go through a series of examples of automata and their languages. We cons
         transition: (curve: 0, label: (angle: 0deg, dist: 0.5)),
         q1-q1: (anchor: right),
         q2-q2: (anchor: right),
-      )
+      ),
     )
   ]
   #v(0.5cm)
@@ -260,20 +261,20 @@ We will go through a series of examples of automata and their languages. We cons
       (
         q0: (q1: "a", q2: "b"),
         q1: (q1: "a, b"),
-        q2: (q2: "a, b")
+        q2: (q2: "a, b"),
       ),
       final: "q1",
       layout: (
         q0: (0, 0),
         q1: (2, 1),
-        q2: (2, -1)
+        q2: (2, -1),
       ),
       style: (
         transition: (curve: 0, label: (angle: 0deg, dist: 0.5)),
         q1-q1: (anchor: right),
         q2-q2: (anchor: right),
-        q0-q1: (label: (dist: -0.5))
-      )
+        q0-q1: (label: (dist: -0.5)),
+      ),
     )
   ]
   #v(0.5cm)
@@ -288,8 +289,8 @@ We will go through a series of examples of automata and their languages. We cons
       ),
       final: "q0",
       style: (
-        transition: (curve: 0.8)
-      )
+        transition: (curve: 0.8),
+      ),
     )
   ]
   #v(-1mm)
@@ -301,19 +302,19 @@ We will go through a series of examples of automata and their languages. We cons
       (
         q0: (q1: "a", q2: "b"),
         q1: (q0: "a", q2: "b"),
-        q2: (q2: "a, b")
+        q2: (q2: "a, b"),
       ),
       final: "q0",
       layout: (
         q0: (0, 0),
         q1: (3, 0),
-        q2: (1.5, -3)
+        q2: (1.5, -3),
       ),
       style: (
         q0-q2: (curve: -1, label: (dist: -.33)),
         q1-q0: (label: (dist: -0.33)),
-        transition: (label: (angle: 0deg))
-      )
+        transition: (label: (angle: 0deg)),
+      ),
     )
   ]
 
@@ -337,7 +338,7 @@ We will go through a series of examples of automata and their languages. We cons
         q2-q2: (anchor: top + right),
         q3-q3: (anchor: bottom + right),
         q4-q4: (anchor: bottom + left),
-      )
+      ),
     )
   ]
 
@@ -353,21 +354,21 @@ A non-deterministic automaton is a generalization of the automaton, where we giv
   - $delta: Q times (Sigma union {epsilon}) -> Q$.
   - $q_0$ a starting state.
   - $F subset Q$ a set of accepted/final states.
-  A computation in $M$ is done as follows: let $S = s_1 s_2 dots s_m in Sigma^*$, $S$ is said to be accepted by $S$ if there exists a sequence ${D_i}_(i in [|1, m|]) subset Q$ that satisfies the recursion. $
-    cases(
-      D_0 = q_0,
-      D_i in delta(D_(i-1), s_i)
-    )
-  $
+  A computation in $M$ is done as follows: let $S = s_1 s_2 dots s_m in Sigma^*$, $S$ is said to be accepted by $S$ if there exists a sequence ${D_i}_(i in [|1, m|]) subset Q$ that satisfies the recursion. $ cases(
+    D_0 = q_0,
+    D_i in delta(D_(i-1), s_i)
+  ) $
   and $D_m in F$, it is said to reject otherwise.
 ]
 
 #ooc[
   The definition above is taken directly from Wikipedia, I have a doubt about it so here is how I formalized it, even though it is a mouthful.
-  $ cases(
-    D_0 = {(q_0, S)},
-    D_i = limits(union.big)_((q, S) in D_(i-1)\ S = s_1 s_2 dots s_n) (union_(q' in delta(q, s_1)) {(q', s_2 s_3 dots s_n)}) union (union_(q' in delta(q, epsilon)) {(q', S)})
-  ) $
+  $
+    cases(
+      D_0 = {(q_0, S)},
+      D_i = limits(union.big)_((q, S) in D_(i-1)\ S = s_1 s_2 dots s_n) (union_(q' in delta(q, s_1)) {(q', s_2 s_3 dots s_n)}) union (union_(q' in delta(q, epsilon)) {(q', S)})
+    )
+  $
   $M$ is said to accept $S$ if and only if $exists (q, epsilon) in D_m, q in F$ and it is said to reject otherwise.
 ]
 
@@ -386,11 +387,11 @@ In this new model, we have 3 additional features:
       #automaton(
         (
           q0: (q1: "a"),
-          q1: (q1: "b")
+          q1: (q1: "b"),
         ),
         style: (
-          q0-q1: (curve: 0)
-        )
+          q0-q1: (curve: 0),
+        ),
       )
     ],
     text($equiv$, size: 1.5em),
@@ -399,7 +400,7 @@ In this new model, we have 3 additional features:
         (
           q0: (q1: "a", q2: "b"),
           q1: (q1: "b", q2: "a"),
-          q2: (q2: "a, b")
+          q2: (q2: "a, b"),
         ),
         final: "q1",
         labels: (
@@ -408,17 +409,17 @@ In this new model, we have 3 additional features:
         layout: (
           q0: (0, 0),
           q1: (1.7, 1),
-          q2: (1.7, -1)
+          q2: (1.7, -1),
         ),
         style: (
           transition: (curve: 0, label: (angle: 0deg, dist: 0.33)),
           q1-q1: (anchor: right),
           q2-q2: (anchor: right),
           q0-q1: (label: (dist: -0.33)),
-          q1-q2: (label: (dist: -.33))
-        )
+          q1-q2: (label: (dist: -.33)),
+        ),
       )
-    ]
+    ],
   )
 ]
 
@@ -435,7 +436,7 @@ The non-determinism comes from the fact that we do not have a deterministic path
       final: "q3",
       style: (
         transition: (curve: 0, label: (angle: 0deg, dist: 0.5)),
-      )
+      ),
     )
   ]
   #v(2cm)
@@ -447,7 +448,7 @@ The non-determinism comes from the fact that we do not have a deterministic path
         q1: (q1: "b", q2: "b"),
         q2: (q2: "a", q1: "b"),
         q3: (q3: "b", q4: "a"),
-        q4: (q3: "a", q4: "b")
+        q4: (q3: "a", q4: "b"),
       ),
       final: ("q2", "q3"),
       labels: (
@@ -459,12 +460,12 @@ The non-determinism comes from the fact that we do not have a deterministic path
         q1: (2, 1.5),
         q2: (4, 1.5),
         q3: (2, -1.5),
-        q4: (4, -1.5)
+        q4: (4, -1.5),
       ),
       style: (
         q0-q1: (curve: 0, label: (text: $epsilon$, dist: -.33, angle: 0deg)),
         q0-q3: (curve: 0, label: (text: $epsilon$, dist: .33, angle: 0deg)),
-      )
+      ),
     )
   ]
 
@@ -475,7 +476,7 @@ From the previous examples, we can assume that an NFA will be stronger than an N
   Let $M$ be a non-deterministic automaton, then there exists a deterministic automaton $M'$ such that $cal(L)(M) = cal(L)(M')$.
 ]
 #prf[
-  Let $M=(Sigma, Q, delta, q_0, F)$ be an NFA and define the function $r: Q -> cal(P)(Q)$ such that $r(q) = {q' in Q | exists (q_j)_(j in [|1, k|]), q_1 = q, q_k = q', q_j in delta(q_(j-1), epsilon)}$, that is, $r(q)$ is the set of states that $q$ can reach with using only $epsilon$-transitions. We define the DFA $M'=(Sigma, Q', delta', q_0', F')$ where $Q' = cal(P)(Q)$, $delta'({q_1, dots, q_k}, c) = union_(i=1)^k r(delta(q_i), a)$, $q_0' = r(q_0)$, $F' = {f subset Q | f inter F != emptyset}$. 
+  Let $M=(Sigma, Q, delta, q_0, F)$ be an NFA and define the function $r: Q -> cal(P)(Q)$ such that $r(q) = {q' in Q | exists (q_j)_(j in [|1, k|]), q_1 = q, q_k = q', q_j in delta(q_(j-1), epsilon)}$, that is, $r(q)$ is the set of states that $q$ can reach with using only $epsilon$-transitions. We define the DFA $M'=(Sigma, Q', delta', q_0', F')$ where $Q' = cal(P)(Q)$, $delta'({q_1, dots, q_k}, c) = union_(i=1)^k r(delta(q_i), a)$, $q_0' = r(q_0)$, $F' = {f subset Q | f inter F != emptyset}$.
 ]
 
 #nte[
